@@ -14,7 +14,7 @@ $result = mysqli_query($con, $sql);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Espace Admin</title>
+    <title>Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <meta name="description" content="This is an example dashboard created using build-in elements and components.">
     <meta name="msapplication-tap-highlight" content="no">
@@ -116,58 +116,58 @@ $result = mysqli_query($con, $sql);
                 <div class="scrollbar-sidebar">
                     <div class="app-sidebar__inner">
                         <ul class="vertical-nav-menu">
-                            <li class="app-sidebar__heading">Général</li>
+                            <li class="app-sidebar__heading">Tổng quan</li>
                             <li>
                                 <a href="index.php">
                                     <i class="metismenu-icon pe-7s-rocket"></i>
-                                    Informations Générales
+                                    Thông tin chung
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">Catégories</li>
+                            <li class="app-sidebar__heading">Danh mục</li>
                             <li>
                                 <a href="addCategorie.php">
                                     <i class="metismenu-icon pe-7s-diamond"></i>
-                                    Ajouter une catégorie
+                                    Thêm danh mục
                                     <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                 </a>
                             </li>
                             <li>
                                 <a href="handleCategories.php">
                                     <i class="metismenu-icon pe-7s-car"></i>
-                                    Gérer les catégories
+                                    Quản lý danh mục
                                     <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">Produits</li>
+                            <li class="app-sidebar__heading">Sản phẩm</li>
                             <li>
                                 <a href="addProduct.php">
                                     <i class="metismenu-icon pe-7s-eyedropper"></i>
-                                    Ajouter un produit
+                                    Thêm sản phẩm
                                 </a>
                                 <a href="handleProducts.php">
                                     <i class="metismenu-icon pe-7s-display2"></i>
-                                    Gérer les produits
+                                    Quản lý sản phẩm
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">Clients</li>
+                            <li class="app-sidebar__heading">Khách hàng</li>
                             <li>
                                 <a href="handleClients.php">
                                     <i class="metismenu-icon pe-7s-mouse">
-                                    </i>Gérer les clients
+                                    </i>Quản lý khách hàng
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">Commandes</li>
+                            <li class="app-sidebar__heading">Đơn hàng</li>
                             <li>
                                 <a href="handleSells.php" class="mm-active">
                                     <i class="metismenu-icon pe-7s-graph2">
-                                    </i>Gérer les commandes
+                                    </i>Quản lý đơn hàng
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">Déconnexion</li>
+                            <li class="app-sidebar__heading">Đăng xuất</li>
                             <li>
                                 <a href="../destroy.php">
                                     <i class="metismenu-icon pe-7s-power">
-                                    </i>Se déconnecter
+                                    </i>Đăng xuất
                                 </a>
                             </li>
                         </ul>
@@ -183,14 +183,14 @@ $result = mysqli_query($con, $sql);
                                     <i class="pe-7s-drawer icon-gradient bg-happy-itmeo">
                                     </i>
                                 </div>
-                                <div>Gérer les commandes
-                                    <div class="page-title-subheading">Gardez un œil
-                                        sur les commandes actives
+                                <div>Quản lý đơn hàng
+                                    <div class="page-title-subheading">Theo dõi
+                                        các đơn hàng đang hoạt động
                                     </div>
                                 </div>
                             </div>
                             <div class="page-title-actions">
-                                <button type="button" data-toggle="tooltip" title="Espace Admin" data-placement="left" class="btn-shadow mr-3 btn btn-dark">
+                                <button type="button" data-toggle="tooltip" title="Khu vực quản trị" data-placement="left" class="btn-shadow mr-3 btn btn-dark">
                                     <i class="fa fa-star"></i>
                                 </button>
                             </div>
@@ -199,7 +199,7 @@ $result = mysqli_query($con, $sql);
                     <div class="row">
                             <div class="col-lg-12">
                                 
-                                    <div class="card-body"><h5 class="card-title">Tous les commandes</h5>
+                                    <div class="card-body"><h5 class="card-title">Tất cả đơn hàng</h5>
                                     <div class="row">
                             <div class="col-md-12">
                                 <div class="main-card mb-3 card">
@@ -208,41 +208,65 @@ $result = mysqli_query($con, $sql);
                                             <thead>
                                             <tr>
                                                 <th class="text-center">#</th>
-                                                <th>Name</th>
-                                                <th class="text-center">City</th>
-                                                <th class="text-center">Total (MAD)</th>
-                                                <th class="text-center">Status</th>
-                                                <th class="text-center">Changer le status</th>
+                                                <th>Tên</th>
+                                                <th class="text-center">Thành phố</th>
+                                                <th class="text-center">Tổng cộng (MAD)</th>
+                                                <th class="text-center">Trạng thái</th>
+                                                <th class="text-center">Thay đổi trạng thái</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <?php 
-                                                //! id nom prenom email et ville des clients qui ont des commandes actives
-                                                $cmdQuery = "SELECT idClient,idCommande,total_cmd FROM commande";
+                                                //! id tên họ email và thành phố của khách hàng có đơn hàng đang hoạt động
+                                                $cmdQuery = "SELECT idClient, idCommande, total_cmd FROM commande";
                                                 $result = mysqli_query($con, $cmdQuery);
+                                                if (!$result) {
+                                                    die('Query failed: ' . mysqli_error($con));
+                                                }
+
                                                 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-                                                    //! id client
                                                     $idc = $row['idClient'];
                                                     $idcmd = $row['idCommande'];
                                                     $totalcmd = $row['total_cmd'];
-                                                    $infoQuery = "SELECT nom, prenom, email from client WHERE idClient = $idc";
+
+                                                    $infoQuery = "SELECT nom, prenom, email FROM client WHERE idClient = $idc";
                                                     $res1 = mysqli_query($con, $infoQuery);
+                                                    if (!$res1) {
+                                                        die('Query failed: ' . mysqli_error($con));
+                                                    }
                                                     $tab1 = mysqli_fetch_array($res1);
-                                                    //! nom prenom email
+                                                    //Added error handling 28/09/2024
+                                                    //Might help with identifying where the failure occurs and prevent trying to access data from a failed query.
+                                                    if (!$tab1) {
+                                                        continue; // Skip if no client info found
+                                                    }
                                                     $nom = $tab1['nom'];
                                                     $prenom = $tab1['prenom'];
                                                     $email = $tab1['email'];
-                                                    $adrQuery = "SELECT idAdresse,statut_liv FROM livraison WHERE idCommande = $idcmd";
-                                                    $res2 = mysqli_query($con,$adrQuery);
+
+                                                    $adrQuery = "SELECT idAdresse, statut_liv FROM livraison WHERE idCommande = $idcmd";
+                                                    $res2 = mysqli_query($con, $adrQuery);
+                                                    if (!$res2) {
+                                                        die('Query failed: ' . mysqli_error($con));
+                                                    }
                                                     $tab2 = mysqli_fetch_array($res2);
+                                                    if (!$tab2) {
+                                                        continue; // Skip if no delivery info found
+                                                    }
                                                     $idAdr = $tab2['idAdresse'];
-                                                    // ! statut livraison
                                                     $statutLiv = $tab2['statut_liv'];
+
                                                     $adrQuery1 = "SELECT ville FROM adresse WHERE idAdresse = $idAdr";
-                                                    $res3 = mysqli_query($con,$adrQuery1);
+                                                    $res3 = mysqli_query($con, $adrQuery1);
+                                                    if (!$res3) {
+                                                        die('Query failed: ' . mysqli_error($con));
+                                                    }
                                                     $tab3 = mysqli_fetch_array($res3);
-                                                    //! ville
+                                                    if (!$tab3) {
+                                                        continue; // Skip if no address found
+                                                    }
                                                     $city = $tab3['ville'];
+
                                                     echo '
                                                     <tr>
                                                         <td class="text-center text-muted">#'.$idc.'</td>
@@ -264,93 +288,71 @@ $result = mysqli_query($con, $sql);
                                                         <td class="text-center">'.$city.'</td>
                                                         <td class="text-center">'.$totalcmd.'</td>
                                                         <td class="text-center">';
+                                                        
                                                     if ($statutLiv == 0) {
-                                                        echo '<div class="badge badge-warning">Pending</div>
+                                                        echo '<div class="badge badge-warning">Đang chờ xử lý</div>
                                                         </td>
                                                         <td class="text-center">
                                                             <div role="group" class="btn-group-sm btn-group btn-group-toggle" data-toggle="buttons">
                                                             <label class="btn btn-outline-warning active">
                                                                 <input type="radio" name="options" id="option1" autocomplete="off" checked>
-                                                                Pending
+                                                                Đang chờ xử lý
                                                             </label>
                                                             <label class="btn btn-outline-danger">
                                                                 <input type="radio" name="options" id="option2" autocomplete="off">
-                                                                In Progress
+                                                                Đang xử lý
                                                             </label>
                                                             <label class="btn btn-outline-success">
                                                                 <input type="radio" name="options" id="option3" autocomplete="off">
-                                                                Completed
+                                                                Hoàn thành
                                                             </label>
                                                             </div>
-                                                        </td>
-                                                        ';
-                                                    }
-                                                    // livraison complet
-                                                    elseif ($statutLiv == 1) {
-                                                        echo '<div class="badge badge-success">Completed</div>
+                                                        </td>';
+                                                    } elseif ($statutLiv == 1) {
+                                                        echo '<div class="badge badge-success">Hoàn thành</div>
                                                         </td>
                                                         <td class="text-center">
                                                             <div role="group" class="btn-group-sm btn-group btn-group-toggle" data-toggle="buttons">
                                                             <label class="btn btn-outline-warning">
                                                                 <input type="radio" name="options" id="option1" autocomplete="off" checked>
-                                                                Pending
+                                                                Đang chờ xử lý
                                                             </label>
                                                             <label class="btn btn-outline-danger">
                                                                 <input type="radio" name="options" id="option2" autocomplete="off">
-                                                                In Progress
+                                                                Đang xử lý
                                                             </label>
                                                             <label class="btn btn-outline-success active">
-                                                                <input type="radio" name="options" id="option3" autocomplete="off" >
-                                                                Completed
+                                                                <input type="radio" name="options" id="option3" autocomplete="off">
+                                                                Hoàn thành
                                                             </label>
                                                             </div>
-                                                        </td>
-                                                        ';
-                                                    }
-                                                    elseif ($statutLiv == 2) {
-                                                        echo '<div class="badge badge-danger">In Progress</div>
+                                                        </td>';
+                                                    } elseif ($statutLiv == 2) {
+                                                        echo '<div class="badge badge-danger">Đang xử lý</div>
                                                         </td>
                                                         <td class="text-center">
                                                             <div role="group" class="btn-group-sm btn-group btn-group-toggle" data-toggle="buttons">
                                                             <label class="btn btn-outline-warning">
                                                                 <input type="radio" name="options" id="option1" autocomplete="off" checked>
-                                                                Pending
+                                                                Đang chờ xử lý
                                                             </label>
                                                             <label class="btn btn-outline-danger active">
                                                                 <input type="radio" name="options" id="option2" autocomplete="off">
-                                                                In Progress
+                                                                Đang xử lý
                                                             </label>
                                                             <label class="btn btn-outline-success">
                                                                 <input type="radio" name="options" id="option3" autocomplete="off">
-                                                                Completed
+                                                                Hoàn thành
                                                             </label>
                                                             </div>
-                                                        </td>
-                                                        ';
+                                                        </td>';
                                                     }
-                                                            
+
                                                     echo '</tr>';
-                                                }
-                                                
+                                                }    
                                             ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                </div>
-            </div>
-        </div>
-        <div class="app-wrapper-footer">
-            <div class="app-footer">
-                <div class="app-footer__inner">
-                    <div class="app-footer-right">
-                        <ul class="nav">
-                            <li class="nav-item">
                                 <a href="../index.php" class="nav-link">
-                                    FANABLO
+                                    PC Store
                                 </a>
                             </li>
                         </ul>

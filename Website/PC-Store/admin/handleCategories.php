@@ -14,7 +14,7 @@ $result = mysqli_query($con, $sql);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Espace Admin</title>
+    <title>Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <meta name="description" content="This is an example dashboard created using build-in elements and components.">
     <meta name="msapplication-tap-highlight" content="no">
@@ -116,58 +116,58 @@ $result = mysqli_query($con, $sql);
                 <div class="scrollbar-sidebar">
                     <div class="app-sidebar__inner">
                         <ul class="vertical-nav-menu">
-                            <li class="app-sidebar__heading">Général</li>
+                            <li class="app-sidebar__heading">Tổng quan</li>
                             <li>
                                 <a href="index.php">
                                     <i class="metismenu-icon pe-7s-rocket"></i>
-                                    Informations Générales
+                                    Thông tin chung
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">Catégories</li>
+                            <li class="app-sidebar__heading">Danh mục</li>
                             <li>
                                 <a href="addCategorie.php">
                                     <i class="metismenu-icon pe-7s-diamond"></i>
-                                    Ajouter une catégorie
+                                    Thêm danh mục
                                     <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                 </a>
                             </li>
                             <li>
                                 <a href="handleCategories.php" class="mm-active">
                                     <i class="metismenu-icon pe-7s-car"></i>
-                                    Gérer les catégories
+                                    Quản lý danh mục
                                     <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">Produits</li>
+                            <li class="app-sidebar__heading">Sản phẩm</li>
                             <li>
                                 <a href="addProduct.php">
                                     <i class="metismenu-icon pe-7s-eyedropper"></i>
-                                    Ajouter un produit
+                                    Thêm sản phẩm
                                 </a>
                                 <a href="handleProducts.php">
                                     <i class="metismenu-icon pe-7s-display2"></i>
-                                    Gérer les produits
+                                    Quản lý sản phẩm
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">Clients</li>
+                            <li class="app-sidebar__heading">Khách hàng</li>
                             <li>
                                 <a href="handleClients.php">
                                     <i class="metismenu-icon pe-7s-mouse">
-                                    </i>Gérer les clients
+                                    </i>Quản lý khách hàng
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">Commandes</li>
+                            <li class="app-sidebar__heading">Đơn hàng</li>
                             <li>
                                 <a href="handleSells.php">
                                     <i class="metismenu-icon pe-7s-graph2">
-                                    </i>Gérer les commandes
+                                    </i>Quản lý đơn hàng
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">Déconnexion</li>
+                            <li class="app-sidebar__heading">Đăng xuất</li>
                             <li>
                                 <a href="../destroy.php">
                                     <i class="metismenu-icon pe-7s-power">
-                                    </i>Se déconnecter
+                                    </i>Đăng xuất
                                 </a>
                             </li>
                         </ul>
@@ -183,13 +183,13 @@ $result = mysqli_query($con, $sql);
                                     <i class="pe-7s-drawer icon-gradient bg-happy-itmeo">
                                     </i>
                                 </div>
-                                <div>Gérer les catégories
-                                    <div class="page-title-subheading">Modifier les catégories
+                                <div>Quản lý danh mục
+                                    <div class="page-title-subheading">Chỉnh sửa danh mục
                                     </div>
                                 </div>
                             </div>
                             <div class="page-title-actions">
-                                <button type="button" data-toggle="tooltip" title="Espace Admin" data-placement="left" class="btn-shadow mr-3 btn btn-dark">
+                                <button type="button" data-toggle="tooltip" title="Khu vực quản trị" data-placement="left" class="btn-shadow mr-3 btn btn-dark">
                                     <i class="fa fa-star"></i>
                                 </button>
                             </div>
@@ -199,14 +199,14 @@ $result = mysqli_query($con, $sql);
                         <div class="col-lg-12">
                             <div class="main-card mb-3 card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Tous les catégories</h5>
+                                    <h5 class="card-title">Tất cả danh mục</h5>
                                     <table class="mb-0 table table-hover">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Catégorie</th>
-                                                <th>Catégorie Parente</th>
-                                                <th>Supprimer</th>
+                                                <th>Danh mục</th>
+                                                <th>Danh mục cha</th>
+                                                <th>Xóa</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -229,9 +229,9 @@ $result = mysqli_query($con, $sql);
                                                     $SCat = "SELECT idCategorie FROM categorie WHERE idCat_parente = $idC";
                                                     $resSC = mysqli_query($con, $SCat);
                                                     if (mysqli_num_rows($resPC) > 0  or mysqli_num_rows($resSC) > 0) {
-                                                        echo '<th><button type="submit" name="supCat' . $row['idCategorie'] . '"  class="mb-2 mr-2 btn btn-danger disabled" disabled><i class="fa fa-fw" aria-hidden="true"></i></button></th>';
+                                                        echo '<th><button type="submit" name="supCat' . $row['idCategorie'] . '"  class="mb-2 mr-2 btn btn-danger disabled" disabled><i class="fa fa-fw" aria-hidden="true"></i></button></th>';
                                                     } else {
-                                                        echo '<th><button type="submit" name="supCat' . $row['idCategorie'] . '"  class="mb-2 mr-2 btn btn-danger"><i class="fa fa-fw" aria-hidden="true"></i></button></th>';
+                                                        echo '<th><button type="submit" name="supCat' . $row['idCategorie'] . '"  class="mb-2 mr-2 btn btn-danger"><i class="fa fa-fw" aria-hidden="true"></i></button></th>';
                                                     }
 
 
@@ -266,7 +266,7 @@ $result = mysqli_query($con, $sql);
                     <ul class="nav">
                         <li class="nav-item">
                             <a href="../index.php" class="nav-link">
-                                FANABLO
+                                PC Store
                             </a>
                         </li>
                     </ul>

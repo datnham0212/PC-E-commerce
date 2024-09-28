@@ -9,7 +9,7 @@ if (empty($_SESSION)) {
 
 <head>
     <meta charset='utf-8' />
-    <title>Votre Reçu</title>
+    <title>Hoá đơn của khách</title>
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,900&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@ if (empty($_SESSION)) {
     <div id="wrap">
         <div>
             <img src="images/success.png" alt="logo">
-            <h1>Votre paiement a été bien effectué</h1>
+            <h1>Thanh toán của bạn đã được thực hiện thành công</h1>
             <form method="post" action="create_reciept.php">
                 <?php
                 $query = "SELECT idAdresse,idCommande FROM livraison ORDER BY idLivraison DESC LIMIT 1";
@@ -37,14 +37,14 @@ if (empty($_SESSION)) {
                 $city = $row["ville"];
                 echo '
                 <fieldset>
-                <legend>Client</legend>
+                <legend>Khách hàng</legend>
                     <div class="col">
                         <p>
-                            <label for="name">Nom</label>
+                            <label for="name">Họ</label>
                             <input type="text" name="name" value="' . $_SESSION["userName"] . '" readonly/>
                         </p>
                         <p>
-                            <label>Prénom</label>
+                            <label>Tên</label>
                             <input type="text" name="firstName" value="' . $_SESSION["userFirstName"] . '" readonly/>
                         </p>
                         <p>
@@ -54,27 +54,27 @@ if (empty($_SESSION)) {
                     </div>
                     <div class="col">
                         <p>
-                            <label for="address">Adresse</label>
+                            <label for="address">Địa chỉ</label>
                             <input type="text" name="address" value="' . $addr . '" readonly/>
                         </p>
                         <p>
-                            <label for="city">Ville</label>
+                            <label for="city">Thành phố</label>
                             <input type="text" name="city" value="' . $city . '" readonly/>
                         </p>
                         <p>
-                            <label for="postal_code">Code Postal</label>
+                            <label for="postal_code">Mã bưu chính</label>
                             <input type="text" name="postal_code" value="' . $zcode . '" readonly/>
                         </p>
                         <p>
-                            <label for="country">Pays</label><input type="text" name="country" value="' . $country . '" readonly/>
+                            <label for="country">Quốc gia</label><input type="text" name="country" value="' . $country . '" readonly/>
                         </p>
                     </div>
                 </fieldset>
                 ';
                 ?>
                 <fieldset>
-                    <legend>Votre Panier</legend>
-                    <h2>Total :
+                    <legend>Giỏ hàng của bạn</legend>
+                    <h2>Tổng cộng:
                         <?php
                         $ID = $_SESSION['id_user'];
                         $sql = "SELECT total_cmd,idCommande FROM commande WHERE idClient=$ID ORDER BY idCommande DESC LIMIT 1";
@@ -90,8 +90,8 @@ if (empty($_SESSION)) {
                     <table>
                         <thead>
                             <tr>
-                                <td>Produit</td>
-                                <td>Prix</td>
+                                <td>Sản phẩm</td>
+                                <td>Giá</td>
                             </tr>
                             <thead>
                             <tbody>
@@ -121,15 +121,15 @@ if (empty($_SESSION)) {
                                 $livrA = mysqli_fetch_array($livrR);
                                 $idLivr = $livrA[0];
                                 if ($idLivr == 1) {
-                                    $typeLivr = "STANDARD";
+                                    $typeLivr = "TIÊU CHUẨN";
                                     $prixLivr = 20;
                                 } elseif ($idLivr == 2) {
-                                    $typeLivr = "EXPRESS";
+                                    $typeLivr = "NHANH";
                                     $prixLivr = 50;
                                 }
                                 echo '
                             <tr>
-                                <td><input type="text" value="Livraison : ' . $typeLivr . '" name="product[]" readonly/></td>
+                                <td><input type="text" value="Vận chuyển : ' . $typeLivr . '" name="product[]" readonly/></td>
                                 <td><input type="text" value="' . $prixLivr . '" name="price[]" readonly/> MAD</td>
                             </tr>
 
@@ -137,9 +137,9 @@ if (empty($_SESSION)) {
                                 ?>
                             </tbody>
                     </table>
-                    <h3>Type de livraison : <?php echo $typeLivr . '  -  ' . $prixLivr . ' MAD'; ?></h3>
+                    <h3>Loại vận chuyển : <?php echo $typeLivr . '  -  ' . $prixLivr . ' MAD'; ?></h3>
                 </fieldset>
-                <button type="submit">Imprimer mon reçu</button>
+                <button type="submit">In hóa đơn của tôi</button>
             </form>
             <script>
                 if (window.history.replaceState) {
@@ -154,7 +154,7 @@ if (empty($_SESSION)) {
     $('button').click(function() {
         $.post('create_reciept.php', $('form').serialize(), function() {
             $('div#wrap div').fadeOut(function() {
-                $(this).empty().html("<h2>Merci pour votre achat!</h2><br><p> <a href='reciept.pdf'>Télécharger votre reçu</a> ou retourner vers <a href='../index.php'>la page d'acceuil</a>. </p>").fadeIn();
+                $(this).empty().html("<h2>Cảm ơn bạn đã mua hàng!</h2><br><p> <a href='reciept.pdf'>Tải hóa đơn của bạn</a> hoặc quay lại <a href='../index.php'>trang chủ</a>. </p>").fadeIn();
             });
         });
         return false;

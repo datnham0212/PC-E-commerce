@@ -13,7 +13,7 @@ if (empty($_SESSION)) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Espace Admin</title>
+    <title>Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <meta name="description" content="This is an example dashboard created using build-in elements and components.">
     <meta name="msapplication-tap-highlight" content="no">
@@ -115,58 +115,58 @@ if (empty($_SESSION)) {
                 <div class="scrollbar-sidebar">
                     <div class="app-sidebar__inner">
                         <ul class="vertical-nav-menu">
-                            <li class="app-sidebar__heading">Général</li>
+                        <li class="app-sidebar__heading">Tổng quan</li>
                             <li>
-                                <a href="index.php">
+                                <a href="index.html" class="mm-active">
                                     <i class="metismenu-icon pe-7s-rocket"></i>
-                                    Informations Générales
+                                    Thông tin chung
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">Catégories</li>
+                            <li class="app-sidebar__heading">Danh mục</li>
                             <li>
                                 <a href="addCategorie.php">
                                     <i class="metismenu-icon pe-7s-diamond"></i>
-                                    Ajouter une catégorie
+                                    Thêm danh mục
                                     <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                 </a>
                             </li>
                             <li>
                                 <a href="handleCategories.php">
                                     <i class="metismenu-icon pe-7s-car"></i>
-                                    Gérer les catégories
+                                    Quản lý danh mục
                                     <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">Produits</li>
+                            <li class="app-sidebar__heading">Sản phẩm</li>
                             <li>
-                                <a href="addProduct.php" class="mm-active">
+                                <a href="addProduct.php">
                                     <i class="metismenu-icon pe-7s-eyedropper"></i>
-                                    Ajouter un produit
+                                    Thêm sản phẩm
                                 </a>
                                 <a href="handleProducts.php">
                                     <i class="metismenu-icon pe-7s-display2"></i>
-                                    Gérer les produits
+                                    Quản lý sản phẩm
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">Clients</li>
+                            <li class="app-sidebar__heading">Khách hàng</li>
                             <li>
                                 <a href="handleClients.php">
                                     <i class="metismenu-icon pe-7s-mouse">
-                                    </i>Gérer les clients
+                                    </i>Quản lý khách hàng
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">Commandes</li>
+                            <li class="app-sidebar__heading">Đơn hàng</li>
                             <li>
                                 <a href="handleSells.php">
                                     <i class="metismenu-icon pe-7s-graph2">
-                                    </i>Gérer les commandes
+                                    </i>Quản lý đơn hàng
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">Déconnexion</li>
+                            <li class="app-sidebar__heading">Đăng xuất</li>
                             <li>
                                 <a href="../destroy.php">
                                     <i class="metismenu-icon pe-7s-power">
-                                    </i>Se déconnecter
+                                    </i>Đăng xuất
                                 </a>
                             </li>
                         </ul>
@@ -182,8 +182,8 @@ if (empty($_SESSION)) {
                                     <i class="pe-7s-upload text-success">
                                     </i>
                                 </div>
-                                <div>Ajouter un produit
-                                    <div class="page-title-subheading">Ajouter des produits à votre site.
+                                <div>Bảng điều khiển
+                                    <div class="page-title-subheading">Quản lý khách hàng, đơn hàng và nội dung trang web của bạn.
                                     </div>
                                 </div>
                             </div>
@@ -196,24 +196,24 @@ if (empty($_SESSION)) {
                     </div>
                     <div class="main-card mb-3 card">
                         <div class="card-body">
-                            <h5 class="card-title">Ajouter un produit à la base de données</h5>
+                            <h5 class="card-title">Thêm sản phẩm vào cơ sở dữ liệu</h5>
                             <form id="addProd-form" method="post" action="upload.php" enctype="multipart/form-data">
-                                <div class="position-relative row form-group"><label for="exampleEmail" class="col-sm-2 col-form-label">Nom du produit</label>
-                                    <div class="col-sm-10"><input name="nomProd" id="exampleEmail" placeholder="ex : Moniteur MSI" type="text" class="form-control"></div>
+                                <div class="position-relative row form-group"><label for="exampleEmail" class="col-sm-2 col-form-label">Tên sản phẩm</label>
+                                    <div class="col-sm-10"><input name="nomProd" id="exampleEmail" placeholder="ví dụ: Màn hình MSI" type="text" class="form-control"></div>
                                 </div>
-                                <div class="position-relative row form-group"><label for="exampleEmail" class="col-sm-2 col-form-label">Prix (MAD)</label>
-                                    <div class="col-sm-10"><input name="prixProd" id="exampleEmail" placeholder="ex : 3400 " type="text" class="form-control"></div>
+                                <div class="position-relative row form-group"><label for="exampleEmail" class="col-sm-2 col-form-label">Giá (MAD)</label>
+                                    <div class="col-sm-10"><input name="prixProd" id="exampleEmail" placeholder="ví dụ: 3400" type="text" class="form-control"></div>
                                 </div>
-                                <div class="position-relative row form-group"><label for="exampleEmail" class="col-sm-2 col-form-label">Stock</label>
-                                    <div class="col-sm-10"><input name="stockProd" id="exampleEmail" placeholder="ex : 120" type="text" class="form-control"></div>
+                                <div class="position-relative row form-group"><label for="exampleEmail" class="col-sm-2 col-form-label">Số lượng</label>
+                                    <div class="col-sm-10"><input name="stockProd" id="exampleEmail" placeholder="ví dụ: 120" type="text" class="form-control"></div>
                                 </div>
-                                <div class="position-relative row form-group"><label for="exampleEmail" class="col-sm-2 col-form-label">Promotion (%)</label>
-                                    <div class="col-sm-10"><input name="promo" id="exampleEmail" placeholder="ex : 15" type="text" class="form-control"></div>
+                                <div class="position-relative row form-group"><label for="exampleEmail" class="col-sm-2 col-form-label">Khuyến mãi (%)</label>
+                                    <div class="col-sm-10"><input name="promo" id="exampleEmail" placeholder="ví dụ: 15" type="text" class="form-control"></div>
                                 </div>
-                                <div class="position-relative row form-group"><label for="exampleText" class="col-sm-2 col-form-label">Description du Produit</label>
+                                <div class="position-relative row form-group"><label for="exampleText" class="col-sm-2 col-form-label">Mô tả sản phẩm</label>
                                     <div class="col-sm-10"><textarea name="descrProd" id="exampleText" class="form-control"></textarea></div>
                                 </div>
-                                <div class="position-relative row form-group"><label for="exampleSelect" class="col-sm-2 col-form-label">Catégorie</label>
+                                <div class="position-relative row form-group"><label for="exampleSelect" class="col-sm-2 col-form-label">Danh mục</label>
                                     <div class="col-sm-10"><select name="selectCat" id="exampleSelect" class="form-control">
                                             <?php
                                             $sql = "SELECT idCategorie,desp_cat FROM categorie";
@@ -224,14 +224,14 @@ if (empty($_SESSION)) {
                                             ?>
                                         </select></div>
                                 </div>
-                                <div class="position-relative row form-group"><label for="exampleFile" class="col-sm-2 col-form-label">Image</label>
+                                <div class="position-relative row form-group"><label for="exampleFile" class="col-sm-2 col-form-label">Hình ảnh</label>
                                     <div class="col-sm-10"><input name="file" id="imageProd" type="file" accept="image/png, image/jpg, image/jpeg" class="form-control-file">
-                                        <small class="form-text text-muted">Insérez une image qui montre clairement le produit</small>
+                                        <small class="form-text text-muted">Chèn một hình ảnh hiển thị rõ ràng sản phẩm</small>
                                     </div>
                                 </div>
                                 <div class="position-relative row form-check">
                                     <div class="col-sm-10 offset-sm-2">
-                                        <button name="addP" type="submit" class="btn btn-primary">Ajouter le produit</button>
+                                        <button name="addP" type="submit" class="btn btn-primary">Thêm sản phẩm</button>
                                     </div>
                                 </div>
                             </form>

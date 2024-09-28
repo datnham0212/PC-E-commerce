@@ -254,11 +254,11 @@ if (isset($_SESSION['couponApplyed']))
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="bradcaump__inner text-center">
-                                <h2 class="bradcaump-title">Liên hệ chúng tôi</h2>
+                                <h2 class="bradcaump-title">Trợ giúp</h2>
                                 <nav class="bradcaump-inner">
                                     <a class="breadcrumb-item" href="index.html">Trang chủ</a>
                                     <span class="brd-separetor">/</span>
-                                    <span class="breadcrumb-item active">Liên hệ chúng tôi</span>
+                                    <span class="breadcrumb-item active">Trợ giúp</span>
                                 </nav>
                             </div>
                         </div>
@@ -273,78 +273,124 @@ if (isset($_SESSION['couponApplyed']))
                 <div class="row">
                     <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
                         <div class="htc__contact__container">
-                            <div class="htc__contact__address">
-                                <h2 class="contact__title">Thông tin liên hệ</h2>
-                                <div class="contact__address__inner">
-                                    <!-- Bắt đầu Địa chỉ đơn -->
-                                    <div class="single__contact__address">
-                                        <div class="contact__icon">
-                                            <span class="ti-location-pin"></span>
-                                        </div>
-                                        <div class="contact__details">
-                                            <p>Địa chỉ : <br>Hồ Chí Minh, Việt Nam.</p>
-                                        </div>
-                                    </div>
-                                    <!-- Kết thúc Địa chỉ đơn -->
-                                </div>
-                                <div class="contact__address__inner">
-                                    <!-- Bắt đầu Địa chỉ đơn -->
-                                    <div class="single__contact__address">
-                                        <div class="contact__icon">
-                                            <span class="ti-mobile"></span>
-                                        </div>
-                                        <div class="contact__details">
-                                            <p> Điện thoại : <br><a href="#">+84 123 456 789 </a></p>
-                                        </div>
-                                    </div>
-                                    <!-- Kết thúc Địa chỉ đơn -->
-                                    <!-- Bắt đầu Địa chỉ đơn -->
-                                    <div class="single__contact__address">
-                                        <div class="contact__icon">
-                                            <span class="ti-email"></span>
-                                        </div>
-                                        <div class="contact__details">
-                                            <p> Thư điện tử :<br><a href="#">info@example.com</a></p>
-                                        </div>
-                                    </div>
-                                    <!-- Kết thúc Địa chỉ đơn -->
+                            
+                            <style>
+                            .dropdown {
+                                position: relative;
+                                display: inline-block;
+                                width: 100%;
+                                margin-bottom: 15px;
+                            }
+                            
+                            .dropdown-toggle {
+                                width: 100%;
+                                padding: 10px 15px;
+                                background-color: #f8f8f8;
+                                border: 1px solid #ddd;
+                                border-radius: 4px;
+                                cursor: pointer;
+                                text-align: left;
+                                font-size: 16px;
+                            }
+                            
+                            .dropdown-toggle::after {
+                                content: '\25BC';
+                                float: right;
+                            }
+                            
+                            .dropdown-menu {
+                                display: none;
+                                position: absolute;
+                                background-color: #f9f9f9;
+                                min-width: 100%;
+                                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                                z-index: 1;
+                                border-radius: 0 0 4px 4px;
+                            }
+                            
+                            .dropdown-menu a {
+                                color: black;
+                                padding: 12px 16px;
+                                text-decoration: none;
+                                display: block;
+                            }
+                            
+                            .dropdown-menu a:hover {
+                                background-color: #f1f1f1;
+                            }
+                            
+                            .show {
+                                display: block;
+                            }
+                            </style>
+                            
+                            <div class="dropdown">
+                                <button onclick="toggleDropdown('dropdown1')" class="dropdown-toggle">Câu hỏi thường gặp</button>
+                                <div id="dropdown1" class="dropdown-menu">
+                                    <a href="#">Làm thế nào để đặt hàng?</a>
+                                    <a href="#">Chính sách đổi trả</a>
+                                    <a href="#">Thời gian giao hàng</a>
                                 </div>
                             </div>
-                            <div class="contact-form-wrap">
-                                <div class="contact-title">
-                                    <h2 class="contact__title">Liên hệ với chúng tôi</h2>
+                            
+                            <div class="dropdown">
+                                <button onclick="toggleDropdown('dropdown2')" class="dropdown-toggle">Phương thức thanh toán</button>
+                                <div id="dropdown2" class="dropdown-menu">
+                                    <a href="#">Thẻ tín dụng</a>
+                                    <a href="#">Chuyển khoản ngân hàng</a>
+                                    <a href="#">Thanh toán khi nhận hàng</a>
                                 </div>
-                                <form id="contact-form" action="mail.php" method="post">
-                                    <div class="single-contact-form">
-                                        <div class="contact-box name">
-                                            <input type="text" name="name" placeholder="Tên của bạn*">
-                                            <input type="email" name="email" placeholder="Thư điện tử*">
-                                        </div>
-                                    </div>
-                                    <div class="single-contact-form">
-                                        <div class="contact-box subject">
-                                            <input type="text" name="subject" placeholder="Chủ đề*">
-                                        </div>
-                                    </div>
-                                    <div class="single-contact-form">
-                                        <div class="contact-box message">
-                                            <textarea name="message" placeholder="Tin nhắn*"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="contact-btn">
-                                        <button type="submit" class="fv-btn">GỬI</button>
-                                    </div>
-                                </form>
                             </div>
-                            <div class="form-output">
-                                <p class="form-messege"></p>
+                            
+                            <div class="dropdown">
+                                <button onclick="toggleDropdown('dropdown3')" class="dropdown-toggle">Vận chuyển</button>
+                                <div id="dropdown3" class="dropdown-menu">
+                                    <a href="#">Phí vận chuyển</a>
+                                    <a href="#">Thời gian vận chuyển</a>
+                                    <a href="#">Khu vực giao hàng</a>
+                                </div>
                             </div>
+                            
+                            <div class="dropdown">
+                                <button onclick="toggleDropdown('dropdown4')" class="dropdown-toggle">Tài khoản</button>
+                                <div id="dropdown4" class="dropdown-menu">
+                                    <a href="#">Đăng ký tài khoản</a>
+                                    <a href="#">Quên mật khẩu</a>
+                                    <a href="#">Cập nhật thông tin</a>
+                                </div>
+                            </div>
+                            
+                            <div class="dropdown">
+                                <button onclick="toggleDropdown('dropdown5')" class="dropdown-toggle">Liên hệ</button>
+                                <div id="dropdown5" class="dropdown-menu">
+                                    <a href="#">Gửi email</a>
+                                    <a href="#">Gọi điện thoại</a>
+                                    <a href="#">Chat trực tuyến</a>
+                                </div>
+                            </div>
+                            
+                            <script>
+                            function toggleDropdown(id) {
+                                document.getElementById(id).classList.toggle("show");
+                            }
+                            
+                            window.onclick = function(event) {
+                                if (!event.target.matches('.dropdown-toggle')) {
+                                    var dropdowns = document.getElementsByClassName("dropdown-menu");
+                                    for (var i = 0; i < dropdowns.length; i++) {
+                                        var openDropdown = dropdowns[i];
+                                        if (openDropdown.classList.contains('show')) {
+                                            openDropdown.classList.remove('show');
+                                        }
+                                    }
+                                }
+                            }
+                            </script>
+                            
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 smt-30 xmt-30">
-                        <div class="map-contacts">
-                            <div id="googleMap"></div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -574,231 +620,6 @@ if (isset($_SESSION['couponApplyed']))
     <script src="js/plugins.js"></script>
     <script src="js/slick.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
-
-    <!-- Google Map js -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmGmeot5jcjdaJTvfCmQPfzeoG_pABeWo"></script>
-    <script>
-        // When the window has finished loading create our google map below
-        google.maps.event.addDomListener(window, 'load', init);
-
-        function init() {
-            // Basic options for a simple Google Map
-            // For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
-            var mapOptions = {
-                // How zoomed in you want the map to start at (always required)
-                zoom: 12,
-
-                scrollwheel: false,
-
-                // The latitude and longitude to center the map (always required)
-                center: new google.maps.LatLng(23.7286, 90.3854), // New York
-
-                // How you would like to style the map. 
-                // This is where you would paste any style found on Snazzy Maps.
-                styles: [
-
-
-                    {
-                        "featureType": "administrative",
-                        "elementType": "all",
-                        "stylers": [{
-                            "hue": "#ff0000"
-                        }]
-                    },
-                    {
-                        "featureType": "administrative",
-                        "elementType": "geometry",
-                        "stylers": [{
-                            "color": "#888888"
-                        }]
-                    },
-                    {
-                        "featureType": "administrative",
-                        "elementType": "geometry.fill",
-                        "stylers": [{
-                            "hue": "#ff0000"
-                        }]
-                    },
-                    {
-                        "featureType": "administrative",
-                        "elementType": "labels.text",
-                        "stylers": [{
-                                "color": "#6e6e6e"
-                            },
-                            {
-                                "visibility": "simplified"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "administrative.country",
-                        "elementType": "geometry",
-                        "stylers": [{
-                            "color": "#6f6b6b"
-                        }]
-                    },
-                    {
-                        "featureType": "landscape",
-                        "elementType": "labels.text",
-                        "stylers": [{
-                            "color": "#c5c5c5"
-                        }]
-                    },
-                    {
-                        "featureType": "landscape.natural",
-                        "elementType": "geometry",
-                        "stylers": [{
-                            "color": "#cfcfcf"
-                        }]
-                    },
-                    {
-                        "featureType": "landscape.natural.landcover",
-                        "elementType": "all",
-                        "stylers": [{
-                            "hue": "#ff0000"
-                        }]
-                    },
-                    {
-                        "featureType": "landscape.natural.landcover",
-                        "elementType": "geometry",
-                        "stylers": [{
-                            "hue": "#ff0000"
-                        }]
-                    },
-                    {
-                        "featureType": "poi",
-                        "elementType": "all",
-                        "stylers": [{
-                            "visibility": "off"
-                        }]
-                    },
-                    {
-                        "featureType": "poi",
-                        "elementType": "labels.text",
-                        "stylers": [{
-                                "visibility": "off"
-                            },
-                            {
-                                "color": "#909090"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "poi",
-                        "elementType": "labels.icon",
-                        "stylers": [{
-                            "visibility": "off"
-                        }]
-                    },
-                    {
-                        "featureType": "poi.medical",
-                        "elementType": "geometry",
-                        "stylers": [{
-                            "color": "#e5e5e5"
-                        }]
-                    },
-                    {
-                        "featureType": "poi.park",
-                        "elementType": "geometry",
-                        "stylers": [{
-                            "color": "#e5e5e5"
-                        }]
-                    },
-                    {
-                        "featureType": "poi.place_of_worship",
-                        "elementType": "geometry",
-                        "stylers": [{
-                            "color": "#ff0000"
-                        }]
-                    },
-                    {
-                        "featureType": "poi.sports_complex",
-                        "elementType": "geometry",
-                        "stylers": [{
-                            "color": "#f7f7f7"
-                        }]
-                    },
-                    {
-                        "featureType": "road",
-                        "elementType": "geometry.fill",
-                        "stylers": [{
-                            "color": "#ffffff"
-                        }]
-                    },
-                    {
-                        "featureType": "road",
-                        "elementType": "geometry.stroke",
-                        "stylers": [{
-                            "gamma": 7.18
-                        }]
-                    },
-                    {
-                        "featureType": "road",
-                        "elementType": "labels.icon",
-                        "stylers": [{
-                            "visibility": "off"
-                        }]
-                    },
-                    {
-                        "featureType": "road.local",
-                        "elementType": "labels.text",
-                        "stylers": [{
-                            "visibility": "simplified"
-                        }]
-                    },
-                    {
-                        "featureType": "transit.line",
-                        "elementType": "geometry",
-                        "stylers": [{
-                            "gamma": 0.48
-                        }]
-                    },
-                    {
-                        "featureType": "transit.station",
-                        "elementType": "labels.icon",
-                        "stylers": [{
-                            "visibility": "off"
-                        }]
-                    },
-                    {
-                        "featureType": "water",
-                        "elementType": "all",
-                        "stylers": [{
-                                "color": "#bcbcbc"
-                            },
-                            {
-                                "visibility": "on"
-                            }
-                        ]
-                    },
-                    {
-                        "featureType": "water",
-                        "elementType": "labels.text.fill",
-                        "stylers": [{
-                            "color": "#ffffff"
-                        }]
-                    }
-                ]
-            };
-
-            // Get the HTML DOM element that will contain your map 
-            // We are using a div with id="map" seen below in the <body>
-            var mapElement = document.getElementById('googleMap');
-
-            // Create the Google Map using our element and options defined above
-            var map = new google.maps.Map(mapElement, mapOptions);
-
-            // Let's also add a marker while we're at it
-            var marker = new google.maps.Marker({
-                position: new google.maps.LatLng(23.7286, 90.3854),
-                map: map,
-                title: 'Tasfiu!',
-                icon: 'images/icons/map.png',
-                animation: google.maps.Animation.BOUNCE
-
-            });
-        }
-    </script>
 
 
     <!-- Waypoints.min.js. -->
