@@ -42,7 +42,7 @@ $vendu = $row[0];
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Espace Admin</title>
+    <title>Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <meta name="description" content="This is an example dashboard created using build-in elements and components.">
     <meta name="msapplication-tap-highlight" content="no">
@@ -144,58 +144,58 @@ $vendu = $row[0];
                 <div class="scrollbar-sidebar">
                     <div class="app-sidebar__inner">
                         <ul class="vertical-nav-menu">
-                            <li class="app-sidebar__heading">Général</li>
+                            <li class="app-sidebar__heading">Tổng quan</li>
                             <li>
                                 <a href="index.html" class="mm-active">
                                     <i class="metismenu-icon pe-7s-rocket"></i>
-                                    Informations Générales
+                                    Thông tin chung
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">Catégories</li>
+                            <li class="app-sidebar__heading">Danh mục</li>
                             <li>
                                 <a href="addCategorie.php">
                                     <i class="metismenu-icon pe-7s-diamond"></i>
-                                    Ajouter une catégorie
+                                    Thêm danh mục
                                     <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                 </a>
                             </li>
                             <li>
                                 <a href="handleCategories.php">
                                     <i class="metismenu-icon pe-7s-car"></i>
-                                    Gérer les catégories
+                                    Quản lý danh mục
                                     <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">Produits</li>
+                            <li class="app-sidebar__heading">Sản phẩm</li>
                             <li>
                                 <a href="addProduct.php">
                                     <i class="metismenu-icon pe-7s-eyedropper"></i>
-                                    Ajouter un produit
+                                    Thêm sản phẩm
                                 </a>
                                 <a href="handleProducts.php">
                                     <i class="metismenu-icon pe-7s-display2"></i>
-                                    Gérer les produits
+                                    Quản lý sản phẩm
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">Clients</li>
+                            <li class="app-sidebar__heading">Khách hàng</li>
                             <li>
                                 <a href="handleClients.php">
                                     <i class="metismenu-icon pe-7s-mouse">
-                                    </i>Gérer les clients
+                                    </i>Quản lý khách hàng
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">Commandes</li>
+                            <li class="app-sidebar__heading">Đơn hàng</li>
                             <li>
                                 <a href="handleSells.php">
                                     <i class="metismenu-icon pe-7s-graph2">
-                                    </i>Gérer les commandes
+                                    </i>Quản lý đơn hàng
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">Déconnexion</li>
+                            <li class="app-sidebar__heading">Đăng xuất</li>
                             <li>
                                 <a href="../destroy.php">
                                     <i class="metismenu-icon pe-7s-power">
-                                    </i>Se déconnecter
+                                    </i>Đăng xuất
                                 </a>
                             </li>
                         </ul>
@@ -211,8 +211,8 @@ $vendu = $row[0];
                                     <i class="pe-7s-car icon-gradient bg-mean-fruit">
                                     </i>
                                 </div>
-                                <div>Tableau de bord
-                                    <div class="page-title-subheading">Gérer les client, les commandes et le contenu de votre site.
+                                <div>Bảng điều khiển
+                                    <div class="page-title-subheading">Quản lý khách hàng, đơn hàng và nội dung trang web của bạn.
                                     </div>
                                 </div>
                             </div>
@@ -228,8 +228,8 @@ $vendu = $row[0];
                             <div class="card mb-3 widget-content bg-midnight-bloom">
                                 <div class="widget-content-wrapper text-white">
                                     <div class="widget-content-left">
-                                        <div class="widget-heading">Commandes</div>
-                                        <div class="widget-subheading">2021</div>
+                                        <div class="widget-heading">Đơn hàng</div>
+                                        <div class="widget-subheading">2024</div>
                                     </div>
                                     <div class="widget-content-right">
                                         <div class="widget-numbers text-white"><span><?php echo $nbrCommandes; ?></span></div>
@@ -241,7 +241,7 @@ $vendu = $row[0];
                             <div class="card mb-3 widget-content bg-arielle-smile">
                                 <div class="widget-content-wrapper text-white">
                                     <div class="widget-content-left">
-                                        <div class="widget-heading">Profits</div>
+                                        <div class="widget-heading">Lợi nhuận</div>
                                     </div>
                                     <div class="widget-content-right">
                                         <div class="widget-numbers text-white"><span><?php echo $totalCommandes; ?> MAD</span></div>
@@ -253,8 +253,8 @@ $vendu = $row[0];
                             <div class="card mb-3 widget-content bg-grow-early">
                                 <div class="widget-content-wrapper text-white">
                                     <div class="widget-content-left">
-                                        <div class="widget-heading">Client</div>
-                                        <div class="widget-subheading">nombre total des clients</div>
+                                        <div class="widget-heading">Khách hàng</div>
+                                        <div class="widget-subheading">Tổng số khách hàng</div>
                                     </div>
                                     <div class="widget-content-right">
                                         <div class="widget-numbers text-white"><span><?php echo $nbrClients; ?></span></div>
@@ -269,13 +269,13 @@ $vendu = $row[0];
                                 <div class="card-header-tab card-header-tab-animation card-header">
                                     <div class="card-header-title">
                                         <i class="header-icon lnr-apartment icon-gradient bg-love-kiss"> </i>
-                                        Clients fidèles
+                                        Khách hàng thân thiết
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     <div class="tab-content">
                                         <div class="tab-pane fade show active" id="tabs-eg-77">
-                                            <h6 class="text-muted text-uppercase font-size-md opacity-5 font-weight-normal">Achats des clients fidèles</h6>
+                                            <h6 class="text-muted text-uppercase font-size-md opacity-5 font-weight-normal">Mua hàng của khách hàng thân thiết</h6>
                                             <div class="scroll-area-sm">
                                                 <div class="scrollbar-container">
                                                     <ul class="rm-list-borders rm-list-borders-scroll list-group list-group-flush">
@@ -331,7 +331,7 @@ $vendu = $row[0];
                                 <div class="card-header-tab card-header">
                                     <div class="card-header-title">
                                         <i class="header-icon lnr-rocket icon-gradient bg-tempting-azure"> </i>
-                                        Transactions mensuelles
+                                        Giao dịch hàng tháng
                                     </div>
                                 </div>
                                 <div class="tab-content">
@@ -352,8 +352,8 @@ $vendu = $row[0];
                                 <div class="widget-content-outer">
                                     <div class="widget-content-wrapper">
                                         <div class="widget-content-left">
-                                            <div class="widget-heading">Catégories</div>
-                                            <div class="widget-subheading">Nombre des catégories et sous-catégories</div>
+                                            <div class="widget-heading">Danh mục</div>
+                                            <div class="widget-subheading">Số lượng danh mục và danh mục con</div>
                                         </div>
                                         <div class="widget-content-right">
                                             <div class="widget-numbers text-success"><?php echo $nbrCategories; ?></div>
@@ -367,8 +367,8 @@ $vendu = $row[0];
                                 <div class="widget-content-outer">
                                     <div class="widget-content-wrapper">
                                         <div class="widget-content-left">
-                                            <div class="widget-heading">Produits</div>
-                                            <div class="widget-subheading">nombre total des produits</div>
+                                            <div class="widget-heading">Sản phẩm</div>
+                                            <div class="widget-subheading">Tổng số sản phẩm</div>
                                         </div>
                                         <div class="widget-content-right">
                                             <div class="widget-numbers text-warning"><?php echo $nbrArticles; ?></div>
@@ -382,8 +382,8 @@ $vendu = $row[0];
                                 <div class="widget-content-outer">
                                     <div class="widget-content-wrapper">
                                         <div class="widget-content-left">
-                                            <div class="widget-heading">Ventes</div>
-                                            <div class="widget-subheading">Pourcentage des ventes</div>
+                                            <div class="widget-heading">Doanh số</div>
+                                            <div class="widget-subheading">Tỷ lệ phần trăm doanh số</div>
                                         </div>
                                         <div class="widget-content-right">
                                             <div class="widget-numbers text-danger"><?php echo number_format(($vendu * 100) / ($vendu + $nbrArticles), 2, '.', ''); ?>%</div>
@@ -396,16 +396,16 @@ $vendu = $row[0];
                     <div class="row">
                         <div class="col-md-12">
                             <div class="main-card mb-3 card">
-                                <div class="card-header">Commandes Actives
+                                <div class="card-header">Đơn hàng đang hoạt động
                                 </div>
                                 <div class="table-responsive">
                                     <table class="align-middle mb-0 table table-borderless table-striped table-hover">
                                         <thead>
                                             <tr>
                                                 <th class="text-center">#</th>
-                                                <th>Name</th>
-                                                <th class="text-center">City</th>
-                                                <th class="text-center">Status</th>
+                                                <th>Tên</th>
+                                                <th class="text-center">Thành phố</th>
+                                                <th class="text-center">Trạng thái</th>
                                             </tr>
                                         </thead>
                                         <tbody>

@@ -20,7 +20,7 @@ $result = mysqli_query($con, $sql);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Espace Admin</title>
+    <title>Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <meta name="description" content="This is an example dashboard created using build-in elements and components.">
     <meta name="msapplication-tap-highlight" content="no">
@@ -122,58 +122,58 @@ $result = mysqli_query($con, $sql);
                 <div class="scrollbar-sidebar">
                     <div class="app-sidebar__inner">
                         <ul class="vertical-nav-menu">
-                            <li class="app-sidebar__heading">Général</li>
+                        <li class="app-sidebar__heading">Tổng quan</li>
                             <li>
-                                <a href="index.php">
+                                <a href="index.html" class="mm-active">
                                     <i class="metismenu-icon pe-7s-rocket"></i>
-                                    Informations Générales
+                                    Thông tin chung
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">Catégories</li>
+                            <li class="app-sidebar__heading">Danh mục</li>
                             <li>
                                 <a href="addCategorie.php">
                                     <i class="metismenu-icon pe-7s-diamond"></i>
-                                    Ajouter une catégorie
+                                    Thêm danh mục
                                     <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                 </a>
                             </li>
                             <li>
                                 <a href="handleCategories.php">
                                     <i class="metismenu-icon pe-7s-car"></i>
-                                    Gérer les catégories
+                                    Quản lý danh mục
                                     <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">Produits</li>
+                            <li class="app-sidebar__heading">Sản phẩm</li>
                             <li>
                                 <a href="addProduct.php">
                                     <i class="metismenu-icon pe-7s-eyedropper"></i>
-                                    Ajouter un produit
+                                    Thêm sản phẩm
                                 </a>
                                 <a href="handleProducts.php">
                                     <i class="metismenu-icon pe-7s-display2"></i>
-                                    Gérer les produits
+                                    Quản lý sản phẩm
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">Clients</li>
+                            <li class="app-sidebar__heading">Khách hàng</li>
                             <li>
-                                <a href="handleClients" class="mm-active">
+                                <a href="handleClients.php">
                                     <i class="metismenu-icon pe-7s-mouse">
-                                    </i>Gérer les clients
+                                    </i>Quản lý khách hàng
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">Commandes</li>
+                            <li class="app-sidebar__heading">Đơn hàng</li>
                             <li>
                                 <a href="handleSells.php">
                                     <i class="metismenu-icon pe-7s-graph2">
-                                    </i>Gérer les commandes
+                                    </i>Quản lý đơn hàng
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">Déconnexion</li>
+                            <li class="app-sidebar__heading">Đăng xuất</li>
                             <li>
                                 <a href="../destroy.php">
                                     <i class="metismenu-icon pe-7s-power">
-                                    </i>Se déconnecter
+                                    </i>Đăng xuất
                                 </a>
                             </li>
                         </ul>
@@ -189,8 +189,8 @@ $result = mysqli_query($con, $sql);
                                     <i class="pe-7s-users icon-gradient bg-happy-itmeo">
                                     </i>
                                 </div>
-                                <div>Gérer les clients
-                                    <div class="page-title-subheading">Garder un oeil sur vos clients
+                                <div>Bảng điều khiển
+                                    <div class="page-title-subheading">Quản lý khách hàng, đơn hàng và nội dung trang web của bạn.
                                     </div>
                                 </div>
                             </div>
@@ -204,16 +204,16 @@ $result = mysqli_query($con, $sql);
                     <div class="row">
                             <div class="col-lg-12">
                                 <div class="main-card mb-3 card">
-                                    <div class="card-body"><h5 class="card-title">Tous les clients</h5>
+                                    <div class="card-body"><h5 class="card-title">Tất cả khách hàng</h5>
                                         <table class="mb-0 table table-hover">
                                             <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Nom</th>
-                                                <th>Prenom</th>
+                                                <th>Họ</th>
+                                                <th>Tên</th>
                                                 <th>Email</th>
-                                                <th>Fidéliser</th>
-                                                <th>Bannir</th>
+                                                <th>Khách hàng thân thiết</th>
+                                                <th>Cấm</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -230,21 +230,21 @@ $result = mysqli_query($con, $sql);
                                                             <td>'.$row['prenom'].'</td>
                                                             <td>'.$row['email'].'</td>';
                                                     if (mysqli_num_rows($resultfid) > 0){
-                                                        echo '<th><button type="submit"  class="mb-2 mr-2 btn-transition btn btn-outline-success disabled" disabled><i class="pe-7s-check" aria-hidden="true"></i></button></th>';}
+                                                        echo '<th><button type="submit"  class="mb-2 mr-2 btn-transition btn btn-outline-success disabled" disabled><i class="pe-7s-check" aria-hidden="true"></i></button></th>';}
                                                     else {
-                                                        echo '<th><button type="submit" name="fidC'.$row['idClient'].'"  class="mb-2 mr-2 btn-transition btn btn-outline-success"><i class="pe-7s-star" aria-hidden="true"></i></button></th>';
+                                                        echo '<th><button type="submit" name="fidC'.$row['idClient'].'"  class="mb-2 mr-2 btn-transition btn btn-outline-success"><i class="pe-7s-star" aria-hidden="true"></i></button></th>';
                                                     }
-                                                        echo '<th><button type="submit" name="banC'.$row['idClient'].'"  class="mb-2 mr-2 btn-transition btn btn-outline-danger"><i class="pe-7s-trash" aria-hidden="true"></i></button></th>
+                                                        echo '<th><button type="submit" name="banC'.$row['idClient'].'"  class="mb-2 mr-2 btn-transition btn btn-outline-danger"><i class="pe-7s-trash" aria-hidden="true"></i></button></th>
                                                             </tr>';
                                                     if(array_key_exists('banC'.$row['idClient'], $_POST)) { 
                                                         $delQuery = "DELETE FROM client WHERE idClient = $idClient";
                                                         $resDel = mysqli_query($con, $delQuery);
-                                                        // Mail Code
+                                                        // Mã gửi email
                                                         require_once __DIR__ . '/PHPMailer-master/src/Exception.php';
                                                         require_once __DIR__ . '/PHPMailer-master/src/PHPMailer.php';
                                                         require_once __DIR__ . '/PHPMailer-master/src/SMTP.php';
 
-                                                        // passing true in constructor enables exceptions in PHPMailer
+                                                        // Truyền true vào hàm khởi tạo để bật ngoại lệ trong PHPMailer
                                                         $mail = new PHPMailer(true);
 
                                                         try {
@@ -261,24 +261,24 @@ $result = mysqli_query($con, $sql);
                                                             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                                                             $mail->Port = 587;
 
-                                                            $mail->Username = 'labnotifyer@gmail.com'; //gmail email
-                                                            $mail->Password = 'labnotifyer1.0'; //gmail password
+                                                            $mail->Username = 'labnotifyer@gmail.com'; // email gmail
+                                                            $mail->Password = 'labnotifyer1.0'; // mật khẩu gmail
 
-                                                            // Sender and recipient settings
+                                                            // Cài đặt người gửi và người nhận
                                                             $mail->setFrom('labnotifyer@gmail.com', 'FANABLO');
-                                                            $mail->addAddress('zakariaziani99@gmail.com'); // replace with $row['email']
-                                                            $mail->addReplyTo('labnotifyer@gmail.com', 'FANABLO'); // to set the reply to
+                                                            $mail->addAddress('zakariaziani99@gmail.com'); // thay thế bằng $row['email']
+                                                            $mail->addReplyTo('labnotifyer@gmail.com', 'FANABLO'); // để đặt địa chỉ trả lời
 
-                                                            // Setting the email content
+                                                            // Cài đặt nội dung email
                                                             $mail->IsHTML(true);
-                                                            $mail->Subject = "Banned From FANABLO Online Store";
-                                                            $mail->Body = 'Hello '.$row['nom'].'. <br><b>FANABLO</b><br>You have been banned from FANABLO.<br> This could happen due to many reasons.<br> If you think it was a mistake please contact support@fanablo.com.';
-                                                            //$mail->AltBody = 'Plain text message body for non-HTML email client. Gmail SMTP email body.';
+                                                            $mail->Subject = "Bị cấm từ cửa hàng trực tuyến FANABLO";
+                                                            $mail->Body = 'Xin chào '.$row['nom'].'. <br><b>FANABLO</b><br>Bạn đã bị cấm từ FANABLO.<br> Điều này có thể xảy ra do nhiều lý do.<br> Nếu bạn nghĩ đây là một sai sót, vui lòng liên hệ support@fanablo.com.';
+                                                            //$mail->AltBody = 'Nội dung tin nhắn văn bản thuần túy cho client email không hỗ trợ HTML. Nội dung email SMTP Gmail.';
 
                                                             $mail->send();
-                                                            echo "Email message sent.";
+                                                            echo "Đã gửi email thành công.";
                                                         } catch (Exception $e) {
-                                                            echo "Error in sending email. Mailer Error: {$mail->ErrorInfo}";
+                                                            echo "Lỗi khi gửi email. Lỗi Mailer: {$mail->ErrorInfo}";
                                                         }
                                                         ?>
                                                         <script>
@@ -289,12 +289,12 @@ $result = mysqli_query($con, $sql);
                                                     if(array_key_exists('fidC'.$row['idClient'], $_POST)) { 
                                                             $insQuery = "INSERT INTO client_fidele (idClient) VALUES ($idClient);";
                                                             $resIns = mysqli_query($con, $insQuery);
-                                                            // Mail Code
+                                                            // Mã gửi email
                                                             require_once __DIR__ . '/PHPMailer-master/src/Exception.php';
                                                             require_once __DIR__ . '/PHPMailer-master/src/PHPMailer.php';
                                                             require_once __DIR__ . '/PHPMailer-master/src/SMTP.php';
     
-                                                            // passing true in constructor enables exceptions in PHPMailer
+                                                            // Truyền true vào hàm khởi tạo để bật ngoại lệ trong PHPMailer
                                                             $mail = new PHPMailer(true);
     
                                                             try {
@@ -311,23 +311,23 @@ $result = mysqli_query($con, $sql);
                                                                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                                                                 $mail->Port = 587;
     
-                                                                $mail->Username = 'labnotifyer@gmail.com'; //gmail email
-                                                                $mail->Password = 'labnotifyer1.0'; //gmail password
+                                                                $mail->Username = 'labnotifyer@gmail.com'; // email gmail
+                                                                $mail->Password = 'labnotifyer1.0'; // mật khẩu gmail
     
-                                                                // Sender and recipient settings
+                                                                // Cài đặt người gửi và người nhận
                                                                 $mail->setFrom('labnotifyer@gmail.com', 'FANABLO');
-                                                                $mail->addAddress('zakariaziani99@gmail.com'); // replace with $row['email']
-                                                                $mail->addReplyTo('labnotifyer@gmail.com', 'FANABLO'); // to set the reply to
+                                                                $mail->addAddress('zakariaziani99@gmail.com'); // thay thế bằng $row['email']
+                                                                $mail->addReplyTo('labnotifyer@gmail.com', 'FANABLO'); // để đặt địa chỉ trả lời
     
-                                                                // Setting the email content
+                                                                // Cài đặt nội dung email
                                                                 $mail->IsHTML(true);
-                                                                $mail->Subject = "Congrats ! You are now a special client";
-                                                                $mail->Body = 'Hello '.$row['nom'].'. <br><b>FANABLO</b> online store is happy to announce that you are now one of our special clients.<br>You will benefit from interesting offers and special coupons.';
-                                                                //$mail->AltBody = 'Plain text message body for non-HTML email client. Gmail SMTP email body.';
+                                                                $mail->Subject = "Chúc mừng! Bạn đã trở thành khách hàng đặc biệt";
+                                                                $mail->Body = 'Xin chào '.$row['nom'].'. <br>Cửa hàng trực tuyến <b>FANABLO</b> rất vui mừng thông báo rằng bạn hiện là một trong những khách hàng đặc biệt của chúng tôi.<br>Bạn sẽ được hưởng những ưu đãi thú vị và phiếu giảm giá đặc biệt.';
+                                                                //$mail->AltBody = 'Nội dung tin nhắn văn bản thuần túy cho client email không hỗ trợ HTML. Nội dung email SMTP Gmail.';
     
                                                                 $mail->send();
                                                             } catch (Exception $e) {
-                                                                echo "Error in sending email. Mailer Error: {$mail->ErrorInfo}";
+                                                                echo "Lỗi khi gửi email. Lỗi Mailer: {$mail->ErrorInfo}";
                                                             }
                                                             echo "<meta http-equiv='refresh' content='0'>";
                                                     }
@@ -353,7 +353,7 @@ $result = mysqli_query($con, $sql);
                     <ul class="nav">
                         <li class="nav-item">
                             <a href="../index.php" class="nav-link">
-                                FANABLO
+                                PC Store
                             </a>
                         </li>
                     </ul>
