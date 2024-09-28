@@ -2,3 +2,5 @@
 Deadline nộp bài tập nhóm chương 2: 29/09/2024  <br />
 Còn thiếu phần user stories  <br />
 Long lo nốt phần user stories <br /> 
+
+Hướng dẫn tải nằm tại phần readme: https://github.com/boutera/PC-Store
