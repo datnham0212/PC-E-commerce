@@ -200,7 +200,7 @@ if (isset($_GET["idCat"])) {
                                             if (isset($_SESSION["id_user"])) {
                                                 echo '<li><a href="account.php"><span class="ti-user">' . $_SESSION["userFirstName"] . '</span></a></li>';
                                             } else {
-                                                echo '<li><a href="login-register.php"><span class="ti-user">Connexion</span></a></li>';
+                                                echo '<li><a href="login-register.php"><span class="ti-user">Đăng nhập</span></a></li>';
                                             }
                                             ?>
 
@@ -442,29 +442,29 @@ if (isset($_GET["idCat"])) {
 
                                        ?>
                                         <div class="single__filter">
-                                            <h2 class="side-title s1">Prix(DH)</h2>
+                                            <h2 class="side-title s1">Giá(VNĐ)</h2>
                                           <div style="width:400px;" id="slider-range"></div>
                                               <p>
                                                 <input type="text" name="amount" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
                                               </p>
                                         </div>
                                         <div class="single__filter" style="width: 400px;margin-top: 5px;">
-                                            <h2 class="side-title s5" style="width:300px;">Sort by</h2><br>
+                                            <h2 class="side-title s5" style="width:300px;">Sắp xếp theo</h2><br>
                                           
                                              <div class="radio" style="width:400px;">
-                                                <input type="radio" name="sortby" value="nomaz" ><label style="font-size:16px;"> nom: De A à Z
+                                                <input type="radio" name="sortby" value="nomaz" ><label style="font-size:16px;"> Tên: Từ A đến Z
                                                 </label>
                                                 </div>
                                              <div class="radio">
-                                                <input type="radio" name="sortby" value="nomza" ><label style="font-size:16px;"> nom: De Z à A
+                                                <input type="radio" name="sortby" value="nomza" ><label style="font-size:16px;"> Tên: Từ Z đến A
                                                 </label>
                                             </div>
                                             <div class="radio">
-                                                <input type="radio" name="sortby" value="prixc" ><label style="font-size:16px;"> Prix: de bas en haut
+                                                <input type="radio" name="sortby" value="prixc" ><label style="font-size:16px;"> Giá: Từ thấp đến cao
                                                 </label>
                                             </div>
                                             <div class="radio">
-                                                <input type="radio" name="sortby" value="prixd" ><label style="font-size:16px;"> Prix: de haut en bas
+                                                <input type="radio" name="sortby" value="prixd" ><label style="font-size:16px;"> Giá: Từ cao đến thấp
                                                 </label>
                                             </div>
 
@@ -475,7 +475,7 @@ if (isset($_GET["idCat"])) {
 
 
                                         <div class="single__filter" >
-                                            <h2 class="side-title s2">marque</h2>
+                                            <h2 class="side-title s2">Thương hiệu</h2>
 
                                            <br>
                                                 
@@ -500,7 +500,7 @@ if (isset($_GET["idCat"])) {
 
                                              
                                          <div class="single__filter" >
-                                            <h2 class="side-title s3" >remise</h2>
+                                            <h2 class="side-title s3" >Giảm giá</h2>
 
                                             <br>
                                              
@@ -510,7 +510,7 @@ if (isset($_GET["idCat"])) {
                                             {
                                                 echo '
                                                 <div class="radio" style="width:200px;" >
-                                                <input type="radio" name="remise" value="'.$nbi.'"  ><label style="font-size:16px;"> '.$nbi.'% et plus
+                                                <input type="radio" name="remise" value="'.$nbi.'"  ><label style="font-size:16px;"> '.$nbi.'% trở lên
                                                 </label>
                                                 </div>
                                                 
@@ -523,14 +523,14 @@ if (isset($_GET["idCat"])) {
                                         </div>
 
                                          <div class="single__filter" style="width: 400px;">
-                                            <h2 class="side-title s4" >expédié depuis</h2><br>
+                                            <h2 class="side-title s4" >Gửi từ</h2><br>
                                           
                                              <div class="checkbox" style="width:400px;">
-                                                <input type="checkbox" name="expedie[]" value="1" ><label style="font-size:16px;"> Expédié depuis Maroc
+                                                <input type="checkbox" name="expedie[]" value="1" ><label style="font-size:16px;"> Gửi từ Morocco
                                                 </label>
                                                 </div>
                                              <div class="checkbox">
-                                                <input type="checkbox" name="expedie[]" value="2" ><label style="font-size:16px;"> Expédié depuis l'étrager
+                                                <input type="checkbox" name="expedie[]" value="2" ><label style="font-size:16px;"> Gửi từ nước ngoài
                                                 </label>
                                             </div>
                                         </div>
@@ -541,7 +541,7 @@ if (isset($_GET["idCat"])) {
 
 
                                             <div class="s-filter" style="position: absolute;width:30%;margin-top: -20px;left:300px;">
-                                                <input id="filtrer" type="submit" value="filtrer" name="submit">
+                                                <input id="filtrer" type="submit" value="Lọc" name="submit">
                                             </div>
 
                                                   
