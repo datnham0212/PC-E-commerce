@@ -10,54 +10,11 @@ if (!isset($_SESSION['cartItems'])) {
 
 ?>
 
-
 <!doctype html>
 <html class="no-js" lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>PC Store</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Place favicon.ico in the root directory -->
-    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-
-
-    <!-- All css files are included here. -->
-    <!-- Bootstrap fremwork main css -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-
-    <!-- Owl Carousel main css -->
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-    <!-- This core.css file contents all plugings css file. -->
-    <link rel="stylesheet" href="css/core.css">
-    <!-- Theme shortcodes/elements style -->
-
-
-
-    <link rel="stylesheet" href="css/shortcode/shortcodes.css">
-
-    <!-- Theme main style -->
-    <link rel="stylesheet" href="style.css">
-    <!-- Responsive css -->
-    <link rel="stylesheet" href="css/responsive.css">
-    <!-- User style -->
-    <link rel="stylesheet" href="css/custom.css">
-    <script src="js/recipe2.js"></script>
-    <link rel="stylesheet" href="css/recipe2.css">
-
-
-    <!-- Modernizr JS -->
-    <script src="js/vendor/jquery-1.12.0.min.js"></script>
-    <script src="js/vendor/modernizr-2.8.3.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="js/addWish.js"></script>
-
+<?php include 'templates/head.php'; ?>
+    
     <?php
     if (isset($_SESSION["id_user"])) {
         $query_n = mysqli_query($con, "SELECT * from panier_produits join produit on produit.idProduit=panier_produits.idProduit where idClient= " . $_SESSION["id_user"] . " ");
@@ -67,33 +24,7 @@ if (!isset($_SESSION['cartItems'])) {
     <?php  }
     }
     ?>
-    <script>
-        /*
-const options = {
-  bottom: '-300px', // default: '32px'
-  right: '600px', // default: '32px'
-  left: 'unset', // default: 'unset'
-  time: '0.5s', // default: '0.3s'
-  mixColor: '#fff', // default: '#fff'
-  backgroundColor: '#fff',  // default: '#fff'
-  buttonColorDark: '#100f2c',  // default: '#100f2c'
-  buttonColorLight: '#fff', // default: '#fff'
-  saveInCookies: false, // default: true,
-  label: '🌓', // default: ''
-  autoMatchOsTheme: true // default: true
-}
- function addDarkmodeWidget() {
- 	const darkmode = new Darkmode(options);
-    new Darkmode().showWidget();
-  }
 
-
-window.addEventListener('load', addDarkmodeWidget);*/
-    </script>
-
-
-
-</head>
 
 <body>
     <!--[if lt IE 8]>
@@ -205,8 +136,6 @@ window.addEventListener('load', addDarkmodeWidget);*/
                     $arrimage[] = $path;
                 }
             }
-
-
             ?>
 
             <!-- End Search Popap -->
@@ -521,23 +450,23 @@ window.addEventListener('load', addDarkmodeWidget);*/
                     }
 
                     echo ' </div>
-                                                   <div class="product__details">
-                                                        <h2><a href="product-details.php?idprod=' . $row['idProduit'] . '">' . $row['nom_prod'] . '</a></h2>
-                                                          <ul class="product__price">';
-                                                        if($new_price<$row['prix']){
+                        <div class="product__details">
+                            <h2><a href="product-details.php?idprod=' . $row['idProduit'] . '">' . $row['nom_prod'] . '</a></h2>
+                                <ul class="product__price">';
+                            if($new_price<$row['prix']){
 
-                                                            echo'<li class="old__price">' . $row['prix'] . ' Dhs</li>
-                                                            
-                                                           
-                                                            <li class="new__price">' . $new_price . ' Dhs</li>';}
-                                                            else {
-                                                                 echo'<li class="new__price" >' . $row['prix'] . ' Dhs</li>';
-                                                            }
-                                                       echo' </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            ';
+                                echo'<li class="old__price">' . $row['prix'] . ' Dhs</li>
+                                
+                                
+                                <li class="new__price">' . $new_price . ' Dhs</li>';}
+                                else {
+                                        echo'<li class="new__price" >' . $row['prix'] . ' Dhs</li>';
+                                }
+                            echo' </ul>
+                        </div>
+                    </div>
+                </div>
+                ';
                 }
 
 
@@ -749,132 +678,7 @@ window.addEventListener('load', addDarkmodeWidget);*/
 
 
         <!-- Start Footer Area -->
-        <footer class="htc__foooter__area gray-bg">
-            <div class="container">
-                <div class="row">
-                    <div class="footer__container clearfix">
-                        <!-- Start Single Footer Widget -->
-                        <div class="col-md-3 col-lg-3 col-sm-6">
-                            <div class="ft__widget">
-                                <div class="ft__logo">
-                                    <a href="index.html">
-                                        <img src="images/logo/logo.png" alt="footer logo">
-                                    </a>
-                                </div>
-                                <div class="footer-address">
-                                    <ul>
-                                        <li>
-                                            <div class="address-icon">
-                                                <i class="zmdi zmdi-pin"></i>
-                                            </div>
-                                            <div class="address-text">
-                                                <p>Hồ Chí Minh <br> Việt Nam</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="address-icon">
-                                                <i class="zmdi zmdi-email"></i>
-                                            </div>
-                                            <div class="address-text">
-                                                <a href="#"> info@gmail.com</a>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="address-icon">
-                                                <i class="zmdi zmdi-phone-in-talk"></i>
-                                            </div>
-                                            <div class="address-text">
-                                                <p>+84 123 456 789 </p>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <ul class="social__icon">
-                                    <li><a href="#"><i class="zmdi zmdi-twitter"></i></a></li>
-                                    <li><a href="#"><i class="zmdi zmdi-instagram"></i></a></li>
-                                    <li><a href="#"><i class="zmdi zmdi-facebook"></i></a></li>
-                                    <li><a href="#"><i class="zmdi zmdi-google-plus"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- End Single Footer Widget -->
-                        <!-- Start Single Footer Widget -->
-                        <div class="col-md-3 col-lg-2 col-sm-6 smt-30 xmt-30">
-                            <div class="ft__widget">
-                                <h2 class="ft__title">Các sản phẩm</h2>
-                                <ul class="footer-categories">
-                                    <li><a href="shop-sidebar.html">Linh kiện</a></li>
-                                    <li><a href="shop-sidebar.html">Thiết bị ngoại vi</a></li>
-                                    <li><a href="shop-sidebar.html">Máy tính xách tay</a></li>
-                                    <li><a href="shop-sidebar.html">Máy tính chơi game</a></li>
-                                    <li><a href="shop-sidebar.html">Bộ vi xử lý</a></li>
-                                    <li><a href="shop-sidebar.html">Lưu trữ</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- Start Single Footer Widget -->
-                        <div class="col-md-3 col-lg-2 col-sm-6 smt-30 xmt-30">
-                            <div class="ft__widget">
-                                <h2 class="ft__title">Infomation</h2>
-                                <ul class="footer-categories">
-                                    <li><a href="about.html">Về chúng tôi</a></li>
-                                    <li><a href="contact.html">Liên hệ với chúng tôi</a></li>
-                                    <li><a href="#">Điều khoản & Điều kiện</a></li>
-                                    <li><a href="#">Trả lại & Đổi hàng</a></li>
-                                    <li><a href="#">Thanh toán & Giao hàng</a></li>
-                                    <li><a href="#">Chính sách bảo mật</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- Start Single Footer Widget -->
-                        <div class="col-md-3 col-lg-3 col-lg-offset-1 col-sm-6 smt-30 xmt-30">
-                            <div class="ft__widget">
-                                <h2 class="ft__title">Newsletter</h2>
-                                <div class="newsletter__form">
-                                <p>Đăng ký nhận bản tin của chúng tôi và nhận giảm giá 10% cho lần mua đầu tiên của bạn.</p>
-                                    <div class="input__box">
-                                        <div id="mc_embed_signup">
-                                            <form action="#" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-                                                <div id="mc_embed_signup_scroll" class="htc__news__inner">
-                                                    <div class="news__input">
-                                                        <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Địa chỉ email" required>
-                                                    </div>
-                                                    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-                                                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_6bbb9b6f5827bd842d9640c82_05d85f18ef" tabindex="-1" value=""></div>
-                                                    <div class="clearfix subscribe__btn"><input type="submit" value="Send" name="subscribe" id="mc-embedded-subscribe" class="bst__btn btn--white__color">
-
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End Single Footer Widget -->
-                    </div>
-                </div>
-                <!-- Start Copyright Area -->
-                <div class="htc__copyright__area">
-                    <div class="row">
-                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                            <div class="copyright__inner">
-                                <div class="copyright">
-                                <p>© 2020 <a href="#">Nhóm phát triển 2GI</a>
-                                Tất cả các quyền được bảo lưu.</p>
-                                </div>
-                                <ul class="footer__menu">
-                                    <li><a href="index.php">Trang chủ</a></li>
-                                    <li><a href="shop.php">Sản phẩm</a></li>
-                                    <li><a href="contact.php">Liên hệ với chúng tôi</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Copyright Area -->
-            </div>
-        </footer>
+        <?php include 'templates/footer.php'; ?>
         <!-- End Footer Area -->
     </div>
     <!-- Body main wrapper end -->
