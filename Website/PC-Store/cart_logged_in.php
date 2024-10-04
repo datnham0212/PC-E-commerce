@@ -65,91 +65,14 @@ $result2 = mysqli_query($con, $query);
     <!-- Bắt đầu wrapper chính của body -->
     <div class="wrapper fixed__footer">
         <!-- Bắt đầu Kiểu Header -->
-        <header id="header" class="htc-header header--3 bg__white">
-            <!-- Bắt đầu Khu vực Menu chính -->
-            <div id="sticky-header-with-topbar" class="mainmenu__area sticky__header">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-2 col-lg-2 col-sm-3 col-xs-3">
-                            <div class="logo">
-                                <a href="index.html">
-                                    <img src="images/logo/logo.png" alt="logo">
-                                </a>
-                            </div>
-                        </div>
-                        <!-- Bắt đầu Khu vực Menu chính -->
-                        <div class="col-md-8 col-lg-8 col-sm-6 col-xs-6">
-                            <nav class="mainmenu__nav hidden-xs hidden-sm">
-                                <ul class="main__menu">
-                                    <li class="drop"><a href="index.php">Trang chủ</a></li>
-
-                                    <li class="drop"><a href="shop.php">Sản phẩm của chúng tôi</a>
-                                    </li>
-                                    <li><a href="help.php">Trợ giúp</a></li>
-                                    <li><a href="contact.php">Liên hệ</a></li>
-                                    <?php if (isset($_SESSION["id_user"])) echo '<li><a href="destroy.php">Đăng xuất</a></li>'; ?>
-                                    <!-- Kết thúc Menu Mega đơn -->
-                                    <!-- Bắt đầu Menu Mega đơn -->
-                                </ul>
-                            </nav>
-                            <div class="mobile-menu clearfix visible-xs visible-sm">
-                                <nav id="mobile_dropdown">
-                                    <ul>
-                                        <li><a href="index.php">Trang chủ</a></li>
-                                        <li><a href="shop.php">Sản phẩm của chúng tôi</a></li>
-                                        <li><a href="help.php">Trợ giúp</a></li>
-                                        <li><a href="contact.php">Liên hệ</a></li>
-                                        <?php if (isset($_SESSION["id_user"])) echo '<li><a href="destroy.php">Đăng xuất</a></li>'; ?>
-
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                        <!-- Kết thúc Khu vực Menu chính -->
-                        <div class="col-md-2 col-sm-4 col-xs-3">
-                            <ul class="menu-extra">
-                                <li class="search search__open hidden-xs"><span class="ti-search"></span></li>
-                                <?php
-                                if (isset($_SESSION["id_user"])) {
-                                    echo '<li><a href="account.php"><span class="ti-user">' . $_SESSION["userFirstName"] . '</span></a></li>';
-                                } else {
-                                    echo '<li><a href="login-register.php"><span class="ti-user">Đăng nhập</span></a></li>';
-                                }
-                                ?>
-                                <li class=""><a href="#/"><span class="ti-shopping-cart"></span><span class="cart-counter"><?php echo $_SESSION["cartItems"]; ?></span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="mobile-menu-area"></div>
-                </div>
-            </div>
-            <!-- Kết thúc Khu vực Menu chính -->
-        </header>
+        <?php include 'templates/header.php'; ?>
         <!-- Kết thúc Kiểu Header -->
 
         <div class="body__overlay"></div>
         <!-- Bắt đầu Wrapper Offset -->
         <div class="offset__wrapper">
             <!-- Bắt đầu Popup Tìm kiếm -->
-            <div class="search__area">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="search__inner">
-                                 <form autocomplete="off" id="easysearch" role="search" method="POST" action="search.php">
-                                    <input  name="keyword" id="myInput"   type="text"  aria-label="Tìm kiếm" style="font-size: 20px;" >
-                                    <button type="submit" id="search" name="search"></button>
-                                </form>
-                                <div class="search__close__btn">
-                                    <span class="search__close__btn_icon"><i class="zmdi zmdi-close" style="color:black;"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
+            <?php include 'templates/search.php'; ?>
 
             <?php   
               $arr=array();
@@ -343,21 +266,7 @@ $result2 = mysqli_query($con, $query);
         <?php include 'templates/footer.php'; ?>
         <!-- End Footer Area -->
     </div>
-    <!-- Body main wrapper end -->
-    <!-- Placed js at the end of the document so the pages load faster -->
-
-    <!-- jquery latest version -->
-    <script src="js/vendor/jquery-1.12.0.min.js"></script>
-    <!-- Bootstrap framework js -->
-    <script src="js/bootstrap.min.js"></script>
-    <!-- All js plugins included in this file. -->
-    <script src="js/plugins.js"></script>
-    <script src="js/slick.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <!-- Waypoints.min.js. -->
-    <script src="js/waypoints.min.js"></script>
-    <!-- Main js file that contents all jQuery plugins activation. -->
-    <script src="js/main.js"></script>
+    
  <script>
         const button=document.querySelector('button[type="submit"]');
 button.disabled=true;

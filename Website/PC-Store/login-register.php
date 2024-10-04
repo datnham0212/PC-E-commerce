@@ -28,82 +28,14 @@ if (isset($_GET['cart']))
     <!-- Body main wrapper start -->
     <div class="wrapper fixed__footer">
         <!-- Bắt đầu Kiểu Header -->
-        <header id="header" class="htc-header header--3 bg__white">
-            <!-- Bắt đầu Khu vực Menu chính -->
-            <div id="sticky-header-with-topbar" class="mainmenu__area sticky__header">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-2 col-lg-2 col-sm-3 col-xs-3">
-                            <div class="logo">
-                                <a href="index.html">
-                                    <img src="images/logo/logo.png" alt="logo">
-                                </a>
-                            </div>
-                        </div>
-                        <!-- Bắt đầu Khu vực Menu chính -->
-                        <div class="col-md-8 col-lg-8 col-sm-6 col-xs-6">
-                            <nav class="mainmenu__nav hidden-xs hidden-sm">
-                                <ul class="main__menu">
-                                    <li class="drop"><a href="index.php">Trang chủ</a></li>
-
-                                    <li class="drop"><a href="shop.php">Sản phẩm của chúng tôi</a>
-                                    </li>
-                                    <li><a href="help.php">Trợ giúp</a></li>
-                                    <li><a href="contact.php">Liên hệ</a></li>
-                                    <!-- Kết thúc Menu Mega Đơn lẻ -->
-                                    <!-- Bắt đầu Menu Mega Đơn lẻ -->
-                                </ul>
-                            </nav>
-                            <div class="mobile-menu clearfix visible-xs visible-sm">
-                                <nav id="mobile_dropdown">
-                                    <ul>
-                                        <li><a href="index.php">Trang chủ</a></li>
-                                        <li><a href="shop.php">Sản phẩm của chúng tôi</a></li>
-                                        <li><a href="help.php">Trợ giúp</a></li>
-                                        <li><a href="contact.php">Liên hệ</a></li>
-
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                        <!-- Kết thúc Khu vực Menu chính -->
-                        <div class="col-md-2 col-sm-4 col-xs-3">
-                            <ul class="menu-extra">
-                                <li class="search search__open hidden-xs"><span class="ti-search"></span></li>
-                                <li><a href="login-register.php"><span class="ti-user"><?php if (isset($_SESSION["id_user"])) echo 'Đã đăng nhập';
-                                                                                        else echo 'Đăng nhập'; ?></span></a></li>
-                                <li class="cart__menu"><a href="cart_logged_out.php"><span class="ti-shopping-cart"></span><span class="cart-counter"><?php echo $_SESSION["cartItems"]; ?></span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="mobile-menu-area"></div>
-                </div>
-            </div>
-            <!-- Kết thúc Khu vực Menu chính -->
-        </header>
+        <?php include 'templates/header.php'; ?>
         <!-- Kết thúc Kiểu Header -->
 
         <div class="body__overlay"></div>
         <!-- Bắt đầu Wrapper Offset -->
         <div class="offset__wrapper">
             <!-- Bắt đầu Tìm kiếm Popap -->
-            <div class="search__area">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="search__inner">
-                                <form action="#" method="get">
-                                    <input placeholder="Tìm kiếm ở đây... " type="text">
-                                    <button type="submit"></button>
-                                </form>
-                                <div class="search__close__btn">
-                                    <span class="search__close__btn_icon"><i class="zmdi zmdi-close"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php include 'templates/search.php'; ?>
             <!-- Kết thúc Tìm kiếm Popap -->
         </div>
         <!-- Kết thúc Wrapper Offset -->
