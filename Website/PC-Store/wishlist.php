@@ -209,24 +209,16 @@ if (empty($_SESSION)) {
         </div>
         <!-- Kết thúc Wrapper Offset -->
         <!-- Bắt đầu khu vực Bradcaump -->
-        <div class="ht__bradcaump__area" style="background: rgba(0, 0, 0, 0) url(images/bg/2.jpg) no-repeat scroll center center / cover ;">
-            <div class="ht__bradcaump__wrap">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="bradcaump__inner text-center">
-                                <h2 class="bradcaump-title">Danh sách yêu thích</h2>
-                                <nav class="bradcaump-inner">
-                                    <a class="breadcrumb-item" href="index.html">Trang chủ</a>
-                                    <span class="brd-separetor">/</span>
-                                    <span class="breadcrumb-item active">Danh sách yêu thích</span>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <?php
+        include 'templates/bradcaump.php';
+
+        renderBradcaump(
+            'Danh sách yêu thích',
+            [
+                ['url' => 'index.php', 'text' => 'Trang chủ / '],
+                ['text' => 'Danh sách yêu thích']
+            ]
+        ); ?>
         <!-- Kết thúc khu vực Bradcaump -->
         <!-- Bắt đầu khu vực danh sách yêu thích -->
         <div class="wishlist-area ptb--120 bg__white">

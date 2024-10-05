@@ -81,12 +81,12 @@ ul.sub-nav li {
 }
 .down-arrow {
     width: 0;
-    border-left: 7px solid transparent;
-    border-right: 7px solid transparent;
-    border-top: 7px solid black;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid black;
     display: inline-block;
-    vertical-align: middle;
-    margin: -5px 0 0 5px;
+    margin-left: 5px;
 }
   .p-search{
   margin-left: 5px;

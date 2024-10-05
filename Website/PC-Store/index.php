@@ -683,12 +683,6 @@ if (!isset($_SESSION['cartItems'])) {
                 a.setAttribute("class", "autocomplete-items");
 
                 this.parentNode.appendChild(a);
-                /*
-      if(val.toUpperCase()=="" || val.toUpperCase()==" "  || val.toUpperCase()==" " ) {         
-           const button=document.querySelector('button[type="submit"]');
-button.disabled=true;
-      }
-*/
 
                 if (val == "" || val == " " || val == "  " || val == "   " || val == "    " || val.indexOf("    ") > -1) {
 

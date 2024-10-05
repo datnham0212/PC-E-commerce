@@ -21,9 +21,6 @@ $row = mysqli_fetch_assoc($result);
 <?php include 'templates/head.php'; ?>
 
 <body>
-    <!--[if lt IE 8]>
-        <p class="browserupgrade">Bạn đang sử dụng một trình duyệt <strong>lỗi thời</strong>. Vui lòng <a href="http://browsehappy.com/">nâng cấp trình duyệt của bạn</a> để cải thiện trải nghiệm.</p>
-    <![endif]-->
 
     <!-- Bắt đầu wrapper chính của body -->
     <div class="wrapper fixed__footer">
