@@ -95,44 +95,29 @@ $result2 = mysqli_query($con, $query);
         <!-- End Offset Wrapper -->
         <!-- Start Bradcaump area -->
         <?php
-        if (!$cart) {
-            echo '<div class="ht__bradcaump__area" style="background: rgba(0, 0, 0, 0) url(images/bg/2.jpg) no-repeat scroll center center / cover ;">
-            <div class="ht__bradcaump__wrap">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="bradcaump__inner text-center">
-                                <h2 class="bradcaump-title">Giỏ hàng</h2>
-                                <nav class="bradcaump-inner">
-                                    <span class="breadcrumb-item active">Giỏ hàng của bạn trống!</span>
-                                    <a class="continuer" href="index.php">Tiếp tục mua sắm</a>                                    
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>';
-        } else {
+        include 'templates/bradcaump.php';
 
-            echo '<div class="ht__bradcaump__area" style="background: rgba(0, 0, 0, 0) url(images/bg/2.jpg) no-repeat scroll center center / cover ;">
-            <div class="ht__bradcaump__wrap">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="bradcaump__inner text-center">
-                                <h2 class="bradcaump-title">Giỏ hàng</h2>
-                                <nav class="bradcaump-inner">
-                                    <a class="breadcrumb-item" href="index.php">Trang chủ</a>
-                                    <span class="brd-separetor">/</span>
-                                    <span class="breadcrumb-item active">Giỏ hàng</span>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        // Thêm đoạn code này sau phần offset wrapper và trước phần cart-main-area
+        if (!$cart) {
+            renderBradcaump(
+                'Giỏ hàng trống',
+                [
+                    ['url' => 'index.php', 'text' => 'Trang chủ / '],
+                    ['text' => 'Giỏ hàng trống']
+                ]
+            );
+            echo '<a class="continuer" href="index.php">Tiếp tục mua sắm</a>';
+        } else {
+            renderBradcaump(
+                'Giỏ hàng',
+                [
+                    ['url' => 'index.php', 'text' => 'Trang chủ / '],
+                    ['text' => 'Giỏ hàng']
+                ]
+            );
+        }
+
+        ?>
         <!-- Kết thúc khu vực Bradcaump -->
         <!-- Bắt đầu khu vực chính của giỏ hàng -->
 
@@ -152,45 +137,48 @@ $result2 = mysqli_query($con, $query);
                                             <th class="product-remove">Xóa</th>
                                         </tr>
                                     </thead>
-                                    <tbody>';
-            $totalFinal = 0;
-            while ($row = mysqli_fetch_assoc($result)) {
-                $prix = $row['prix'] * (1 - $row['promo'] / 100);
-                echo '<tr>';
-                echo '<td class="product-thumbnail"><a href="product-details.php?idprod=' . $row["idProduit"] . '"><img src="images/' . $row['img_prod'] . '" alt="hình ảnh sản phẩm" /></a></td>';
-                echo '<td class="product-name"><a href="product-details.php?idprod=' . $row["idProduit"] . '">' . $row['nom_prod'] . '</a></td>';
-                echo '<td class="product-price"><span class="amount">' . $prix . ' VNĐ</span></td>';
-                echo '<td class="product-quantity">
-                           <form class="change-quantity" method="post" action="" role="form">';
-                if ($row['stock'] == 0) {
-                    echo '<input type="number" style="display: none;" name="quantity" value="0" min="1" max="' . $row['stock'] . '" />';
-                    echo '<span class="comments">Hết hàng</span>';
-                    $total = 0;
-                } else if ($row['quantite'] > $row['stock']) {
-                    echo '<input type="number" name="quantity" value="' . $row['stock'] . '" min="1" max="' . $row['stock'] . '" />';
-                    $total = $row['stock'] * $prix;
-                } else {
-                    echo '<input type="number" name="quantity" value="' . $row['quantite'] . '" min="1" max="' . $row['stock'] . '" />';
-                    $total = $row['quantite'] * $prix;
-                }
-                $totalFinal += $total;
-                echo '<input type="text" style="display: none;" name="id_product" value="' . $row['idProduit'] . '" />
-                            </form>
-                        </td>';
-                echo '<td class="product-subtotal">' . $total . '</td>';
-                echo '<td class="product-remove">
-                            <form class="remove-product" method="post" action="" role="form">
-                                <a href="#/"><span class="ti-trash" style="font-size: 25px;"></span></a>
-                                <input type="text" style="display: none;" name="id_product" value="' . $row['idProduit'] . '" />
-                            </form>
-                        </td>';
-
-                echo '</tr>';
-            }
-            $_SESSION["montantGlobale"] = $totalFinal;
-
-
-            echo '</tbody>
+                                    <tbody>
+                                    <?php
+                                    $totalFinal = 0;
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        $prix = $row['prix'] * (1 - $row['promo'] / 100);
+                                        ?>
+                                        <tr>
+                                            <td class="product-thumbnail"><a href="product-details.php?idprod=<?php echo $row["idProduit"]; ?>"><img src="images/<?php echo $row['img_prod']; ?>" alt="hình ảnh sản phẩm" /></a></td>
+                                            <td class="product-name"><a href="product-details.php?idprod=<?php echo $row["idProduit"]; ?>"><?php echo $row['nom_prod']; ?></a></td>
+                                            <td class="product-price"><span class="amount"><?php echo $prix; ?> VNĐ</span></td>
+                                            <td class="product-quantity">
+                                                <form class="change-quantity" method="post" action="" role="form">
+                                                    <?php
+                                                    if ($row['stock'] == 0) {
+                                                        echo '<input type="number" style="display: none;" name="quantity" value="0" min="1" max="' . $row['stock'] . '" />';
+                                                        echo '<span class="comments">Hết hàng</span>';
+                                                        $total = 0;
+                                                    } else if ($row['quantite'] > $row['stock']) {
+                                                        echo '<input type="number" name="quantity" value="' . $row['stock'] . '" min="1" max="' . $row['stock'] . '" />';
+                                                        $total = $row['stock'] * $prix;
+                                                    } else {
+                                                        echo '<input type="number" name="quantity" value="' . $row['quantite'] . '" min="1" max="' . $row['stock'] . '" />';
+                                                        $total = $row['quantite'] * $prix;
+                                                    }
+                                                    $totalFinal += $total;
+                                                    ?>
+                                                    <input type="hidden" name="id_product" value="<?php echo $row['idProduit']; ?>" />
+                                                </form>
+                                            </td>
+                                            <td class="product-subtotal"><?php echo $total; ?></td>
+                                            <td class="product-remove">
+                                                <form class="remove-product" method="post" action="" role="form">
+                                                    <a href="#/"><span class="ti-trash" style="font-size: 25px;"></span></a>
+                                                    <input type="hidden" name="id_product" value="<?php echo $row['idProduit']; ?>" />
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                    }
+                                    $_SESSION["montantGlobale"] = $totalFinal;
+                                    ?>
+                                    </tbody>
                                 </table>
                             </div>
                             <div class="row">
@@ -208,28 +196,31 @@ $result2 = mysqli_query($con, $query);
                                             <tbody>
                                                 <tr class="cart-subtotal">
                                                     <th>Tổng cộng</th>
-                                                    <td><span id="sous_amount" class="amount">' . $totalFinal . ' VNĐ</span></td>
+                                                    <td><span id="sous_amount" class="amount"><?php echo $totalFinal; ?> VNĐ</span></td>
                                                 </tr>
                                                 <tr class="shipping">
                                                     <th>Vận chuyển</th>
-                                                    <td>';
-            $row2 = mysqli_fetch_assoc($result2);
-            $bilan = $row2['prix_livraison'] + $totalFinal;
-            $_SESSION["type_livr"] = $row2['id_type'];
-
-            echo '<form class="livraison" method="post" action="" role="form">
+                                                    <td>
+                                                        <?php
+                                                        $row2 = mysqli_fetch_assoc($result2);
+                                                        $bilan = $row2['prix_livraison'] + $totalFinal;
+                                                        $_SESSION["type_livr"] = $row2['id_type'];
+                                                        ?>
+                                                        <form class="livraison" method="post" action="" role="form">
                                                             <ul id="shipping_method">
                                                                 <li>
-                                                                    <input type="radio" id="' . $row2['nom_type'] . '" name="type_livraison" value="' . $row2['id_type'] . '" checked>
-                                                                    <label for="' . $row2['nom_type'] . '">
-                                                                        ' . $row2['nom_type'] . ': <span class="amount">' . $row2['prix_livraison'] . ' VNĐ</span>
+                                                                    <input type="radio" id="<?php echo $row2['nom_type']; ?>" name="type_livraison" value="<?php echo $row2['id_type']; ?>" checked>
+                                                                    <label for="<?php echo $row2['nom_type']; ?>">
+                                                                        <?php echo $row2['nom_type']; ?>: <span class="amount"><?php echo $row2['prix_livraison']; ?> VNĐ</span>
                                                                     </label>
-                                                                </li>';
-            $row2 = mysqli_fetch_assoc($result2);
-            echo '<li>
-                                                                    <input type="radio" id="' . $row2['nom_type'] . '" name="type_livraison" value="' . $row2['id_type'] . '">
-                                                                    <label for="' . $row2['nom_type'] . '">
-                                                                        ' . $row2['nom_type'] . ': <span class="amount">' . $row2['prix_livraison'] . ' VNĐ</span>
+                                                                </li>
+                                                                <?php
+                                                                $row2 = mysqli_fetch_assoc($result2);
+                                                                ?>
+                                                                <li>
+                                                                    <input type="radio" id="<?php echo $row2['nom_type']; ?>" name="type_livraison" value="<?php echo $row2['id_type']; ?>">
+                                                                    <label for="<?php echo $row2['nom_type']; ?>">
+                                                                        <?php echo $row2['nom_type']; ?>: <span class="amount"><?php echo $row2['prix_livraison']; ?> VNĐ</span>
                                                                     </label>
                                                                 </li>
                                                                 <li></li>
@@ -240,7 +231,7 @@ $result2 = mysqli_query($con, $query);
                                                 <tr class="order-total">
                                                     <th>Tổng thanh toán</th>
                                                     <td>
-                                                        <strong><span id="final_amount" class="amount ">' . $bilan . ' VNĐ</span></strong>
+                                                        <strong><span id="final_amount" class="amount "><?php echo $bilan; ?> VNĐ</span></strong>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -250,7 +241,7 @@ $result2 = mysqli_query($con, $query);
                                                 <a href="#/">Hoàn tất đơn hàng</a><br><br>
                                                 <span id="cmdError" class="comments"></span>
                                             </div>
-                                            <input type="text" style="display: none;" name="type_livr" value="' . $_SESSION["type_livr"] . '" />
+                                            <input type="text" style="display: none;" name="type_livr" value="<?php echo $_SESSION["type_livr"]; ?>" />
                                         </form>
                                     </div>
                                 </div>
@@ -258,9 +249,7 @@ $result2 = mysqli_query($con, $query);
                     </div>
                 </div>
             </div>
-        </div>';
-        }
-        ?>
+        </div>
         <!-- cart-main-area end -->
         <!-- Start Footer Area -->
         <?php include 'templates/footer.php'; ?>

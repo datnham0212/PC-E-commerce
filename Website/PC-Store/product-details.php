@@ -97,24 +97,17 @@ $patal = array_reverse($patal);
         </div>
         <!-- Kết thúc Wrapper Offset -->
         <!-- Bắt đầu khu vực Bradcaump -->
-        <div class="ht__bradcaump__area" style="background: rgba(0, 0, 0, 0) url(images/bg/2.jpg) no-repeat scroll center center / cover ;">
-            <div class="ht__bradcaump__wrap">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="bradcaump__inner text-center">
-                                <h2 class="bradcaump-title">Chi tiết sản phẩm</h2>
-                                <nav class="bradcaump-inner">
-                                    <a class="breadcrumb-item" href="index.html">Trang chủ</a>
-                                    <span class="brd-separetor">></span>
-                                    <span class="breadcrumb-item active">Chi tiết sản phẩm</span>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <?php
+        include 'templates/bradcaump.php';
+        renderBradcaump(
+            $productName,
+            [
+                ['url' => 'index.php', 'text' => 'Trang chủ / '],
+                ['url' => 'shop.php', 'text' => 'Sản phẩm / '],
+                ['text' => $productName]
+            ]
+        ); ?>
+
         <!-- End Bradcaump area -->
         <!-- Start Product Details -->
         <?php
@@ -252,10 +245,10 @@ $patal = array_reverse($patal);
                                     <div class="pro__feature">
                                         <h2 class="title__6">Thông số kỹ thuật</h2>
                                         <ul class="feature__list">
-                                            <li><a href="#"><i class="zmdi zmdi-play-circle"></i>Duis aute irure dolor in reprehenderit in voluptate velit esse</a></li>
-                                            <li><a href="#"><i class="zmdi zmdi-play-circle"></i>Irure dolor in reprehenderit in voluptate velit esse</a></li>
-                                            <li><a href="#"><i class="zmdi zmdi-play-circle"></i>Sed do eiusmod tempor incididunt ut labore et </a></li>
-                                            <li><a href="#"><i class="zmdi zmdi-play-circle"></i>Nisi ut aliquip ex ea commodo consequat.</a></li>
+                                            <li><a href="#"><i class="zmdi zmdi-play-circle"></i>....</a></li>
+                                            <li><a href="#"><i class="zmdi zmdi-play-circle"></i>....</a></li>
+                                            <li><a href="#"><i class="zmdi zmdi-play-circle"></i>....</a></li>
+                                            <li><a href="#"><i class="zmdi zmdi-play-circle"></i>....</a></li>
                                         </ul>
                                     </div>
                                 </div>

@@ -104,17 +104,4 @@ function viderPanier()
         echo "Un problème est survenu veuillez contacter l'administrateur du site.";
 }
 
-
-/*function estVide(){
-
-    $estVide = true;
-    if (creationPanier()) {
-        for ($i = 0; $i < count($_SESSION['panier']['idProduit']); $i++) {
-            if($_SESSION['panier']['qteProduit'][$i] > 0)
-            $estVide = false;
-        }
-    }
-    return $estVide;
-}*/
-
 ?>

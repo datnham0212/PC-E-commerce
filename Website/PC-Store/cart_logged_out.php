@@ -73,49 +73,29 @@ $result2 = mysqli_query($con, $query);
             <!-- Kết thúc Offset Wrapper -->
             <!-- Bắt đầu khu vực Bradcaump -->
             <?php
-            if ($_SESSION['cartItems'] == 0 || !isset($_SESSION['panier'])) {
-                echo '<div class="ht__bradcaump__area" style="background: rgba(0, 0, 0, 0) url(images/bg/2.jpg) no-repeat scroll center center / cover ;">
-            <div class="ht__bradcaump__wrap">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="bradcaump__inner text-center">
-                                <h2 class="bradcaump-title">Giỏ hàng</h2>
-                                <nav class="bradcaump-inner">
-                                    <span class="breadcrumb-item active">Giỏ hàng của bạn trống!</span>
-                                    <a class="continuer" href="index.php">Tiếp tục mua sắm</a> 
-                                    <br><br>
-                                    <span class="breadcrumb-item active">Bạn đã có tài khoản? </span>
-                                    <a class="continuer" href="login-register.php"> Đăng nhập </a>
-                                    <span class="breadcrumb-item active">để xem các mặt hàng trong giỏ hàng của bạn.</span>                                
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>';
-            } else {
+            include 'templates/bradcaump.php';
 
-                echo '<div class="ht__bradcaump__area" style="background: rgba(0, 0, 0, 0) url(images/bg/2.jpg) no-repeat scroll center center / cover ;">
-            <div class="ht__bradcaump__wrap">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="bradcaump__inner text-center">
-                                <h2 class="bradcaump-title">Giỏ hàng</h2>
-                                <nav class="bradcaump-inner">
-                                    <a class="breadcrumb-item" href="index.php">Trang chủ</a>
-                                    <span class="brd-separetor">/</span>
-                                    <span class="breadcrumb-item active">Giỏ hàng</span>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Kết thúc khu vực Bradcaump -->
+            if ($_SESSION['cartItems'] == 0 || !isset($_SESSION['panier'])) {
+                renderBradcaump(
+                    'Giỏ hàng',
+                    [
+                        ['text' => 'Giỏ hàng của bạn trống!']
+                    ]
+                );
+                echo '<a class="continuer" href="index.php">Tiếp tục mua sắm</a>';
+                echo '<br><br>';
+                echo '<span class="breadcrumb-item active">Bạn đã có tài khoản? </span>';
+                echo '<a class="continuer" href="login-register.php"> Đăng nhập </a>';
+                echo '<span class="breadcrumb-item active">để xem các mặt hàng trong giỏ hàng của bạn.</span>';
+            } else {
+                renderBradcaump(
+                    'Giỏ hàng',
+                    [
+                        ['url' => 'index.php', 'text' => 'Trang chủ / '],
+                        ['text' => 'Giỏ hàng']
+                    ]
+                );
+            } ?>
         <!-- Bắt đầu khu vực giỏ hàng chính -->
 
         <div class="cart-main-area ptb--120 bg__white">

@@ -180,24 +180,19 @@ elseif(isset($_GET['search']))  $keysearch=$_GET['search'];
         </div>
         <!-- Kết thúc Offset Wrapper -->
         <!-- Bắt đầu khu vực Bradcaump -->
-        <div class="ht__bradcaump__area" style="background: rgba(0, 0, 0, 0) url(images/bg/2.jpg) no-repeat scroll center center / cover ;">
-            <div class="ht__bradcaump__wrap">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="bradcaump__inner text-center">
-                                <h2 class="bradcaump-title">Sản phẩm của chúng tôi</h2>
-                                <nav class="bradcaump-inner">
-                                    <a class="breadcrumb-item" href="index.html">Trang chủ</a>
-                                    <span class="brd-separetor">></span>
-                                    <span class="breadcrumb-item active">Sản phẩm của chúng tôi</span>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <?php
+        include 'templates/bradcaump.php';
+
+        // ... (các phần code khác)
+
+        renderBradcaump(
+            'Kết quả tìm kiếm',
+            [
+                ['url' => 'index.php', 'text' => 'Trang chủ / '],
+                ['text' => 'Kết quả tìm kiếm']
+            ]
+        ); ?>
+
         <!-- Kết thúc khu vực Bradcaump -->
         <!-- Bắt đầu Khu vực Sản phẩm của Chúng tôi -->
         <section class="htc__product__area shop__page ptb--130 bg__white">
@@ -313,22 +308,8 @@ elseif(isset($_GET['search']))  $keysearch=$_GET['search'];
                                                     </div>
                                                 </div>
                                             </div>
-                                            ';
-                            }
-
-
-}
-
-
-
-
+                                            ';}}
                             ?>
-
-                            <!-- Start Single Product -->
-
-
-
-                            <!-- End Single Product -->
                         </div>
                         <div class="slider-frame">
 
@@ -404,23 +385,6 @@ elseif(isset($_GET['search']))  $keysearch=$_GET['search'];
     </div>
     <!-- Body main wrapper end -->
     <?php include 'templates/quickview_product.php'; ?>
-    <!-- Placed js at the end of the document so the pages load faster -->
-
-    <!-- jquery latest version -->
-    <script src="js/vendor/modernizr-2.8.3.min.js"></script>
-    <script src="js/vendor/jquery-1.12.0.min.js"></script>
-    <!-- Bootstrap framework js -->
-    <script src="js/bootstrap.min.js"></script>
-    <!-- All js plugins included in this file. -->
-    <script src="js/plugins.js"></script>
-    <script src="js/slick.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-
-     <script src="js/jquery-ui.min.js"></script>
-    <!-- Waypoints.min.js. -->
-    <script src="js/waypoints.min.js"></script>
-    <!-- Main js file that contents all jQuery plugins activation. -->
-    <script src="js/main.js"></script>
 
  <script>
         const button=document.querySelector('button[type="submit"]');
@@ -445,12 +409,6 @@ button.disabled=true;
       a.setAttribute("class", "autocomplete-items");
        
       this.parentNode.appendChild(a);
-      /*
-      if(val.toUpperCase()=="" || val.toUpperCase()==" "  || val.toUpperCase()==" " ) {         
-           const button=document.querySelector('button[type="submit"]');
-button.disabled=true;
-      }
-*/
 
 if( val=="" || val==" " || val=="  " || val=="   " || val=="    " || val.indexOf("    " )>-1){
 

@@ -267,23 +267,16 @@ if (isset($_GET["idCat"])) {
         </div>
         <!-- End Offset Wrapper -->
         <!-- Start Bradcaump area -->
-        <div class="ht__bradcaump__area" style="background: rgba(0, 0, 0, 0) url(images/bg/2.jpg) no-repeat scroll center center / cover ;">
-            <div class="ht__bradcaump__wrap">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12">
-                        <h2 class="bradcaump-title">Sản phẩm của chúng tôi</h2>
-                                <nav class="bradcaump-inner">
-                                    <a class="breadcrumb-item" href="index.html">Trang chủ</a>
-                                    <span class="brd-separetor">></span>
-                                    <span class="breadcrumb-item active">Sản phẩm của chúng tôi</span>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <?php
+        include 'templates/bradcaump.php';
+
+        renderBradcaump(
+            'Sản phẩm của chúng tôi',
+            [
+                ['url' => 'index.php', 'text' => 'Trang chủ / '],
+                ['text' => 'Sản phẩm của chúng tôi']
+            ]
+        ); ?>
         <!-- End Bradcaump area -->
         <!-- Start Our Product Area -->
         <div class="up-div"></div>
@@ -307,8 +300,6 @@ if (isset($_GET["idCat"])) {
                                                 $num = mysqli_num_rows($statement);
                                                 $checked = "is-checked";
                                             }
-
-
                                             ?>
 
                                             <a href="shop.php" <?php echo 'class=' . $checked . ''; ?>>
@@ -332,9 +323,11 @@ if (isset($_GET["idCat"])) {
                                             echo ' <li class="drop shop"  style="width:160px;text-align: center;">
                                             <a href="shop.php?idCat=' . $row['idCategorie'] . '"  class="' . $checked . '" >
                                                 <div class="link-content">
-                                                    <div class="nav-item">' . $row['desp_cat'] . ' ';
-                                            if ($total1 > 1) echo '<div class="down-arrow"></div>';
-                                                echo '</div></div></a>';
+                                                    <div class="nav-item">
+                                                        <span class="category-name">' . $row['desp_cat'] . '</span>';
+                                            if ($total1 > 1) echo '<span class="down-arrow"></span>';
+                                                echo '      </div>
+                                                </div></a>';
                                             if ($total1 > 1) {
                                                 echo '<ul class="dropdown" >';
 
@@ -994,12 +987,6 @@ if (isset($_GET["idCat"])) {
                 a.setAttribute("class", "autocomplete-items");
 
                 this.parentNode.appendChild(a);
-                /*
-      if(val.toUpperCase()=="" || val.toUpperCase()==" "  || val.toUpperCase()==" " ) {         
-           const button=document.querySelector('button[type="submit"]');
-button.disabled=true;
-      }
-*/
 
                 if (val == "" || val == " " || val == "  " || val == "   " || val == "    " || val.indexOf("    ") > -1) {
 
