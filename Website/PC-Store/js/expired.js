@@ -1,9 +1,6 @@
 $(document).ready(function () {
-
-
     function Counter(options) {
         var timer;
-        var instance = this;
         var seconds = options.seconds || 10;
         var onUpdateStatus = options.onUpdateStatus || function () { };
         var onCounterEnd = options.onCounterEnd || function () { };
@@ -17,52 +14,39 @@ $(document).ready(function () {
                 return;
             }
             seconds--;
-        };
+        }
 
         function startCounter() {
             onCounterStart();
             clearInterval(timer);
-            timer = 0;
-            decrementCounter();
             timer = setInterval(decrementCounter, 1000);
-        };
+            decrementCounter();
+        }
 
         function stopCounter() {
             clearInterval(timer);
-        };
+        }
 
         return {
-            start: function () {
-                startCounter();
-            },
-            stop: function () {
-                stopCounter();
-            }
-        }
-    };
-
+            start: startCounter,
+            stop: stopCounter
+        };
+    }
 
     var countdown = new Counter({
-        // number of seconds to count down
         seconds: 1800,
-
         onCounterStart: function () {
             // show pop up with a message 
         },
-
-        // callback function for each second
         onUpdateStatus: function (second) {
             // change the UI that displays the seconds remaining in the timeout 
         },
-
-        // callback function for final action after countdown
         onCounterEnd: function () {
             // show message that session is over, perhaps redirect or log out 
             $.ajax({
                 type: 'GET',
                 url: 'reset.php',
-                success: function (result) {
-
+                success: function () {
                     location.href = "session_expired.php";
                 }
             });
@@ -80,34 +64,20 @@ $(document).ready(function () {
             data: postdata,
             dataType: 'json',
             success: function (result) {
-
+                var message, color;
                 if (result.isSuccess) {
                     $('#totalFinal').html(result.totalFinal + ' DH');
-                    $('#couponValidity').css('color', '#4a934a');
-                    $('#couponValidity').html('Coupon appliqué avec succès !');
-                    $('#couponValidity').show();
-                    $('#couponValidity').delay(5000).fadeOut(400);
+                    message = 'Coupon appliqué avec succès !';
+                    color = '#4a934a';
+                } else if (result.couponApplyed) {
+                    message = 'Vous avez déjà appliqué un coupon !';
+                    color = '#ff4136';
+                } else {
+                    message = 'Coupon invalide !';
+                    color = '#ff4136';
                 }
-                else if (result.couponApplyed) {
-                    $('#couponValidity').css('color', '#ff4136');
-                    $('#couponValidity').html('Vous avez déjà appliqué un coupon !');
-                    $('#couponValidity').show();
-                    $('#couponValidity').delay(5000).fadeOut(400);
-                }
-                else {
-                    $('#couponValidity').css('color', '#ff4136');
-                    $('#couponValidity').html('Coupon invalide !');
-                    $('#couponValidity').show();
-                    $('#couponValidity').delay(5000).fadeOut(400);
-                }
-
-
+                $('#couponValidity').css('color', color).html(message).show().delay(5000).fadeOut(400);
             }
         });
     });
-
-
-
-}
-
-)
+});

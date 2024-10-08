@@ -1,31 +1,42 @@
 $(document).ready(function () {
+    function handleAjaxResponse(result, successCallback, errorCallback) {
+        if (result.isSuccess) {
+            successCallback(result);
+        } else {
+            errorCallback(result);
+        }
+    }
 
+    function updateCartStatus(message, isSuccess) {
+        $('#cart-status')
+            .css('color', isSuccess ? '#4a934a' : '#ff4136')
+            .html(message)
+            .show()
+            .delay(5000)
+            .fadeOut(400);
+    }
+
+    function updateCartCounter(count) {
+        $(".cart-counter").html(count);
+    }
 
     $("#cart-form").submit(function (e) {
         e.preventDefault();
-
-        var postdata = $('#cart-form').serialize();
-
         $.ajax({
             type: 'POST',
             url: 'manage-cart.php',
-            data: postdata,
+            data: $(this).serialize(),
             dataType: 'json',
             success: function (result) {
-
-                if (result.isSuccess) {
-                    $('#cart-status').css('color', '#4a934a');
-                    $('#cart-status').html('Produit ajouté avec succès');
-                    $('#cart-status').show();
-                    $('#cart-status').delay(5000).fadeOut(400);
-                    $(".cart-counter").html(result.cartItems);
-                }
-                else {
-                    $('#cart-status').css('color', '#ff4136');
-                    $('#cart-status').html('Produit épuisé');
-                    $('#cart-status').show();
-                    $('#cart-status').delay(5000).fadeOut(400);
-                }
+                handleAjaxResponse(result,
+                    function (data) {
+                        updateCartStatus('Produit ajouté avec succès', true);
+                        updateCartCounter(data.cartItems);
+                    },
+                    function () {
+                        updateCartStatus('Produit épuisé', false);
+                    }
+                );
             }
         });
     });
@@ -34,42 +45,34 @@ $(document).ready(function () {
         $(this).parents(".change-quantity").submit();
     });
 
-
     $(".change-quantity").submit(function (e) {
         e.preventDefault();
-        var postdata = $(this).serialize();
-        $(this).addClass("flag");
+        var $form = $(this);
+        $form.addClass("flag");
 
         $.ajax({
             type: 'POST',
             url: 'quantity.php',
-            data: postdata,
+            data: $form.serialize(),
             dataType: 'json',
             success: function (result) {
-
-                if (result.isSuccess) {
-                    $('.flag').parents(".product-quantity").next().html(result.total);
-                    $('form.flag > input:first').attr("value", result.quantite);
-                    $('.flag').removeClass("flag");
-                    $(".cart-counter").html(result.cartItems);
-                    $('#sous_amount').html(result.global + ' DH');
-                    $('#final_amount').html(result.global2 + ' DH');
-
-                }
-                else {
-                    if (result.quantite <= 0) {
-                        $('form.flag > input:first').attr("value", "1");
+                handleAjaxResponse(result,
+                    function (data) {
+                        $('.flag').parents(".product-quantity").next().html(data.total);
+                        $('form.flag > input:first').attr("value", data.quantite);
+                        updateCartCounter(data.cartItems);
+                        $('#sous_amount').html(data.global + ' DH');
+                        $('#final_amount').html(data.global2 + ' DH');
+                    },
+                    function (data) {
+                        var newValue = data.quantite <= 0 ? "1" : data.stock;
+                        $('form.flag > input:first').attr("value", newValue);
+                        alert("quantité invalide !");
                     }
-                    else {
-                        $('form.flag > input:first').attr("value", result.stock);
-                    }
-
-                    alert("quantité invalide !");
-                    $('.flag').removeClass("flag");
-                }
+                );
+                $('.flag').removeClass("flag");
             }
         });
-
     });
 
     $(".remove-product a").click(function () {
@@ -78,43 +81,31 @@ $(document).ready(function () {
 
     $(".remove-product").submit(function (e) {
         e.preventDefault();
-        var postdata = $(this).serialize();
-        $(this).addClass("flag");
+        var $form = $(this);
+        $form.addClass("flag");
 
         $.ajax({
             type: 'POST',
             url: 'remove.php',
-            data: postdata,
+            data: $form.serialize(),
             dataType: 'json',
             success: function (result) {
-
-                if (result.isSuccess) {
-                    if (result.cartItems == 0) {
-                        if (result.isLogged) {
-                            location.href = "cart_logged_in.php";
+                handleAjaxResponse(result,
+                    function (data) {
+                        if (data.cartItems == 0) {
+                            location.href = data.isLogged ? "cart_logged_in.php" : "cart_logged_out.php";
+                        } else {
+                            $('.flag').parents("tr").remove();
+                            updateCartCounter(data.cartItems);
                         }
-                        else{
-                            location.href = "cart_logged_out.php";
-                        }
-                        
-                        
+                    },
+                    function () {
+                        alert("erreur de suppression !");
                     }
-                    else {
-                        $('.flag').parents("tr").remove();
-                        $(".cart-counter").html(result.cartItems);
-                        $('.flag').removeClass("flag");
-                    }
-
-
-                }
-                else {
-                    alert("erreur de suppression !");
-                    $('.flag').removeClass("flag");
-
-                }
+                );
+                $('.flag').removeClass("flag");
             }
         });
-
     });
 
     $('input[type=radio][name=type_livraison]').change(function () {
@@ -123,19 +114,15 @@ $(document).ready(function () {
 
     $(".livraison").submit(function (e) {
         e.preventDefault();
-        var postdata = $(this).serialize();
-
         $.ajax({
             type: 'POST',
             url: 'livraison.php',
-            data: postdata,
+            data: $(this).serialize(),
             dataType: 'json',
             success: function (result) {
-
                 $('#final_amount').html(result.total + ' DH');
             }
         });
-
     });
 
     $(".wc-proceed-to-checkout a").click(function () {
@@ -144,56 +131,35 @@ $(document).ready(function () {
 
     $(".achat").submit(function (e) {
         e.preventDefault();
-        var postdata = $(this).serialize();
-
         $.ajax({
             type: 'POST',
             url: 'commande.php',
-            data: postdata,
+            data: $(this).serialize(),
             dataType: 'json',
             success: function (result) {
-
-                if(result.isEmpty){
-                    $('#cmdError').css('color', '#d82c2e');
-                    $('#cmdError').html('Votre panier est vide!')
-                    $('#cmdError').show();
-                    $('#cmdError').delay(5000).fadeOut(400);    
-                }
-                else{
+                if (result.isEmpty) {
+                    $('#cmdError')
+                        .css('color', '#d82c2e')
+                        .html('Votre panier est vide!')
+                        .show()
+                        .delay(5000)
+                        .fadeOut(400);
+                } else {
                     location.href = "checkout.php";
                 }
-
-                
             }
         });
     });
 
-
     $(".buttons-cart a:first").click(function (e) {
-        
         $.ajax({
             type: 'POST',
             url: 'resetCart.php',
             data: "",
             dataType: 'json',
             success: function (result) {
-
-                if (result.isLogged) {
-                    location.href = "cart_logged_in.php";
-                    
-                }
-                else {
-                    location.href = "cart_logged_out.php";
-                }
-
-
+                location.href = result.isLogged ? "cart_logged_in.php" : "cart_logged_out.php";
             }
         });
-
     });
-
-
-
-}
-
-)
+});
