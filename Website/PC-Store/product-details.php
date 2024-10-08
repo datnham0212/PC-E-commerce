@@ -99,10 +99,14 @@ $patal = array_reverse($patal);
         <!-- Bắt đầu khu vực Bradcaump -->
         <?php
         include 'templates/bradcaump.php';
+
+        // Thêm dòng này để lấy tên sản phẩm
+        $productName = $row['nom_prod'];
+        
         renderBradcaump(
             $productName,
             [
-                ['url' => 'index.php', 'text' => 'Trang chủ / '],
+                ['url' => 'index.php', 'text' => 'Trang chủ '],
                 ['url' => 'shop.php', 'text' => 'Sản phẩm / '],
                 ['text' => $productName]
             ]
