@@ -39,6 +39,7 @@
     <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="js/addWish.js"></script>
+    <script src="js/panier.js"></script>
     <script src="js/login-register.js"></script>
     
     <!-- Bootstrap framework js -->

@@ -8,20 +8,25 @@ if (empty($_SESSION)) {
 if(isset($_SESSION["id_user"])){
  if ($_SERVER["REQUEST_METHOD"] == "POST" ) 
     { 
-        $name =$_POST["name"];
-        $email= $_POST["email"];
-        $comment=$_POST["textarea"];
+        // Kiểm tra xem các khóa có tồn tại trong $_POST không
+        $name = isset($_POST["name"]) ? $_POST["name"] : '';
+        $email = isset($_POST["email"]) ? $_POST["email"] : '';
+        $comment = isset($_POST["textarea"]) ? $_POST["textarea"] : '';
   
         $isSuccess = true; 
         
-        
-        if($isSuccess) 
-        {
-            $result3 = mysqli_query($con, "INSERT INTO avis (idClient,idProduit,commentaire,evaluation) values(".$_SESSION["id_user"].",".$_GET['idprod'].", '$comment','3')" );
-
+        // Kiểm tra xem các trường có giá trị không trước khi chèn vào cơ sở dữ liệu
+        if(!empty($name) && !empty($email) && !empty($comment)) {
+            $result3 = mysqli_query($con, "INSERT INTO avis (idClient,idProduit,commentaire,evaluation) VALUES (".$_SESSION["id_user"].",".$_GET['idprod'].", '".mysqli_real_escape_string($con, $comment)."','3')" );
+            if(!$result3) {
+                $isSuccess = false;
+                // Xử lý lỗi ở đây, ví dụ:
+                // error_log("Lỗi SQL: " . mysqli_error($con));
+            }
+        } else {
+            $isSuccess = false;
+            // Có thể thêm thông báo lỗi cho người dùng ở đây
         }
-        
-        
     }
 }
 
