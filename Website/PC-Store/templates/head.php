@@ -40,6 +40,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="js/addWish.js"></script>
     <script src="js/panier.js"></script>
+    <script src="js/account.js"></script>
+    <script src="js/wishlist.js"></script>
     <script src="js/login-register.js"></script>
     
     <!-- Bootstrap framework js -->
