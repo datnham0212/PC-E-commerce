@@ -1,20 +1,21 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.14
--- http://www.phpmyadmin.net
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 08, 2021 at 01:36 AM
--- Server version: 5.6.17
--- PHP Version: 5.5.12
+-- Generation Time: Oct 11, 2024 at 08:33 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `ecommerce2`
@@ -24,42 +25,36 @@ DELIMITER $$
 --
 -- Functions
 --
-CREATE DEFINER=`root`@`localhost` FUNCTION `categorie_idName`(`idCat` INT) RETURNS varchar(1000) CHARSET utf8mb4
-BEGIN
+CREATE DEFINER=`root`@`localhost` FUNCTION `categorie_idName` (`idCat` INT) RETURNS VARCHAR(1000) CHARSET utf8mb4 COLLATE utf8mb4_general_ci  BEGIN
          DECLARE nameCat varchar(50);
          SELECT desp_cat INTO nameCat FROM categorie WHERE idCategorie=idCat;
     RETURN nameCat;
     END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `produit_idName`(`idP` INT) RETURNS varchar(50) CHARSET utf8mb4
-BEGIN
+CREATE DEFINER=`root`@`localhost` FUNCTION `produit_idName` (`idP` INT) RETURNS VARCHAR(50) CHARSET utf8mb4 COLLATE utf8mb4_general_ci  BEGIN
          DECLARE nameP varchar(50);
          SELECT nom_prod INTO nameP FROM produit WHERE idProduit=idP;
     RETURN nameP;
     END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `produit_idPrice`(`idP` INT) RETURNS float
-BEGIN
+CREATE DEFINER=`root`@`localhost` FUNCTION `produit_idPrice` (`idP` INT) RETURNS FLOAT  BEGIN
          DECLARE priceP float;
          SELECT prix INTO priceP FROM produit WHERE idProduit=idP;
     RETURN priceP;
     END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `produit_idPromo`(`idP` INT) RETURNS int(11)
-BEGIN
+CREATE DEFINER=`root`@`localhost` FUNCTION `produit_idPromo` (`idP` INT) RETURNS INT(11)  BEGIN
 DECLARE promoP float;
 SELECT promo INTO promoP FROM produit WHERE idProduit = idP;
 RETURN promoP;
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `stock_vendu`(`idP` INT, `quantite` INT) RETURNS int(11)
-BEGIN
+CREATE DEFINER=`root`@`localhost` FUNCTION `stock_vendu` (`idP` INT, `quantite` INT) RETURNS INT(11)  BEGIN
 	UPDATE produit SET stock = (SELECT stock FROM produit WHERE idProduit = idP) - quantite, vendu = (SELECT vendu FROM produit WHERE idProduit = idP) + quantite WHERE idProduit = idP;
 	RETURN 1;
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `vider_panier`(`idC` INT) RETURNS int(11)
-BEGIN
+CREATE DEFINER=`root`@`localhost` FUNCTION `vider_panier` (`idC` INT) RETURNS INT(11)  BEGIN
 DELETE FROM panier_produits WHERE idClient = idC;
 RETURN 1;
 END$$
@@ -72,16 +67,15 @@ DELIMITER ;
 -- Table structure for table `admin`
 --
 
-CREATE TABLE IF NOT EXISTS `admin` (
-  `idAdmin` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `admin` (
+  `idAdmin` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
   `mdp` varchar(50) NOT NULL,
   `nom` varchar(50) NOT NULL,
   `prenom` varchar(50) NOT NULL,
   `numeroTel` varchar(10) NOT NULL,
-  `photo` varchar(50) NOT NULL,
-  PRIMARY KEY (`idAdmin`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=2 ;
+  `photo` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin`
@@ -96,16 +90,15 @@ INSERT INTO `admin` (`idAdmin`, `email`, `mdp`, `nom`, `prenom`, `numeroTel`, `p
 -- Table structure for table `admins`
 --
 
-CREATE TABLE IF NOT EXISTS `admins` (
-  `idAdmin` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `admins` (
+  `idAdmin` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
   `mdp` varchar(50) NOT NULL,
   `nom` varchar(50) NOT NULL,
   `prenom` varchar(50) NOT NULL,
   `numeroTel` varchar(10) NOT NULL,
-  `photo` varchar(50) NOT NULL,
-  PRIMARY KEY (`idAdmin`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=2 ;
+  `photo` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admins`
@@ -120,15 +113,14 @@ INSERT INTO `admins` (`idAdmin`, `email`, `mdp`, `nom`, `prenom`, `numeroTel`, `
 -- Table structure for table `adresse`
 --
 
-CREATE TABLE IF NOT EXISTS `adresse` (
-  `idAdresse` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `adresse` (
+  `idAdresse` int(11) NOT NULL,
   `ville` varchar(50) NOT NULL,
   `pays` varchar(50) NOT NULL,
   `zipCode` varchar(20) NOT NULL,
   `details` varchar(100) NOT NULL,
-  `idClient` int(11) NOT NULL,
-  PRIMARY KEY (`idAdresse`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=20 ;
+  `idClient` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `adresse`
@@ -158,19 +150,25 @@ INSERT INTO `adresse` (`idAdresse`, `ville`, `pays`, `zipCode`, `details`, `idCl
 -- Table structure for table `avis`
 --
 
-CREATE TABLE IF NOT EXISTS `avis` (
+CREATE TABLE `avis` (
   `idClient` int(11) NOT NULL,
   `idProduit` int(11) NOT NULL,
   `commentaire` varchar(500) NOT NULL,
-  `evaluation` enum('0','1','2','3','4','5') NOT NULL,
-  PRIMARY KEY (`idClient`,`idProduit`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `evaluation` enum('0','1','2','3','4','5') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `avis`
 --
 
 INSERT INTO `avis` (`idClient`, `idProduit`, `commentaire`, `evaluation`) VALUES
+(4, 6, 'i luv u\r\nbest fan ever\r\n', '3'),
+(4, 7, '', '3'),
+(4, 11, '', '3'),
+(4, 15, '', '3'),
+(4, 16, '', '3'),
+(4, 20, '', '3'),
+(4, 21, '', '3'),
 (5, 6, 'gg', '3');
 
 -- --------------------------------------------------------
@@ -179,11 +177,10 @@ INSERT INTO `avis` (`idClient`, `idProduit`, `commentaire`, `evaluation`) VALUES
 -- Table structure for table `brand`
 --
 
-CREATE TABLE IF NOT EXISTS `brand` (
-  `brand` int(9) NOT NULL AUTO_INCREMENT,
-  `brand_nom` varchar(200) NOT NULL,
-  PRIMARY KEY (`brand`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+CREATE TABLE `brand` (
+  `brand` int(9) NOT NULL,
+  `brand_nom` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `brand`
@@ -205,11 +202,10 @@ INSERT INTO `brand` (`brand`, `brand_nom`) VALUES
 -- Table structure for table `catalogue`
 --
 
-CREATE TABLE IF NOT EXISTS `catalogue` (
-  `idCatalogue` int(11) NOT NULL AUTO_INCREMENT,
-  `nom_cat` varchar(100) NOT NULL,
-  PRIMARY KEY (`idCatalogue`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;
+CREATE TABLE `catalogue` (
+  `idCatalogue` int(11) NOT NULL,
+  `nom_cat` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -217,11 +213,10 @@ CREATE TABLE IF NOT EXISTS `catalogue` (
 -- Table structure for table `catalogue_produits`
 --
 
-CREATE TABLE IF NOT EXISTS `catalogue_produits` (
+CREATE TABLE `catalogue_produits` (
   `idCatalogue` int(11) NOT NULL,
-  `idProduit` int(11) NOT NULL,
-  PRIMARY KEY (`idCatalogue`,`idProduit`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `idProduit` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -229,33 +224,32 @@ CREATE TABLE IF NOT EXISTS `catalogue_produits` (
 -- Table structure for table `categorie`
 --
 
-CREATE TABLE IF NOT EXISTS `categorie` (
-  `idCategorie` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `categorie` (
+  `idCategorie` int(11) NOT NULL,
   `desp_cat` varchar(1000) NOT NULL,
-  `idCat_parente` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idCategorie`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=22 ;
+  `idCat_parente` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `categorie`
 --
 
 INSERT INTO `categorie` (`idCategorie`, `desp_cat`, `idCat_parente`) VALUES
-(1, 'Composants', 0),
-(2, 'Peripheriques', 0),
-(3, 'Cartes graphiques', 1),
-(4, 'Cartes Meres', 1),
-(5, 'Processeurs', 1),
-(6, 'Memoires RAM', 1),
-(7, 'Alimentation', 1),
-(8, 'Stockage', 1),
-(9, 'Graveurs', 1),
-(10, 'Refroidissement', 1),
-(11, 'Cartes son', 1),
-(12, 'Moniteurs', 2),
-(14, 'Souris', 2),
-(15, 'Claviers', 2),
-(16, 'Tapis', 2),
+(1, 'Linh kiện', 0),
+(2, 'Thiết bị ngoại vi', 0),
+(3, 'Card đồ họa', 1),
+(4, 'Bo mạch chủ', 1),
+(5, 'Bộ xử lý', 1),
+(6, 'Bộ nhớ RAM', 1),
+(7, 'Vật phẩm phụ', 1),
+(8, 'Kho', 1),
+(9, 'Ổ đĩa', 1),
+(10, 'Quạt ', 1),
+(11, 'Card âm thanh', 1),
+(12, 'Màn hình', 2),
+(14, 'Chuột', 2),
+(15, 'Bàn phím', 2),
+(16, 'Thảm chuột', 2),
 (17, 'PC Gamer', 0),
 (18, 'PC Portable', 0),
 (20, 'AMD Build', 17),
@@ -267,17 +261,16 @@ INSERT INTO `categorie` (`idCategorie`, `desp_cat`, `idCat_parente`) VALUES
 -- Table structure for table `client`
 --
 
-CREATE TABLE IF NOT EXISTS `client` (
-  `idClient` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `client` (
+  `idClient` int(11) NOT NULL,
   `nom` varchar(50) NOT NULL,
   `prenom` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
   `pass` varchar(20) NOT NULL,
   `tel` varchar(12) DEFAULT NULL,
   `img_user` varchar(100) DEFAULT NULL,
-  `dateCreation` date NOT NULL,
-  PRIMARY KEY (`idClient`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=6 ;
+  `dateCreation` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `client`
@@ -295,10 +288,9 @@ INSERT INTO `client` (`idClient`, `nom`, `prenom`, `email`, `pass`, `tel`, `img_
 -- Table structure for table `client_fidele`
 --
 
-CREATE TABLE IF NOT EXISTS `client_fidele` (
-  `idClient` int(11) NOT NULL,
-  PRIMARY KEY (`idClient`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `client_fidele` (
+  `idClient` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `client_fidele`
@@ -315,14 +307,13 @@ INSERT INTO `client_fidele` (`idClient`) VALUES
 -- Table structure for table `commande`
 --
 
-CREATE TABLE IF NOT EXISTS `commande` (
-  `idCommande` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `commande` (
+  `idCommande` int(11) NOT NULL,
   `idClient` int(11) NOT NULL,
   `date_cmd` datetime NOT NULL,
   `total_cmd` float NOT NULL,
-  `id_typeLivraison` int(11) NOT NULL,
-  PRIMARY KEY (`idCommande`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=71 ;
+  `id_typeLivraison` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `commande`
@@ -334,7 +325,9 @@ INSERT INTO `commande` (`idCommande`, `idClient`, `date_cmd`, `total_cmd`, `id_t
 (2, 3, '2020-12-30 00:34:00', 6580, 2),
 (3, 4, '2020-12-30 00:39:07', 16770, 1),
 (4, 5, '2020-12-31 16:35:27', 3170, 1),
-(70, 3, '2021-01-30 14:39:55', 3690, 1);
+(70, 3, '2021-01-30 14:39:55', 3690, 1),
+(73, 4, '2024-09-27 21:08:07', 1791, 1),
+(74, 4, '2024-09-27 21:09:31', 1821, 1);
 
 -- --------------------------------------------------------
 
@@ -342,12 +335,11 @@ INSERT INTO `commande` (`idCommande`, `idClient`, `date_cmd`, `total_cmd`, `id_t
 -- Table structure for table `commande_produits`
 --
 
-CREATE TABLE IF NOT EXISTS `commande_produits` (
+CREATE TABLE `commande_produits` (
   `idCommande` int(11) NOT NULL,
   `idProduit` int(11) NOT NULL,
-  `quantite` int(11) NOT NULL,
-  PRIMARY KEY (`idCommande`,`idProduit`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `quantite` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `commande_produits`
@@ -378,7 +370,9 @@ INSERT INTO `commande_produits` (`idCommande`, `idProduit`, `quantite`) VALUES
 (67, 20, 1),
 (68, 6, 1),
 (70, 12, 1),
-(70, 14, 1);
+(70, 14, 1),
+(73, 7, 1),
+(74, 7, 1);
 
 -- --------------------------------------------------------
 
@@ -386,12 +380,11 @@ INSERT INTO `commande_produits` (`idCommande`, `idProduit`, `quantite`) VALUES
 -- Table structure for table `coupon`
 --
 
-CREATE TABLE IF NOT EXISTS `coupon` (
+CREATE TABLE `coupon` (
   `codeCoupon` varchar(10) NOT NULL,
   `valeur` int(11) NOT NULL,
-  `date_expiration` date NOT NULL,
-  PRIMARY KEY (`codeCoupon`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `date_expiration` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -399,11 +392,10 @@ CREATE TABLE IF NOT EXISTS `coupon` (
 -- Table structure for table `envie`
 --
 
-CREATE TABLE IF NOT EXISTS `envie` (
+CREATE TABLE `envie` (
   `idClient` int(11) NOT NULL,
-  `idProduit` int(11) NOT NULL,
-  PRIMARY KEY (`idClient`,`idProduit`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `idProduit` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `envie`
@@ -421,14 +413,13 @@ INSERT INTO `envie` (`idClient`, `idProduit`) VALUES
 -- Table structure for table `livraison`
 --
 
-CREATE TABLE IF NOT EXISTS `livraison` (
-  `idLivraison` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `livraison` (
+  `idLivraison` int(11) NOT NULL,
   `idCommande` int(11) NOT NULL,
   `statut_liv` int(11) NOT NULL,
   `date_liv` datetime NOT NULL,
-  `idAdresse` int(11) NOT NULL,
-  PRIMARY KEY (`idLivraison`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=21 ;
+  `idAdresse` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `livraison`
@@ -461,18 +452,18 @@ INSERT INTO `livraison` (`idLivraison`, `idCommande`, `statut_liv`, `date_liv`, 
 -- Table structure for table `panier_produits`
 --
 
-CREATE TABLE IF NOT EXISTS `panier_produits` (
+CREATE TABLE `panier_produits` (
   `idClient` int(11) NOT NULL,
   `idProduit` int(11) NOT NULL,
-  `quantite` int(11) NOT NULL,
-  PRIMARY KEY (`idClient`,`idProduit`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `quantite` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `panier_produits`
 --
 
 INSERT INTO `panier_produits` (`idClient`, `idProduit`, `quantite`) VALUES
+(4, 20, 3),
 (16, 6, 1);
 
 -- --------------------------------------------------------
@@ -481,20 +472,19 @@ INSERT INTO `panier_produits` (`idClient`, `idProduit`, `quantite`) VALUES
 -- Table structure for table `produit`
 --
 
-CREATE TABLE IF NOT EXISTS `produit` (
-  `idProduit` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `produit` (
+  `idProduit` int(11) NOT NULL,
   `nom_prod` varchar(50) NOT NULL,
   `desp_prod` varchar(500) NOT NULL,
   `prix` float NOT NULL,
   `img_prod` varchar(100) NOT NULL,
-  `promo` float NOT NULL DEFAULT '0',
+  `promo` float NOT NULL DEFAULT 0,
   `stock` int(11) NOT NULL,
   `idCategorie` int(11) NOT NULL,
-  `vendu` int(11) NOT NULL DEFAULT '0',
-  `expedie` int(1) NOT NULL DEFAULT '1',
-  `brand` int(5) NOT NULL,
-  PRIMARY KEY (`idProduit`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=22 ;
+  `vendu` int(11) NOT NULL DEFAULT 0,
+  `expedie` int(1) NOT NULL DEFAULT 1,
+  `brand` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `produit`
@@ -527,12 +517,11 @@ INSERT INTO `produit` (`idProduit`, `nom_prod`, `desp_prod`, `prix`, `img_prod`,
 -- Table structure for table `types_livraisons`
 --
 
-CREATE TABLE IF NOT EXISTS `types_livraisons` (
-  `id_type` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `types_livraisons` (
+  `id_type` int(11) NOT NULL,
   `nom_type` varchar(50) NOT NULL,
-  `prix_livraison` int(11) NOT NULL,
-  PRIMARY KEY (`id_type`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=3 ;
+  `prix_livraison` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `types_livraisons`
@@ -541,6 +530,189 @@ CREATE TABLE IF NOT EXISTS `types_livraisons` (
 INSERT INTO `types_livraisons` (`id_type`, `nom_type`, `prix_livraison`) VALUES
 (1, 'standard', 20),
 (2, 'express', 50);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`idAdmin`);
+
+--
+-- Indexes for table `admins`
+--
+ALTER TABLE `admins`
+  ADD PRIMARY KEY (`idAdmin`);
+
+--
+-- Indexes for table `adresse`
+--
+ALTER TABLE `adresse`
+  ADD PRIMARY KEY (`idAdresse`);
+
+--
+-- Indexes for table `avis`
+--
+ALTER TABLE `avis`
+  ADD PRIMARY KEY (`idClient`,`idProduit`);
+
+--
+-- Indexes for table `brand`
+--
+ALTER TABLE `brand`
+  ADD PRIMARY KEY (`brand`);
+
+--
+-- Indexes for table `catalogue`
+--
+ALTER TABLE `catalogue`
+  ADD PRIMARY KEY (`idCatalogue`);
+
+--
+-- Indexes for table `catalogue_produits`
+--
+ALTER TABLE `catalogue_produits`
+  ADD PRIMARY KEY (`idCatalogue`,`idProduit`);
+
+--
+-- Indexes for table `categorie`
+--
+ALTER TABLE `categorie`
+  ADD PRIMARY KEY (`idCategorie`);
+
+--
+-- Indexes for table `client`
+--
+ALTER TABLE `client`
+  ADD PRIMARY KEY (`idClient`);
+
+--
+-- Indexes for table `client_fidele`
+--
+ALTER TABLE `client_fidele`
+  ADD PRIMARY KEY (`idClient`);
+
+--
+-- Indexes for table `commande`
+--
+ALTER TABLE `commande`
+  ADD PRIMARY KEY (`idCommande`);
+
+--
+-- Indexes for table `commande_produits`
+--
+ALTER TABLE `commande_produits`
+  ADD PRIMARY KEY (`idCommande`,`idProduit`);
+
+--
+-- Indexes for table `coupon`
+--
+ALTER TABLE `coupon`
+  ADD PRIMARY KEY (`codeCoupon`);
+
+--
+-- Indexes for table `envie`
+--
+ALTER TABLE `envie`
+  ADD PRIMARY KEY (`idClient`,`idProduit`);
+
+--
+-- Indexes for table `livraison`
+--
+ALTER TABLE `livraison`
+  ADD PRIMARY KEY (`idLivraison`);
+
+--
+-- Indexes for table `panier_produits`
+--
+ALTER TABLE `panier_produits`
+  ADD PRIMARY KEY (`idClient`,`idProduit`);
+
+--
+-- Indexes for table `produit`
+--
+ALTER TABLE `produit`
+  ADD PRIMARY KEY (`idProduit`);
+
+--
+-- Indexes for table `types_livraisons`
+--
+ALTER TABLE `types_livraisons`
+  ADD PRIMARY KEY (`id_type`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `idAdmin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `admins`
+--
+ALTER TABLE `admins`
+  MODIFY `idAdmin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `adresse`
+--
+ALTER TABLE `adresse`
+  MODIFY `idAdresse` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `brand`
+--
+ALTER TABLE `brand`
+  MODIFY `brand` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `catalogue`
+--
+ALTER TABLE `catalogue`
+  MODIFY `idCatalogue` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `categorie`
+--
+ALTER TABLE `categorie`
+  MODIFY `idCategorie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `client`
+--
+ALTER TABLE `client`
+  MODIFY `idClient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `commande`
+--
+ALTER TABLE `commande`
+  MODIFY `idCommande` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+
+--
+-- AUTO_INCREMENT for table `livraison`
+--
+ALTER TABLE `livraison`
+  MODIFY `idLivraison` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT for table `produit`
+--
+ALTER TABLE `produit`
+  MODIFY `idProduit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `types_livraisons`
+--
+ALTER TABLE `types_livraisons`
+  MODIFY `id_type` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
