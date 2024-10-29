@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ Hàng</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="container">
+        <h1>Giỏ Hàng Của Bạn</h1>
+        {% if cart_items %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tên Sản Phẩm</th>
+                        <th>Giá</th>
+                        <th>Số Lượng</th>
+                        <th>Tổng</th>
+                        <th>Hành Động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product_id, item in cart_items.items() %}
+                        {% set price = item.price | int %}
+                        {% set quantity = item.quantity | int %}
+                        {% set item_total = price * quantity %}
+                        <tr>
+                            <td>{{ item.name }}</td>
+                            <td class="price">{{ price }} VND</td>
+                            <td class="quantity">{{ quantity }}</td>
+                            <td class="item-total">{{ item_total }} VND</td>
+                            <td>
+                                <form method="POST" action="{{ url_for('cart.remove_from_cart', product_id=product_id) }}">
+                                    <button type="submit" class="remove-from-cart" style="background-color: red; color: white; width: 30px; height: 30px; border: none; border-radius: 5px; cursor: pointer;">&times;</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <h2 id="total">Tổng Cộng: 0 VND</h2>
+            <button id="confirm-purchase" class="confirm-purchase" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; float: right; transition: background-color 0.3s, transform 0.2s;" onmouseover="this.style.backgroundColor='#45a049'" onmouseout="this.style.backgroundColor='#4CAF50'" onmousedown="this.style.transform='scale(0.95)'" onmouseup="this.style.transform='scale(1)'">Xác Nhận Mua Hàng</button>
+        {% else %}
+            <p>Giỏ hàng của bạn hiện đang trống.</p>
+        {% endif %}
+    </div>
+    {% include 'footer.html' %}
+
+    <script>
+        function calculateTotals() {
+            const rows = document.querySelectorAll('tbody tr');
+            let total = 0;
+
+            rows.forEach(row => {
+                const price = parseInt(row.querySelector('.price').textContent);
+                const quantity = parseInt(row.querySelector('.quantity').textContent);
+                const itemTotal = price * quantity;
+
+                row.querySelector('.item-total').textContent = itemTotal + 'VND';
+                total += itemTotal;
+            });
+
+            document.getElementById('total').textContent = 'Tổng Cộng: ' + total + ' VND';
+        }
+
+        window.onload = calculateTotals;
+    </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name_prod }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="product-detail">
+        <div class="product-info">
+            <img src="{{ url_for('static', filename='img/' + product.img_prod) }}" alt="{{ product.name_prod }}">
+            <div class="info">
+                <h1>{{ product.name_prod }}</h1>
+                <p class="price">{{ product.price }} Dhs</p>
+                {% if product.promo > 0 %}
+                    <p class="promo">Giảm giá: {{ product.promo }}%</p>
+                {% endif %}
+                <div class="quantity-changer">
+                    <button class="quantity-btn" onclick="changeQuantity(-1)">-</button>
+                    <input type="number" class="quantity-input" value="1" min="1" onchange="updateHiddenInput()">
+                    <button class="quantity-btn" onclick="changeQuantity(1)">+</button>
+                </div>
+                <input type="hidden" name="quantity" class="quantity-hidden" value="1">
+                <form method="POST" action="{{ url_for('cart.add_to_cart') }}" onsubmit="checkQuantity()">
+                    <input type="hidden" name="product_id" value="{{ product.idProduct }}">
+                    <input type="hidden" name="product_name" value="{{ product.name_prod }}">
+                    <input type="hidden" name="product_price" value="{{ product.price }}">
+                    <input type="hidden" name="quantity" class="quantity-hidden-form" value="1">
+                    <button type="submit" class="add-to-cart">Thêm vào giỏ hàng</button>
+                </form>
+            </div>
+        </div>
+        <p class="description">{{ product.description_prod }}</p>
+    </div>
+    {% include 'footer.html' %}
+    <script>
+        function changeQuantity(amount) {
+            const input = document.querySelector('.quantity-input');
+            let currentValue = parseInt(input.value);
+
+            // Ensure currentValue is a valid number
+            if (isNaN(currentValue)) currentValue = 1;
+
+            currentValue += amount;
+            if (currentValue < 1) currentValue = 1; // Ensure quantity doesn't go below 1
+
+            input.value = currentValue;
+            updateHiddenInput(currentValue);
+        }
+
+        function updateHiddenInput() {
+            const input = document.querySelector('.quantity-input');
+            const hiddenInput = document.querySelector('.quantity-hidden-form');
+            hiddenInput.value = input.value; // Update the form hidden input with the current quantity
+        }
+
+        function checkQuantity() {
+            const hiddenInput = document.querySelector('.quantity-hidden-form');
+            console.log("Số lượng gửi đi:", hiddenInput.value); // Output the value of the hidden field
+        }
+    </script>
+</body>
+</html>

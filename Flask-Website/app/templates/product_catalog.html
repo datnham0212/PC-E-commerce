@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sản phẩm của chúng tôi</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    {% include 'header.html' %}
+    <!-- <h1>Sản phẩm của chúng tôi</h1> -->
+    <ul class="navbar" style="display: flex; justify-content: space-around; background-color: #f8f9fa; padding: 10px; border-radius: 5px;">
+        <li style="margin: 0;"><a href="#" style="text-decoration: none; color: #333; padding: 10px 15px;">Tất Cả</a></li>
+        <li style="margin: 0;"><a href="#" style="text-decoration: none; color: #333; padding: 10px 15px;">Linh Kiện</a></li>
+        <li style="margin: 0;"><a href="#" style="text-decoration: none; color: #333; padding: 10px 15px;">Thiết Bị Ngoại Vi</a></li>
+        <li style="margin: 0;"><a href="#" style="text-decoration: none; color: #333; padding: 10px 15px;">PC Gamer</a></li>
+        <li style="margin: 0;"><a href="#" style="text-decoration: none; color: #333; padding: 10px 15px;">PC Portable</a></li>
+    </ul>    
+    <style>
+        .navbar a:hover {
+            background-color: #e2e6ea; /* Màu nền khi hover */
+            color: #000; /* Màu chữ khi hover */
+        }
+    </style>
+    <div class="product-grid">
+        {% for product in products %}
+        <div class="product-card">
+            <a href="{{ url_for('product_catalog.product_detail', product_id=product.idProduct) }}">
+                {% if product.promo %}
+                    <div class="discount-badge">{{ product.promo }}%</div>
+                {% endif %}
+                <img src="{{ url_for('static', filename='img/' + product.img_prod) }}" alt="{{ product.name_prod }}">
+                <h2>{{ product.name_prod }}</h2>
+                <p class="price">
+                    <span class="price">{{ product.price }} VND</span>
+                </p>
+            </a>
+            <!-- <p>{{ product.description_prod }}</p> -->
+        </div>
+        {% endfor %}
+    </div>
+    {% include 'footer.html' %}
+</body>
+</html>

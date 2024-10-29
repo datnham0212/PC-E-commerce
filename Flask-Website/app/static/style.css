@@ -1,0 +1,560 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Colors */
+:root {
+    --primary-color: #0066cc;
+    --secondary-color: #004080;
+    --accent-color: #e60023;
+    --text-color: #333;
+    --bg-color: #f9f9f9;
+}
+
+/* Header */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background: var(--primary-color);
+    color: white;
+}
+
+.header .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: white;
+}
+
+.header .nav a,
+.header .auth-cart a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 1em;
+    transition: color 0.3s ease;
+}
+
+.header .nav a:hover,
+.header .auth-cart a:hover {
+    color: var(--accent-color);
+}
+
+/* Sidebar */
+.sidebar {
+    width: 200px;
+    padding: 20px;
+    background: var(--bg-color);
+    border-right: 2px solid #ddd;
+}
+
+.sidebar h2 {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.sidebar ul li a {
+    display: block;
+    margin: 10px 0;
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+    color: var(--accent-color);
+}
+
+/* Main Content */
+.main-content {
+    padding: 20px;
+    width: calc(100% - 220px);
+    margin-left: 220px;
+    background: white;
+}
+
+.new-product {
+    background: linear-gradient(135deg, #0066cc, #004080);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.new-product h2 {
+    font-size: 1.8em;
+    margin: 10px 0;
+}
+
+.new-product a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: var(--accent-color);
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.new-product a:hover {
+    background: #b2001a;
+}
+
+/* Featured Products */
+.featured-products {
+    padding: 20px 0;
+}
+
+.featured-products h3 {
+    font-size: 1.6em;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.product-list {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.product-item {
+    text-align: center;
+    background: var(--bg-color);
+    padding: 15px;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.product-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.product-item p {
+    margin: 10px 0;
+    color: var(--text-color);
+}
+
+.product-item .price {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+.product-item:hover {
+    transform: translateY(-10px);
+}
+
+/* Footer */
+.footer {
+    padding: 30px 20px;
+    background: var(--primary-color);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-info, .footer-links, .newsletter {
+    width: 30%;
+}
+
+.footer-info h3, .footer-links ul, .newsletter h4 {
+    margin-bottom: 15px;
+    color: white;
+}
+
+.footer-links ul li {
+    list-style: none;
+    margin-bottom: 5px;
+}
+
+.footer-links ul li a, .footer-info a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links ul li a:hover, .footer-info a:hover {
+    color: var(--accent-color);
+}
+
+.newsletter input[type="email"] {
+    padding: 8px;
+    width: 70%;
+    border-radius: 5px;
+    border: none;
+}
+
+.newsletter button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    background: var(--accent-color);
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.newsletter button:hover {
+    background: #b2001a;
+}
+
+/* Authentication */
+/* Basic styling for tabs and forms */
+.tab-container {
+    display: flex;
+    justify-content: center; /* Căn giữa các tab */
+    margin-bottom: 20px; /* Khoảng cách giữa tab và form */
+}
+
+.tab {
+    cursor: pointer;
+    padding: 10px 20px; /* Thêm khoảng cách bên trong cho tab */
+    margin: 0 5px; /* Khoảng cách giữa các tab */
+    background-color: #f1f1f1; /* Màu nền cho tab */
+    border-radius: 5px; /* Bo tròn các góc cho tab */
+    transition: background-color 0.3s; /* Hiệu ứng chuyển màu nền */
+}
+
+.active-tab {
+    background-color: #ccc; /* Màu nền cho tab đang hoạt động */
+}
+
+.tab:hover {
+    background-color: #e0e0e0; /* Màu nền khi di chuột qua tab */
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column; /* Đặt các form theo chiều dọc */
+    align-items: center; /* Căn giữa các form */
+    margin-top: 20px;
+}
+
+.form-container form {
+    width: 300px; /* Đặt chiều rộng cho các form */
+    padding: 20px; /* Thêm khoảng cách bên trong */
+    border: 1px solid #ccc; /* Thêm viền cho các form */
+    border-radius: 5px; /* Bo tròn các góc */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Thêm bng cho các form */
+    margin-bottom: 15px; /* Thêm khoảng cách giữa các form */
+    display: none; /* Ẩn các form mặc định */
+}
+
+.form-container form.active-form {
+    display: block; /* Hiện form đang hoạt động */
+}
+
+.form-container input {
+    width: 100%; /* Đặt chiều rộng cho các input */
+    padding: 10px; /* Thêm khoảng cách bên trong cho các input */
+    margin-bottom: 10px; /* Thêm khoảng cách giữa các input */
+    border: 1px solid #ccc; /* Thêm viền cho các input */
+    border-radius: 5px; /* Bo tròn các góc cho các input */
+}
+
+.form-container button {
+    width: 100%; /* Đặt chiều rộng cho các nút */
+    padding: 10px; /* Thêm khoảng cách bên trong cho các nút */
+    background-color: #007bff; /* Màu nền cho các nút */
+    color: white; /* Màu chữ cho các nút */
+    border: none; /* Không viền cho các nút */
+    border-radius: 5px; /* Bo tròn các góc cho các nút */
+    cursor: pointer; /* Thay đổi con trỏ khi di chuột qua nút */
+}
+
+.form-container button:hover {
+    background-color: #0056b3; /* Màu nền khi di chuột qua nút */
+}
+
+/* Carousel styles */
+.carousel {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+}
+
+.carousel img {
+    display: none; 
+    width: 100%;
+    transition: transform 0.5s ease;
+}
+
+/* Add styles for active image */
+.carousel img.active {
+    display: block;
+    transform: scale(1.1);
+}
+
+
+/* Product catalog */
+.product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+.product-card {
+    width: 220px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    position: relative;
+    text-align: center;
+}
+
+.discount-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: red;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.product-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.product-card h2 {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.price {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.old-price {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.new-price {
+    font-weight: bold;
+    color: #e60000;
+}
+
+/* Product Detail Styles */
+.product-detail {
+    max-width: 800px; /* Giới hạn chiều rộng tối đa */
+    margin: 20px auto; /* Căn giữa trang */
+    padding: 20px; /* Thêm khoảng cách bên trong */
+    border: 1px solid #ddd; /* Đường viền xung quanh */
+    border-radius: 8px; /* Bo tròn các góc */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+    background-color: #fff; /* Màu nền trắng */
+    display: flex; /* Sử dụng Flexbox */
+    flex-direction: column; /* Cột dọc */
+}
+
+.product-info {
+    display: flex; /* Sử dụng Flexbox cho thông tin sản phẩm */
+    align-items: flex-start; /* Căn chỉnh các phần tử theo chiều dọc */
+}
+
+.product-detail img {
+    width: 300px; /* Đặt chiều rộng hình ảnh */
+    height: auto; /* Giữ tỷ lệ hình ảnh */
+    border-radius: 8px; /* Bo tròn các góc hình ảnh */
+    margin-right: 20px; /* Khoảng cách bên phải hình ảnh */
+}
+
+.info {
+    flex: 1; /* Chiếm không gian còn lại */
+}
+
+.product-detail h1 {
+    font-size: 2em; /* Kích thước chữ lớn cho tiêu đề */
+    margin-bottom: 10px; /* Khoảng cách dưới tiêu đề */
+}
+
+.product-detail .price {
+    font-size: 1.5em; /* Kích thước chữ lớn cho giá */
+    color: #007bff; /* Màu xanh cho giá */
+    margin: 10px 0; /* Khoảng cách trên và dưới */
+}
+
+.product-detail .description {
+    font-size: 1em; /* Kích thước chữ bình thường cho mô tả */
+    margin: 10px 0; /* Khoảng cách trên và dưới */
+}
+
+.product-detail .promo {
+    color: red; /* Màu đỏ cho thông tin giảm giá */
+    font-weight: bold; /* Chữ đậm cho thông tin giảm giá */
+    margin: 10px 0; /* Khoảng cách trên và dưới */
+}
+
+.quantity-changer {
+    display: flex; /* Sử dụng Flexbox cho bộ điều chỉnh số lượng */
+    align-items: center; /* Căn giữa các phần tử */
+    margin: 10px 0; /* Khoảng cách trên và dưới */
+}
+
+.quantity-btn {
+    background-color: #007bff; /* Màu nền cho nút */
+    color: white; /* Màu chữ cho nút */
+    border: none; /* Không viền cho nút */
+    border-radius: 5px; /* Bo tròn các góc cho nút */
+    cursor: pointer; /* Thay đổi con trỏ khi di chuột qua nút */
+    padding: 5px 10px; /* Khoảng cách bên trong */
+}
+
+.quantity-input {
+    width: 50px; /* Chiều rộng cho ô nhập số lượng */
+    text-align: center; /* Căn giữa chữ trong ô nhập */
+    margin: 0 10px; /* Khoảng cách bên trái và bên phải */
+}
+
+.product-detail .add-to-cart {
+    background-color: #28a745; /* Màu nền xanh lá cho nút */
+    color: white; /* Màu chữ trắng */
+    border: none; /* Không viền */
+    border-radius: 5px; /* Bo tròn các góc */
+    padding: 10px 20px;
+    cursor: pointer; /* Thay đổi con trỏ khi di chuột qua nút */
+    font-size: 1em; /* Kích thước chữ bình thường */
+    transition: background-color 0.3s; /* Hiệu ứng chuyển màu nền */
+}
+
+.product-detail .add-to-cart:hover {
+    background-color: #218838; /* Màu nền khi di chuột qua nút */
+}
+
+.search-icon {
+    width: 30px; 
+    height: 30px; 
+    font-size: 24px;
+    color: white;
+    background-color:#0066cc;
+    border: none;
+}
+
+.search-icon:hover {
+    cursor: pointer;
+    color:#b2001a;
+}
+
+.search-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    display: none; /* Ẩn mặc định */
+    z-index: 1000; /* Đảm bảo nó nằm trên các phần tử khác */
+}
+
+.search-bar {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.suggestions {
+    position: absolute;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 999;
+    display: none; /* Ẩn mặc định */
+}
+
+.suggestion-item {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.suggestion-item:hover {
+    background-color: #f0f0f0;
+}
+
+.header + .search-container {
+    position: absolute;
+    top: 60px; /* Điều chỉnh dựa trên chiều cao của header */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%; /* Điều chỉnh chiều rộng theo layout của bạn */
+}
+
+.show-search-bar {
+    display: block;
+}
+
+.navbar {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0;           /* Remove padding */
+    margin: 0;            /* Remove margin */
+    display: flex;        /* Use flexbox for horizontal layout */
+}
+
+.navbar li {
+    margin-right: 20px;   /* Space between items */
+}
+
+.navbar a {
+    text-decoration: none; /* Remove underline */
+    color: #000;          /* Set text color */
+    padding: 10px;        /* Add padding */
+}
+
+.navbar a:hover {
+    color: #007BFF;       /* Change color on hover */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+.total {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.flash-messages {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+}
+
+.alert {
+    background-color: #d4edda; /* Màu nền xanh nhạt */
+    color: #155724; /* Màu chữ xanh đậm */
+    padding: 10px;
+    border: 1px solid #c3e6cb; /* Viền xanh nhạt */
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
