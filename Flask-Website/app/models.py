@@ -14,6 +14,14 @@ class Admin(db.Model, UserMixin):
     phoneNumber = db.Column(db.String(10), nullable=True)
     photo = db.Column(db.String(50), nullable=True)
 
+    @property
+    def get_id(self):
+        return str(self.idAdmin)
+    
+    @property
+    def is_authenticated(self):
+        return True  
+
 # Address Model
 class Address(db.Model):
     __tablename__ = 'address'
