@@ -43,6 +43,7 @@
             <button id="confirm-purchase" class="confirm-purchase" onclick="goToCheckout()" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; float: right; transition: background-color 0.3s, transform 0.2s;" onmouseover="this.style.backgroundColor='#45a049'" onmouseout="this.style.backgroundColor='#4CAF50'" onmousedown="this.style.transform='scale(0.95)'" onmouseup="this.style.transform='scale(1)'">Xác Nhận Mua Hàng</button>
         {% else %}
             <p>Giỏ hàng của bạn hiện đang trống.</p>
+            <a href="{{ url_for('product_catalog.product_catalog_route') }}" class="btn btn-primary">Tiếp Tục Mua Hàng</a>
         {% endif %}
     </div>
     {% include 'footer.html' %}

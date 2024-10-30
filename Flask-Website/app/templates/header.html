@@ -1,15 +1,19 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <header class="header">
+    <h1>PC - Store</h1>
     <nav class="nav">
         <a href="/">Trang Chủ</a>
         <a href="/product_catalog">Sản Phẩm Của Chúng Tôi</a>
         <a href="/help">Trợ Giúp</a>
         <a href="/contact">Liên Hệ</a>
-    </nav>
+    </nav>   
 
-    <button class="search-icon"><i class="fa fa-search"></i></button>
-      <div class="auth-cart">
+    <button class="search-icon" style="display: flex; align-items: center; border: none; background: none; padding: 0;">
+        <h6 style="margin: 0; display: inline;">Tìm kiếm</h6>
+        <i class="fa fa-search" style="margin-left: 4px;"></i>
+    </button>
+          <div class="auth-cart">
           {% if current_user.is_authenticated %}
               <span>Welcome, {{ current_user.firstName }}!</span>
               <a href="{{ url_for('auth.logout') }}">Logout</a>

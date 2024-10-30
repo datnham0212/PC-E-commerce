@@ -1,6 +1,6 @@
 from flask import flash
 from werkzeug.security import generate_password_hash, check_password_hash
-from app.models import User  # Import the User model
+from app.models import Admin  # Import the Admin model
 from app import db
 from app.models import Client  # Import the Client model
 from datetime import datetime

@@ -13,7 +13,7 @@
             <img src="{{ url_for('static', filename='img/' + product.img_prod) }}" alt="{{ product.name_prod }}">
             <div class="info">
                 <h1>{{ product.name_prod }}</h1>
-                <p class="price">{{ product.price }} Dhs</p>
+                <p class="price">{{ product.price }} VND</p>
                 {% if product.promo > 0 %}
                     <p class="promo">Giảm giá: {{ product.promo }}%</p>
                 {% endif %}

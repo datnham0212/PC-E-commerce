@@ -3,8 +3,8 @@ from .extensions import db
 from flask_login import UserMixin
 from datetime import datetime
 
-# User Model
-class User(db.Model, UserMixin):
+# Admin Model
+class Admin(db.Model, UserMixin):
     __tablename__ = 'admins'  # Thay đổi tên bảng
     idAdmin = db.Column(db.Integer, primary_key=True)  # Thay đổi tên cột
     email = db.Column(db.String(100), unique=True, nullable=False)
@@ -126,3 +126,33 @@ class Wish(db.Model):
     __tablename__ = 'wish'
     idClient = db.Column(db.Integer, db.ForeignKey('client.idClient'), primary_key=True)  # Thay đổi tên bảng và cột
     idProduct = db.Column(db.Integer, db.ForeignKey('product.idProduct'), primary_key=True)  # Thay đổi tên bảng và cột
+
+# Brand Model
+class Brand(db.Model):
+    __tablename__ = 'brand'
+    brand = db.Column(db.Integer, primary_key=True)
+    brand_name = db.Column(db.String(200), nullable=False)
+
+# Catalog Model
+class Catalog(db.Model):
+    __tablename__ = 'catalog'
+    idCatalog = db.Column(db.Integer, primary_key=True)
+    name_cat = db.Column(db.String(100), nullable=False)
+
+# CatalogProducts Model
+class CatalogProducts(db.Model):
+    __tablename__ = 'catalog_products'
+    idCatalog = db.Column(db.Integer, db.ForeignKey('catalog.idCatalog'), primary_key=True)
+    idProduct = db.Column(db.Integer, db.ForeignKey('product.idProduct'), primary_key=True)
+
+# LoyalClient Model
+class LoyalClient(db.Model):
+    __tablename__ = 'loyal_client'
+    idClient = db.Column(db.Integer, db.ForeignKey('client.idClient'), primary_key=True)
+
+# OrderProducts Model
+class OrderProducts(db.Model):
+    __tablename__ = 'order_products'
+    idOrder = db.Column(db.Integer, db.ForeignKey('order.idOrder'), primary_key=True)
+    idProduct = db.Column(db.Integer, db.ForeignKey('product.idProduct'), primary_key=True)
+    quantity = db.Column(db.Integer, nullable=False)
