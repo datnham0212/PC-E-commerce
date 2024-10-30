@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giỏ Hàng</title>
-    <link rel="stylesheet" href="../static/style.css">
+    <title>Thanh toán</title>
 </head>
 <body>
     {% include 'header.html' %}
@@ -45,13 +44,13 @@
                         {% for item_id, item in cart_items.items() %}
                         <div class="d-flex justify-content-between">
                             <span>{{ item.name }} (x{{ item.quantity }})</span>
-                            <span>${{ "%.2f"|format(item.price * item.quantity) }}</span>
+                            <span>{{ "%.2f"|format(item.price * item.quantity) }} VND</span>
                         </div>
                         {% endfor %}
                         <hr>
                         <div class="d-flex justify-content-between">
                             <strong>Total:</strong>
-                            <strong>${{ "%.2f"|format(total) }}</strong>
+                            <strong>{{ "%.2f"|format(total) }} VND</strong>
                         </div>
                     </div>
                 </div>

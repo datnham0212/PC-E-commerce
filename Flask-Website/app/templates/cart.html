@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giỏ Hàng</title>
-    <link rel="stylesheet" href="../static/style.css">
 </head>
 <body>
     {% include 'header.html' %}
@@ -41,7 +40,7 @@
                 </tbody>
             </table>
             <h2 id="total">Tổng Cộng: 0 VND</h2>
-            <button id="confirm-purchase" class="confirm-purchase" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; float: right; transition: background-color 0.3s, transform 0.2s;" onmouseover="this.style.backgroundColor='#45a049'" onmouseout="this.style.backgroundColor='#4CAF50'" onmousedown="this.style.transform='scale(0.95)'" onmouseup="this.style.transform='scale(1)'">Xác Nhận Mua Hàng</button>
+            <button id="confirm-purchase" class="confirm-purchase" onclick="goToCheckout()" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; float: right; transition: background-color 0.3s, transform 0.2s;" onmouseover="this.style.backgroundColor='#45a049'" onmouseout="this.style.backgroundColor='#4CAF50'" onmousedown="this.style.transform='scale(0.95)'" onmouseup="this.style.transform='scale(1)'">Xác Nhận Mua Hàng</button>
         {% else %}
             <p>Giỏ hàng của bạn hiện đang trống.</p>
         {% endif %}
@@ -67,5 +66,10 @@
 
         window.onload = calculateTotals;
     </script>
+    <script>
+        function goToCheckout() {
+            window.location.href = "{{ url_for('checkout.checkout_page') }}";
+        }
+    </script>    
 </body>
 </html>
