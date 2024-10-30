@@ -7,6 +7,7 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/', methods=['GET', 'POST'])
 def auth_route():
+    
     if request.method == 'POST':
         action = request.form.get('action')  # "login" or "signup"
 
@@ -40,6 +41,7 @@ def auth_route():
 
 @auth.route('/logout')
 def logout():
-    logout_user()
-    flash("You have been logged out.", "info")
+    if current_user.is_authenticated:
+        flash("You have been logged out.", "info")
+        logout_user()
     return redirect(url_for('auth.auth_route'))

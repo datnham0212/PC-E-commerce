@@ -2,7 +2,7 @@
 from flask import Flask
 from config import Config
 from .extensions import db, bcrypt, login_manager  # Nhập từ extensions.py
-from .models import User  # Import User model
+from .models import Client  # Import Client model
 from flask_login import LoginManager
 
 login_manager = LoginManager()
@@ -10,7 +10,7 @@ login_manager.login_view = 'auth.auth_route'  # Đảm bảo rằng đây là ro
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))  # Trả về người dùng từ cơ sở dữ liệu
+    return Client.query.get(int(user_id))  # Trả về người dùng từ cơ sở dữ liệu
 
 def create_app():
     app = Flask(__name__)
@@ -33,5 +33,8 @@ def create_app():
 
     from .routes.cart import cart as cart_blueprint
     app.register_blueprint(cart_blueprint, url_prefix='/cart')
+
+    from .routes.checkout import checkout
+    app.register_blueprint(checkout, url_prefix='/checkout')
 
     return app

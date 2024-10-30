@@ -9,17 +9,16 @@
     </nav>
 
     <button class="search-icon"><i class="fa fa-search"></i></button>
-
-    <div class="auth-cart">
-        {% if current_user.is_authenticated %}
-            <span>Welcome, {{ current_user.firstName }}!</span> <!-- Display username -->
-            <a href="/logout">Logout</a>
-        {% else %}
-            <a href="/auth">Đăng Nhập</a>
-        {% endif %}
-        <a href="/cart"> <i class="fa fa-shopping-cart"></i> </a>
-    </div>
-</header>
+      <div class="auth-cart">
+          {% if current_user.is_authenticated %}
+              <span>Welcome, {{ current_user.firstName }}!</span>
+              <a href="{{ url_for('auth.logout') }}">Logout</a>
+          {% else %}
+              <a href="{{ url_for('auth.auth_route') }}">Đăng Nhập</a>
+          {% endif %}
+          <a href="/cart"> <i class="fa fa-shopping-cart"></i> </a>
+      </div>
+  </header>
 
 <!-- Search bar and suggestions -->
 <div class="search-container">

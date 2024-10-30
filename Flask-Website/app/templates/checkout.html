@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ Hàng</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="container mt-5">
+        <h2>Checkout</h2>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Shipping Information</h5>
+                        <form method="POST" action="{{ url_for('checkout.process_checkout') }}">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" class="form-control" name="full_name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" class="form-control" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Address</label>
+                                <textarea class="form-control" name="address" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="tel" class="form-control" name="phone" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">Place Order</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Order Summary</h5>
+                        {% for item_id, item in cart_items.items() %}
+                        <div class="d-flex justify-content-between">
+                            <span>{{ item.name }} (x{{ item.quantity }})</span>
+                            <span>${{ "%.2f"|format(item.price * item.quantity) }}</span>
+                        </div>
+                        {% endfor %}
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <strong>Total:</strong>
+                            <strong>${{ "%.2f"|format(total) }}</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'footer.html' %}
+    
+
