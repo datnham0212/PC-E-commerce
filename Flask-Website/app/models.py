@@ -14,13 +14,20 @@ class Admin(db.Model, UserMixin):
     phoneNumber = db.Column(db.String(10), nullable=True)
     photo = db.Column(db.String(50), nullable=True)
 
-    @property
     def get_id(self):
         return str(self.idAdmin)
     
     @property
     def is_authenticated(self):
         return True  
+    
+    @property 
+    def is_active(self):
+        return True
+        
+    @property
+    def is_anonymous(self):
+        return False
 
 # Address Model
 class Address(db.Model):
@@ -73,6 +80,7 @@ class Client(UserMixin, db.Model):
     phone = db.Column(db.String(12), nullable=True)  # Cho phép NULL
     user_img = db.Column(db.String(100), nullable=True)  # Cho phép NULL
     creationDate = db.Column(db.Date, nullable=False)
+    is_admin = db.Column(db.Boolean, default=False, nullable=False)
 
     # Flask-Login requires these properties
     def get_id(self):

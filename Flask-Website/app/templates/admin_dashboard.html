@@ -1,0 +1,61 @@
+<!-- app/admin/templates/admin_dashboard.html -->
+{% extends "admin_base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<main class="admin-main">
+    <header class="admin-header">
+        <h1>Dashboard</h1>
+        <div class="admin-actions">
+            <input type="search" placeholder="Search...">
+            <button class="notifications">🔔</button>
+        </div>
+    </header>
+    
+    <div class="dashboard-stats">
+        <div class="stat-card">
+            <h3>Total Sales</h3>
+            <p class="stat-number">{{ total_sales }} VND</p>
+        </div>
+        <div class="stat-card">
+            <h3>Total Orders</h3>
+            <p class="stat-number">{{ total_orders }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Total Customers</h3>
+            <p class="stat-number">{{ total_customers }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Total In Stocks</h3>
+            <p class="stat-number">{{ total_stocks }}</p>
+        </div>
+    </div>
+    
+    <div class="recent-activity">
+        <h2>Recent Activity</h2>
+        <table class="activity-table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Product</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in recent_orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.customer_name }}</td>
+                    <td>{{ order.product_name }}</td>
+                    <td>{{ order.amount }}</td>
+                    <td>{{ order.status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+{% endblock %}

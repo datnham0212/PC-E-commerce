@@ -1,0 +1,36 @@
+{% extends "admin_base.html" %}
+
+{% block content %}
+<main class="admin-main">
+    <header class="admin-header">
+        <h1>Customers List</h1>
+        <div class="admin-actions">
+            <input type="search" placeholder="Search...">
+            <button class="notifications">🔔</button>
+        </div>
+    </header>
+
+    <div class="customer-list">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>LastName</th>
+                    <th>FirstName</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for client in clients %}
+                <tr>
+                    <td>{{ client.idClient }}</td>
+                    <td>{{ client.lastName }}</td>
+                    <td>{{ client.firstName }}</td>
+                    <td>{{ client.email }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+{% endblock %}

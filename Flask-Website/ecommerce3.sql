@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 11, 2024 at 08:33 AM
+-- Generation Time: Oct 31, 2024 at 03:31 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -31,6 +31,11 @@ CREATE DEFINER=`root`@`localhost` FUNCTION `category_idName` (`idCat` INT) RETUR
     RETURN nameCat;
     END$$
 
+CREATE DEFINER=`root`@`localhost` FUNCTION `empty_cart` (`idC` INT) RETURNS INT(11)  BEGIN
+DELETE FROM cart_products WHERE idClient = idC;
+RETURN 1;
+END$$
+
 CREATE DEFINER=`root`@`localhost` FUNCTION `product_idName` (`idP` INT) RETURNS VARCHAR(50) CHARSET utf8mb4 COLLATE utf8mb4_general_ci  BEGIN
          DECLARE nameP varchar(50);
          SELECT name_prod INTO nameP FROM product WHERE idProduct=idP;
@@ -54,58 +59,7 @@ CREATE DEFINER=`root`@`localhost` FUNCTION `stock_sold` (`idP` INT, `quantity` I
 	RETURN 1;
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `empty_cart` (`idC` INT) RETURNS INT(11)  BEGIN
-DELETE FROM cart_products WHERE idClient = idC;
-RETURN 1;
-END$$
-
 DELIMITER ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `admin`
---
-
-CREATE TABLE `admin` (
-  `idAdmin` int(11) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `lastName` varchar(50) NOT NULL,
-  `firstName` varchar(50) NOT NULL,
-  `phoneNumber` varchar(10) NOT NULL,
-  `photo` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `admin`
---
-
-INSERT INTO `admin` (`idAdmin`, `email`, `password`, `lastName`, `firstName`, `phoneNumber`, `photo`) VALUES
-(1, 'admin@gmail.com', 'admin', 'ziani', 'zakaria', '', '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `admins`
---
-
-CREATE TABLE `admins` (
-  `idAdmin` int(11) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `lastName` varchar(50) NOT NULL,
-  `firstName` varchar(50) NOT NULL,
-  `phoneNumber` varchar(10) NOT NULL,
-  `photo` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `admins`
---
-
-INSERT INTO `admins` (`idAdmin`, `email`, `password`, `lastName`, `firstName`, `phoneNumber`, `photo`) VALUES
-(1, 'admin@gmail.com', 'admin', 'ziani', 'zakaria', '', '');
 
 -- --------------------------------------------------------
 
@@ -127,49 +81,56 @@ CREATE TABLE `address` (
 --
 
 INSERT INTO `address` (`idAddress`, `city`, `country`, `zipCode`, `details`, `idClient`) VALUES
-(1, 'fes', 'morocco', '2154862', '33, machin truc', 1),
 (2, 'berlin', 'Germany', '2154862', '33, machin truc', 2),
-(3, 'meknes', 'morocco', '2154862', '33, machin truc', 1),
 (4, 'Midelt', 'morocco', '2154862', '33, machin truc', 3),
 (5, 'Casablanca', 'morocco', '2154862', '33, machin truc', 4),
 (6, 'Khnifra', 'morocco', '2154862', '33, machin truc', 5),
-(10, 'meknes', 'morocco', '50000', 'machin truc', 1),
-(11, 'meknes', 'morocco', '50000', 'machin truc', 1),
-(12, 'meknes', 'morocco', '50000', 'machin truc', 1),
-(13, 'casablanca', 'morocco', '12345', 'test, testtesttest', 7),
-(14, 'casablanca', 'morocco', '12345', 'test1, test2test3', 8),
 (15, 'Missour', 'morocco', '33250', '21, rue narjiss', 5),
 (16, 'Midelt', 'morocco', '12345', 'test1, test2', 5),
 (17, 'Midelt', 'morocco', '12345', 'test1, test2', 5),
 (18, 'Missour', 'morocco', '33250', '21, rue Narjiss, quartier administratif, Missour', 3),
-(19, 'Missour', 'morocco', '33250', '21, rue Narjiss, quartier administratif, Missour', 3);
+(19, 'Missour', 'morocco', '33250', '21, rue Narjiss, quartier administratif, Missour', 3),
+(20, 'a', 'a', '1', '1', 4);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `review`
+-- Table structure for table `admins`
 --
 
-CREATE TABLE `review` (
-  `idClient` int(11) NOT NULL,
-  `idProduct` int(11) NOT NULL,
-  `comment` varchar(500) NOT NULL,
-  `rating` enum('0','1','2','3','4','5') NOT NULL
+CREATE TABLE `admins` (
+  `idAdmin` int(11) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `lastName` varchar(50) DEFAULT NULL,
+  `firstName` varchar(50) DEFAULT NULL,
+  `phoneNumber` varchar(10) DEFAULT NULL,
+  `photo` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `review`
+-- Dumping data for table `admins`
 --
 
-INSERT INTO `review` (`idClient`, `idProduct`, `comment`, `rating`) VALUES
-(4, 6, 'i luv u\r\nbest fan ever\r\n', '3'),
-(4, 7, '', '3'),
-(4, 11, '', '3'),
-(4, 15, '', '3'),
-(4, 16, '', '3'),
-(4, 20, '', '3'),
-(4, 21, '', '3'),
-(5, 6, 'gg', '3');
+INSERT INTO `admins` (`idAdmin`, `email`, `password`, `lastName`, `firstName`, `phoneNumber`, `photo`) VALUES
+(1, 'admin@gmail.com', 'admin', 'ziani', 'zakaria', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `alembic_version`
+--
+
+CREATE TABLE `alembic_version` (
+  `version_num` varchar(32) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `alembic_version`
+--
+
+INSERT INTO `alembic_version` (`version_num`) VALUES
+('077dcfcc4235');
 
 -- --------------------------------------------------------
 
@@ -195,6 +156,25 @@ INSERT INTO `brand` (`brand`, `brand_name`) VALUES
 (6, 'Predator'),
 (7, 'Lcd'),
 (8, 'Dell');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart_products`
+--
+
+CREATE TABLE `cart_products` (
+  `idClient` int(11) NOT NULL,
+  `idProduct` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cart_products`
+--
+
+INSERT INTO `cart_products` (`idClient`, `idProduct`, `quantity`) VALUES
+(4, 20, 3);
 
 -- --------------------------------------------------------
 
@@ -230,7 +210,7 @@ CREATE TABLE `category` (
   `idParent_cat` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 
+--
 -- Dumping data for table `category`
 --
 
@@ -269,18 +249,77 @@ CREATE TABLE `client` (
   `password` varchar(20) NOT NULL,
   `phone` varchar(12) DEFAULT NULL,
   `user_img` varchar(100) DEFAULT NULL,
-  `creationDate` date NOT NULL
+  `creationDate` date NOT NULL,
+  `is_admin` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `client`
 --
 
-INSERT INTO `client` (`idClient`, `lastName`, `firstName`, `email`, `password`, `phone`, `user_img`, `creationDate`) VALUES
-(2, 'salamat', 'fatima zahrae', 'salamat.fatimazahrae@gmail.com', '1234', NULL, NULL, '2020-11-29'),
-(3, 'zakaria', 'ziani', 'zakariaziani99@gmail.com', '1234', NULL, NULL, '2020-12-30'),
-(4, 'baya', 'ziyad', 'baya@gmail.com', '1234', '123456789', NULL, '0000-00-00'),
-(5, 'boutera', 'youssef', 'boutera@gmail.com', '1234', NULL, NULL, '2021-01-16');
+INSERT INTO `client` (`idClient`, `lastName`, `firstName`, `email`, `password`, `phone`, `user_img`, `creationDate`, `is_admin`) VALUES
+(2, 'salamat', 'fatima zahrae', 'salamat.fatimazahrae@gmail.com', '1234', NULL, NULL, '2020-11-29', 0),
+(3, 'zakaria', 'ziani', 'zakariaziani99@gmail.com', '1234', NULL, NULL, '2020-12-30', 0),
+(4, 'baya', 'ziyad', 'baya@gmail.com', '1234', '123456789', NULL, '0000-00-00', 0),
+(5, 'boutera', 'youssef', 'boutera@gmail.com', '1234', NULL, NULL, '2021-01-16', 0),
+(6, 'a', 'a', 'a@a', '1', '1', NULL, '2024-10-29', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `coupon`
+--
+
+CREATE TABLE `coupon` (
+  `codeCoupon` varchar(10) NOT NULL,
+  `value` int(11) NOT NULL,
+  `expiration_date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `delivery`
+--
+
+CREATE TABLE `delivery` (
+  `idDelivery` int(11) NOT NULL,
+  `idOrder` int(11) NOT NULL,
+  `status_del` int(11) NOT NULL,
+  `date_del` datetime NOT NULL,
+  `idAddress` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `delivery`
+--
+
+INSERT INTO `delivery` (`idDelivery`, `idOrder`, `status_del`, `date_del`, `idAddress`) VALUES
+(3, 1, 0, '2020-12-26 17:19:34', 2),
+(5, 3, 0, '2020-12-26 17:50:24', 4),
+(6, 4, 2, '2020-12-26 18:24:18', 5),
+(20, 70, 0, '2021-01-30 14:40:06', 19),
+(21, 77, 0, '2024-10-30 23:39:38', 20);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `delivery_types`
+--
+
+CREATE TABLE `delivery_types` (
+  `id_type` int(11) NOT NULL,
+  `name_type` varchar(50) NOT NULL,
+  `delivery_price` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `delivery_types`
+--
+
+INSERT INTO `delivery_types` (`id_type`, `name_type`, `delivery_price`) VALUES
+(1, 'standard', 20),
+(2, 'express', 50);
 
 -- --------------------------------------------------------
 
@@ -320,14 +359,14 @@ CREATE TABLE `order` (
 --
 
 INSERT INTO `order` (`idOrder`, `idClient`, `date_order`, `total_order`, `id_deliveryType`) VALUES
-(0, 1, '2020-12-28 20:23:25', 1207.5, 1),
 (1, 2, '2020-12-30 00:19:41', 19200, 2),
 (2, 3, '2020-12-30 00:34:00', 6580, 2),
 (3, 4, '2020-12-30 00:39:07', 16770, 1),
 (4, 5, '2020-12-31 16:35:27', 3170, 1),
 (70, 3, '2021-01-30 14:39:55', 3690, 1),
 (73, 4, '2024-09-27 21:08:07', 1791, 1),
-(74, 4, '2024-09-27 21:09:31', 1821, 1);
+(74, 4, '2024-09-27 21:09:31', 1821, 1),
+(77, 4, '2024-10-30 23:39:38', 1700, 1);
 
 -- --------------------------------------------------------
 
@@ -346,125 +385,11 @@ CREATE TABLE `order_products` (
 --
 
 INSERT INTO `order_products` (`idOrder`, `idProduct`, `quantity`) VALUES
-(53, 15, 5),
-(54, 2, 1),
-(54, 10, 2),
-(54, 21, 1),
-(55, 2, 1),
-(55, 10, 2),
-(55, 21, 1),
-(56, 2, 1),
-(56, 10, 2),
-(56, 21, 1),
-(57, 2, 1),
-(57, 10, 2),
-(57, 21, 1),
-(58, 2, 1),
-(58, 10, 1),
-(58, 21, 1),
-(59, 9, 1),
-(61, 20, 1),
-(62, 20, 1),
-(65, 20, 1),
-(66, 6, 1),
-(67, 20, 1),
-(68, 6, 1),
 (70, 12, 1),
 (70, 14, 1),
 (73, 7, 1),
-(74, 7, 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `coupon`
---
-
-CREATE TABLE `coupon` (
-  `codeCoupon` varchar(10) NOT NULL,
-  `value` int(11) NOT NULL,
-  `expiration_date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `wish`
---
-
-CREATE TABLE `wish` (
-  `idClient` int(11) NOT NULL,
-  `idProduct` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `wish`
---
-
-INSERT INTO `wish` (`idClient`, `idProduct`) VALUES
-(5, 7),
-(5, 11),
-(5, 12),
-(16, 19);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `delivery`
---
-
-CREATE TABLE `delivery` (
-  `idDelivery` int(11) NOT NULL,
-  `idOrder` int(11) NOT NULL,
-  `status_del` int(11) NOT NULL,
-  `date_del` datetime NOT NULL,
-  `idAddress` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `delivery`
---
-
-INSERT INTO `delivery` (`idDelivery`, `idOrder`, `status_del`, `date_del`, `idAddress`) VALUES
-(2, 0, 1, '2020-12-26 17:11:50', 1),
-(3, 1, 0, '2020-12-26 17:19:34', 2),
-(4, 2, 1, '2020-12-26 17:23:57', 3),
-(5, 3, 0, '2020-12-26 17:50:24', 4),
-(6, 4, 2, '2020-12-26 18:24:18', 5),
-(7, 30, 0, '2020-12-26 18:30:14', 6),
-(8, 31, 0, '2020-12-26 18:33:20', 7),
-(9, 32, 0, '2020-12-26 18:36:59', 8),
-(10, 50, 0, '2020-12-28 14:07:31', 9),
-(11, 51, 0, '2020-12-28 15:12:22', 10),
-(12, 52, 0, '2020-12-28 18:33:20', 11),
-(13, 53, 0, '2020-12-28 20:24:11', 12),
-(14, 55, 0, '2020-12-30 00:27:50', 13),
-(15, 57, 0, '2020-12-30 00:35:17', 14),
-(16, 59, 0, '2020-12-31 17:04:24', 15),
-(17, 60, 0, '2020-12-31 17:08:42', 16),
-(18, 67, 0, '2021-01-06 15:43:06', 17),
-(19, 69, 0, '2021-01-30 12:25:26', 18),
-(20, 70, 0, '2021-01-30 14:40:06', 19);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cart_products`
---
-
-CREATE TABLE `cart_products` (
-  `idClient` int(11) NOT NULL,
-  `idProduct` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `cart_products`
---
-
-INSERT INTO `cart_products` (`idClient`, `idProduct`, `quantity`) VALUES
-(4, 20, 3),
-(16, 6, 1);
+(74, 7, 1),
+(77, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -478,11 +403,11 @@ CREATE TABLE `product` (
   `description_prod` varchar(500) NOT NULL,
   `price` float NOT NULL,
   `img_prod` varchar(100) NOT NULL,
-  `promo` float NOT NULL DEFAULT 0,
+  `promo` float DEFAULT 0,
   `stock` int(11) NOT NULL,
   `idCategory` int(11) NOT NULL,
-  `sold` int(11) NOT NULL DEFAULT 0,
-  `shipped` int(1) NOT NULL DEFAULT 1,
+  `sold` int(11) DEFAULT 0,
+  `shipped` tinyint(1) DEFAULT 1,
   `brand` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -514,56 +439,86 @@ INSERT INTO `product` (`idProduct`, `name_prod`, `description_prod`, `price`, `i
 -- --------------------------------------------------------
 
 --
--- Table structure for table `delivery_types`
+-- Table structure for table `review`
 --
 
-CREATE TABLE `delivery_types` (
-  `id_type` int(11) NOT NULL,
-  `name_type` varchar(50) NOT NULL,
-  `delivery_price` int(11) NOT NULL
+CREATE TABLE `review` (
+  `idClient` int(11) NOT NULL,
+  `idProduct` int(11) NOT NULL,
+  `comment` varchar(500) NOT NULL,
+  `rating` enum('0','1','2','3','4','5') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `delivery_types`
+-- Dumping data for table `review`
 --
 
-INSERT INTO `delivery_types` (`id_type`, `name_type`, `delivery_price`) VALUES
-(1, 'standard', 20),
-(2, 'express', 50);
+INSERT INTO `review` (`idClient`, `idProduct`, `comment`, `rating`) VALUES
+(4, 6, 'i luv u\r\nbest fan ever\r\n', '3'),
+(4, 7, '', '3'),
+(4, 11, '', '3'),
+(4, 15, '', '3'),
+(4, 16, '', '3'),
+(4, 20, '', '3'),
+(4, 21, '', '3'),
+(5, 6, 'gg', '3');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wish`
+--
+
+CREATE TABLE `wish` (
+  `idClient` int(11) NOT NULL,
+  `idProduct` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `wish`
+--
+
+INSERT INTO `wish` (`idClient`, `idProduct`) VALUES
+(5, 7),
+(5, 11),
+(5, 12);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `admin`
+-- Indexes for table `address`
 --
-ALTER TABLE `admin`
-  ADD PRIMARY KEY (`idAdmin`);
+ALTER TABLE `address`
+  ADD PRIMARY KEY (`idAddress`),
+  ADD KEY `idClient` (`idClient`);
 
 --
 -- Indexes for table `admins`
 --
 ALTER TABLE `admins`
-  ADD PRIMARY KEY (`idAdmin`);
+  ADD PRIMARY KEY (`idAdmin`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indexes for table `address`
+-- Indexes for table `alembic_version`
 --
-ALTER TABLE `address`
-  ADD PRIMARY KEY (`idAddress`);
-
---
--- Indexes for table `review`
---
-ALTER TABLE `review`
-  ADD PRIMARY KEY (`idClient`,`idProduct`);
+ALTER TABLE `alembic_version`
+  ADD PRIMARY KEY (`version_num`);
 
 --
 -- Indexes for table `brand`
 --
 ALTER TABLE `brand`
   ADD PRIMARY KEY (`brand`);
+
+--
+-- Indexes for table `cart_products`
+--
+ALTER TABLE `cart_products`
+  ADD PRIMARY KEY (`idClient`,`idProduct`),
+  ADD KEY `idProduct` (`idProduct`);
 
 --
 -- Indexes for table `catalog`
@@ -575,7 +530,8 @@ ALTER TABLE `catalog`
 -- Indexes for table `catalog_products`
 --
 ALTER TABLE `catalog_products`
-  ADD PRIMARY KEY (`idCatalog`,`idProduct`);
+  ADD PRIMARY KEY (`idCatalog`,`idProduct`),
+  ADD KEY `idProduct` (`idProduct`);
 
 --
 -- Indexes for table `category`
@@ -587,7 +543,28 @@ ALTER TABLE `category`
 -- Indexes for table `client`
 --
 ALTER TABLE `client`
-  ADD PRIMARY KEY (`idClient`);
+  ADD PRIMARY KEY (`idClient`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indexes for table `coupon`
+--
+ALTER TABLE `coupon`
+  ADD PRIMARY KEY (`codeCoupon`);
+
+--
+-- Indexes for table `delivery`
+--
+ALTER TABLE `delivery`
+  ADD PRIMARY KEY (`idDelivery`),
+  ADD KEY `idOrder` (`idOrder`),
+  ADD KEY `idAddress` (`idAddress`);
+
+--
+-- Indexes for table `delivery_types`
+--
+ALTER TABLE `delivery_types`
+  ADD PRIMARY KEY (`id_type`);
 
 --
 -- Indexes for table `loyal_client`
@@ -599,71 +576,53 @@ ALTER TABLE `loyal_client`
 -- Indexes for table `order`
 --
 ALTER TABLE `order`
-  ADD PRIMARY KEY (`idOrder`);
+  ADD PRIMARY KEY (`idOrder`),
+  ADD KEY `idClient` (`idClient`),
+  ADD KEY `id_deliveryType` (`id_deliveryType`);
 
 --
 -- Indexes for table `order_products`
 --
 ALTER TABLE `order_products`
-  ADD PRIMARY KEY (`idOrder`,`idProduct`);
-
---
--- Indexes for table `coupon`
---
-ALTER TABLE `coupon`
-  ADD PRIMARY KEY (`codeCoupon`);
-
---
--- Indexes for table `wish`
---
-ALTER TABLE `wish`
-  ADD PRIMARY KEY (`idClient`,`idProduct`);
-
---
--- Indexes for table `delivery`
---
-ALTER TABLE `delivery`
-  ADD PRIMARY KEY (`idDelivery`);
-
---
--- Indexes for table `cart_products`
---
-ALTER TABLE `cart_products`
-  ADD PRIMARY KEY (`idClient`,`idProduct`);
+  ADD PRIMARY KEY (`idOrder`,`idProduct`),
+  ADD KEY `idProduct` (`idProduct`);
 
 --
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
-  ADD PRIMARY KEY (`idProduct`);
+  ADD PRIMARY KEY (`idProduct`),
+  ADD KEY `idCategory` (`idCategory`);
 
 --
--- Indexes for table `delivery_types`
+-- Indexes for table `review`
 --
-ALTER TABLE `delivery_types`
-  ADD PRIMARY KEY (`id_type`);
+ALTER TABLE `review`
+  ADD PRIMARY KEY (`idClient`,`idProduct`),
+  ADD KEY `idProduct` (`idProduct`);
+
+--
+-- Indexes for table `wish`
+--
+ALTER TABLE `wish`
+  ADD PRIMARY KEY (`idClient`,`idProduct`),
+  ADD KEY `idProduct` (`idProduct`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `admin`
+-- AUTO_INCREMENT for table `address`
 --
-ALTER TABLE `admin`
-  MODIFY `idAdmin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `address`
+  MODIFY `idAddress` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
   MODIFY `idAdmin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `address`
---
-ALTER TABLE `address`
-  MODIFY `idAddress` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `brand`
@@ -687,19 +646,25 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `client`
 --
 ALTER TABLE `client`
-  MODIFY `idClient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `order`
---
-ALTER TABLE `order`
-  MODIFY `idOrder` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `idClient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `delivery`
 --
 ALTER TABLE `delivery`
-  MODIFY `idDelivery` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `idDelivery` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `delivery_types`
+--
+ALTER TABLE `delivery_types`
+  MODIFY `id_type` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `order`
+--
+ALTER TABLE `order`
+  MODIFY `idOrder` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -708,10 +673,100 @@ ALTER TABLE `product`
   MODIFY `idProduct` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
--- AUTO_INCREMENT for table `delivery_types`
+-- Constraints for dumped tables
 --
-ALTER TABLE `delivery_types`
-  MODIFY `id_type` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Constraints for table `address`
+--
+ALTER TABLE `address`
+  ADD CONSTRAINT `address_ibfk_1` FOREIGN KEY (`idClient`) REFERENCES `client` (`idClient`),
+  ADD CONSTRAINT `address_ibfk_2` FOREIGN KEY (`idClient`) REFERENCES `client` (`idClient`);
+
+--
+-- Constraints for table `cart_products`
+--
+ALTER TABLE `cart_products`
+  ADD CONSTRAINT `cart_products_ibfk_1` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`),
+  ADD CONSTRAINT `cart_products_ibfk_2` FOREIGN KEY (`idClient`) REFERENCES `client` (`idClient`),
+  ADD CONSTRAINT `cart_products_ibfk_3` FOREIGN KEY (`idClient`) REFERENCES `client` (`idClient`),
+  ADD CONSTRAINT `cart_products_ibfk_4` FOREIGN KEY (`idClient`) REFERENCES `client` (`idClient`);
+
+--
+-- Constraints for table `catalog_products`
+--
+ALTER TABLE `catalog_products`
+  ADD CONSTRAINT `catalog_products_ibfk_1` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`),
+  ADD CONSTRAINT `catalog_products_ibfk_2` FOREIGN KEY (`idCatalog`) REFERENCES `catalog` (`idCatalog`),
+  ADD CONSTRAINT `catalog_products_ibfk_3` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`),
+  ADD CONSTRAINT `catalog_products_ibfk_4` FOREIGN KEY (`idCatalog`) REFERENCES `catalog` (`idCatalog`);
+
+--
+-- Constraints for table `delivery`
+--
+ALTER TABLE `delivery`
+  ADD CONSTRAINT `delivery_ibfk_1` FOREIGN KEY (`idOrder`) REFERENCES `order` (`idOrder`),
+  ADD CONSTRAINT `delivery_ibfk_2` FOREIGN KEY (`idAddress`) REFERENCES `address` (`idAddress`),
+  ADD CONSTRAINT `delivery_ibfk_3` FOREIGN KEY (`idAddress`) REFERENCES `address` (`idAddress`),
+  ADD CONSTRAINT `delivery_ibfk_4` FOREIGN KEY (`idAddress`) REFERENCES `address` (`idAddress`),
+  ADD CONSTRAINT `delivery_ibfk_5` FOREIGN KEY (`idAddress`) REFERENCES `address` (`idAddress`),
+  ADD CONSTRAINT `delivery_ibfk_6` FOREIGN KEY (`idAddress`) REFERENCES `address` (`idAddress`);
+
+--
+-- Constraints for table `loyal_client`
+--
+ALTER TABLE `loyal_client`
+  ADD CONSTRAINT `loyal_client_ibfk_1` FOREIGN KEY (`idClient`) REFERENCES `client` (`idClient`),
+  ADD CONSTRAINT `loyal_client_ibfk_2` FOREIGN KEY (`idClient`) REFERENCES `client` (`idClient`),
+  ADD CONSTRAINT `loyal_client_ibfk_3` FOREIGN KEY (`idClient`) REFERENCES `client` (`idClient`),
+  ADD CONSTRAINT `loyal_client_ibfk_4` FOREIGN KEY (`idClient`) REFERENCES `client` (`idClient`);
+
+--
+-- Constraints for table `order`
+--
+ALTER TABLE `order`
+  ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`idClient`) REFERENCES `client` (`idClient`),
+  ADD CONSTRAINT `order_ibfk_2` FOREIGN KEY (`idClient`) REFERENCES `client` (`idClient`),
+  ADD CONSTRAINT `order_ibfk_3` FOREIGN KEY (`id_deliveryType`) REFERENCES `delivery_types` (`id_type`),
+  ADD CONSTRAINT `order_ibfk_4` FOREIGN KEY (`idClient`) REFERENCES `client` (`idClient`),
+  ADD CONSTRAINT `order_ibfk_5` FOREIGN KEY (`id_deliveryType`) REFERENCES `delivery_types` (`id_type`),
+  ADD CONSTRAINT `order_ibfk_6` FOREIGN KEY (`idClient`) REFERENCES `client` (`idClient`),
+  ADD CONSTRAINT `order_ibfk_7` FOREIGN KEY (`id_deliveryType`) REFERENCES `delivery_types` (`id_type`);
+
+--
+-- Constraints for table `order_products`
+--
+ALTER TABLE `order_products`
+  ADD CONSTRAINT `order_products_ibfk_1` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`),
+  ADD CONSTRAINT `order_products_ibfk_2` FOREIGN KEY (`idOrder`) REFERENCES `order` (`idOrder`),
+  ADD CONSTRAINT `order_products_ibfk_3` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`),
+  ADD CONSTRAINT `order_products_ibfk_4` FOREIGN KEY (`idOrder`) REFERENCES `order` (`idOrder`),
+  ADD CONSTRAINT `order_products_ibfk_5` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`),
+  ADD CONSTRAINT `order_products_ibfk_6` FOREIGN KEY (`idOrder`) REFERENCES `order` (`idOrder`);
+
+--
+-- Constraints for table `product`
+--
+ALTER TABLE `product`
+  ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`idCategory`) REFERENCES `category` (`idCategory`),
+  ADD CONSTRAINT `product_ibfk_2` FOREIGN KEY (`idCategory`) REFERENCES `category` (`idCategory`);
+
+--
+-- Constraints for table `review`
+--
+ALTER TABLE `review`
+  ADD CONSTRAINT `review_ibfk_1` FOREIGN KEY (`idClient`) REFERENCES `client` (`idClient`),
+  ADD CONSTRAINT `review_ibfk_2` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`),
+  ADD CONSTRAINT `review_ibfk_3` FOREIGN KEY (`idClient`) REFERENCES `client` (`idClient`),
+  ADD CONSTRAINT `review_ibfk_4` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`);
+
+--
+-- Constraints for table `wish`
+--
+ALTER TABLE `wish`
+  ADD CONSTRAINT `wish_ibfk_1` FOREIGN KEY (`idClient`) REFERENCES `client` (`idClient`),
+  ADD CONSTRAINT `wish_ibfk_2` FOREIGN KEY (`idClient`) REFERENCES `client` (`idClient`),
+  ADD CONSTRAINT `wish_ibfk_3` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
