@@ -40,6 +40,9 @@
                 </tbody>
             </table>
             <h2 id="total">Tổng Cộng: 0 VND</h2>
+            <form action="{{ url_for('cart.delete_cart') }}" method="post">
+                <button type="submit" style="background-color: red; color: white; border: none; padding: 10px 20px; cursor: pointer; font-size: 16px; border-radius: 5px;">Xoá giỏ hàng</button>
+            </form>
             <button id="confirm-purchase" class="confirm-purchase" onclick="goToCheckout()" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; float: right; transition: background-color 0.3s, transform 0.2s;" onmouseover="this.style.backgroundColor='#45a049'" onmouseout="this.style.backgroundColor='#4CAF50'" onmousedown="this.style.transform='scale(0.95)'" onmouseup="this.style.transform='scale(1)'">Xác Nhận Mua Hàng</button>
         {% else %}
             <p>Giỏ hàng của bạn hiện đang trống.</p>

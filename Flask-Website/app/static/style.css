@@ -304,6 +304,7 @@
     gap: 20px;
     justify-content: center;
     padding: 20px;
+    margin-top: 20px;
 }
 
 .product-card {
@@ -424,7 +425,12 @@
     margin: 0 10px; /* Khoảng cách bên trái và bên phải */
 }
 
-.product-detail .add-to-cart {
+.button-container {
+    display: flex;
+    gap: 1em;
+}
+
+.add-to-cart {
     background-color: #28a745; /* Màu nền xanh lá cho nút */
     color: white; /* Màu chữ trắng */
     border: none; /* Không viền */
@@ -435,8 +441,23 @@
     transition: background-color 0.3s; /* Hiệu ứng chuyển màu nền */
 }
 
-.product-detail .add-to-cart:hover {
+.add-to-cart:hover {
     background-color: #218838; /* Màu nền khi di chuột qua nút */
+}
+
+.add-to-favorites {
+    background-color: #ffcc00; /* Màu nền vàng */
+    color: black; /* Màu chữ đen */
+    border: none; /* Không viền */
+    border-radius: 5px; /* Bo tròn các góc */
+    padding: 10px 20px;
+    cursor: pointer; /* Thay đổi con trỏ khi di chuột qua nút */
+    font-size: 1em; /* Kích thước chữ bình thường */
+    transition: background-color 0.3s; /* Hiệu ứng chuyển màu nền */
+}
+
+.add-to-favorites:hover {
+    background-color: #e6b800; /* Màu nền khi di chuột qua nút */
 }
 
 .search-icon {
@@ -758,4 +779,24 @@ strong {
     border: 1px solid #ddd;
     border-radius: 8px;
     background: #f9f9f9;
+}
+
+.comment-section {
+    margin-top: 20px;
+}
+
+.review {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.review p {
+    margin: 5px 0;
+}
+
+.review .fa-star {
+    color: #ffcc00; /* Màu vàng cho các ngôi sao */
 }

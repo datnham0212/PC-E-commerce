@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 31, 2024 at 03:31 AM
+-- Generation Time: Nov 01, 2024 at 03:46 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -101,7 +101,7 @@ INSERT INTO `address` (`idAddress`, `city`, `country`, `zipCode`, `details`, `id
 CREATE TABLE `admins` (
   `idAdmin` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `password` varchar(50) NOT NULL,
+  `password` varchar(42) DEFAULT NULL,
   `lastName` varchar(50) DEFAULT NULL,
   `firstName` varchar(50) DEFAULT NULL,
   `phoneNumber` varchar(10) DEFAULT NULL,
@@ -113,7 +113,8 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`idAdmin`, `email`, `password`, `lastName`, `firstName`, `phoneNumber`, `photo`) VALUES
-(1, 'admin@gmail.com', 'admin', 'ziani', 'zakaria', '', '');
+(1, 'admin@gmail.com', 'admin', 'ziani', 'zakaria', '', ''),
+(2, 'admin2@gmail.com', 'admin2', 'bee', 'bee', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -187,6 +188,13 @@ CREATE TABLE `catalog` (
   `name_cat` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `catalog` (`idCatalog`, `name_cat`) VALUES
+(1, 'Component'),
+(2, 'Peripherals'),
+(3, 'Gaming PC'),
+(4, 'Portable PC');
+
+
 -- --------------------------------------------------------
 
 --
@@ -198,6 +206,28 @@ CREATE TABLE `catalog_products` (
   `idProduct` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `catalog_products` (`idCatalog`, `idProduct`) VALUES
+(1, 1),  -- NVIDIA RTX 2080 (Graphics Card)
+(1, 2),  -- Nvidia ZOTAC (Graphics Card)
+(1, 3),  -- MSI GTX 1080 Graphics Card
+(1, 4),  -- MSI GTX 2060 Graphics Card
+(2, 5),  -- ACER Monitor - PREDATOR (Monitor)
+(2, 6),  -- MSI Monitor - 120Hz (Monitor)
+(2, 7),  -- SAMSUNG Monitor (Monitor)
+(2, 8),  -- ACER Mouse - 1800 DPI (Mouse)
+(2, 9),  -- MARVO L-21 Optical Mouse (Mouse)
+(2, 10), -- JEDEL K90 Gaming Mouse (Mouse)
+(2, 11), -- Razer Scorpion F13 (Keyboard)
+(2, 12), -- Razer Scorpion - Special Edition (Keyboard)
+(3, 13), -- Gaming PC - AMD Ryzen 5 (Gaming PC)
+(3, 14), -- Gaming PC - AMD Ryzen 9 (Gaming PC)
+(3, 15), -- Gaming PC - Intel i7 (Gaming PC)
+(3, 16), -- Gaming PC ALIEN Build (Gaming PC)
+(3, 17), -- PC MSI Ryzen 5 (Gaming PC)
+(4, 18), -- ASUS Laptop (Portable PC)
+(4, 19); -- DELL Laptop i7 (Portable PC)
+
+
 -- --------------------------------------------------------
 
 --
@@ -207,33 +237,30 @@ CREATE TABLE `catalog_products` (
 CREATE TABLE `category` (
   `idCategory` int(11) NOT NULL,
   `description_cat` varchar(1000) NOT NULL,
-  `idParent_cat` int(11) DEFAULT NULL
+  `idCatalog` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `category`
 --
 
-INSERT INTO `category` (`idCategory`, `description_cat`, `idParent_cat`) VALUES
-(1, 'Components', 0),
-(2, 'Peripherals', 0),
-(3, 'Graphics Card', 1),
-(4, 'Motherboard', 1),
-(5, 'Processor', 1),
-(6, 'RAM', 1),
-(7, 'Accessories', 1),
-(8, 'Storage', 1),
-(9, 'Drive', 1),
-(10, 'Fan', 1),
-(11, 'Sound Card', 1),
-(12, 'Monitor', 2),
-(14, 'Mouse', 2),
-(15, 'Keyboard', 2),
-(16, 'Mouse Pad', 2),
-(17, 'Gaming PC', 0),
-(18, 'Portable PC', 0),
-(20, 'AMD Build', 17),
-(21, 'INTEL Build', 17);
+INSERT INTO `category` (`idCategory`, `description_cat`, `idCatalog`) VALUES
+(1, 'Graphics Card', 1),
+(2, 'Motherboard', 1),
+(3, 'Processor', 1),
+(4, 'RAM', 1),
+(5, 'Accessories', 1),
+(6, 'Storage', 1),
+(7, 'Drive', 1),
+(8, 'Fan', 1),
+(9, 'Sound Card', 1),
+(10, 'Monitor', 2),
+(11, 'Mouse', 2),
+(12, 'Keyboard', 2),
+(13, 'Mouse Pad', 2),
+(14, 'AMD Build', 3),
+(15, 'INTEL Build', 3);
+
 
 -- --------------------------------------------------------
 
@@ -246,7 +273,7 @@ CREATE TABLE `client` (
   `lastName` varchar(50) NOT NULL,
   `firstName` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `password` varchar(20) NOT NULL,
+  `password` varchar(42) DEFAULT NULL,
   `phone` varchar(12) DEFAULT NULL,
   `user_img` varchar(100) DEFAULT NULL,
   `creationDate` date NOT NULL,
@@ -262,7 +289,7 @@ INSERT INTO `client` (`idClient`, `lastName`, `firstName`, `email`, `password`, 
 (3, 'zakaria', 'ziani', 'zakariaziani99@gmail.com', '1234', NULL, NULL, '2020-12-30', 0),
 (4, 'baya', 'ziyad', 'baya@gmail.com', '1234', '123456789', NULL, '0000-00-00', 0),
 (5, 'boutera', 'youssef', 'boutera@gmail.com', '1234', NULL, NULL, '2021-01-16', 0),
-(6, 'a', 'a', 'a@a', '1', '1', NULL, '2024-10-29', 0);
+(12, 'a', 'a', 'a@a', 'a', '1', NULL, '2024-10-31', 0);
 
 -- --------------------------------------------------------
 
@@ -330,15 +357,6 @@ INSERT INTO `delivery_types` (`id_type`, `name_type`, `delivery_price`) VALUES
 CREATE TABLE `loyal_client` (
   `idClient` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `loyal_client`
---
-
-INSERT INTO `loyal_client` (`idClient`) VALUES
-(2),
-(3),
-(5);
 
 -- --------------------------------------------------------
 
@@ -416,25 +434,53 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`idProduct`, `name_prod`, `description_prod`, `price`, `img_prod`, `promo`, `stock`, `idCategory`, `sold`, `shipped`, `brand`) VALUES
-(2, 'DELL Laptop i7', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis noexercit ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id.', 1700, 'dell.webp', 12.5, 8, 18, 50, 2, 8),
-(3, 'ASUS Laptop', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis noexercit ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id.', 1350, 'Asus.png', 19, 0, 18, 12, 1, 2),
-(4, 'Gaming PC ALIEN Build', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis noexercit ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id.', 2790, 'alien.jpg', 50, 6, 17, 13, 2, 0),
-(6, 'NVIDIA RTX 2080', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis noexercit ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id.', 1890, 'palit rtx.jpg', 15, 9, 3, 9, 1, 6),
-(7, 'Nvidia ZOTAC', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis noexercit ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id.', 2530, 'zotac.jpg', 30, 3, 3, 5, 2, 2),
-(8, 'PC MSI Ryzen 5', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis noexercit ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id.', 2500, '1.jpg', 0, 12, 20, 5, 1, 7),
-(9, 'ACER Monitor - PREDATOR', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis noexercit ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id.', 1200, 'acer ecran.jpg', 17.5, 18, 12, 2, 2, 1),
-(10, 'MSI Monitor - 120Hz', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis noexercit ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id.', 800, 'msi ecran.jpg', 46.5, 3, 12, 6, 1, 4),
-(11, 'SAMSUNG Monitor', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis noexercit ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id.', 1000, 'moniteur lcd.jpg', 9.5, 20, 12, 0, 2, 6),
-(12, 'MSI GTX 2060 Graphics Card', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis noexercit ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id.', 950, 'GTX ventus.jpg', 13.5, 9, 3, 6, 1, 4),
-(13, 'ACER Mouse - 1800 DPI', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis noexercit ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id.', 250, 'acer souris.jpg', 6, 30, 14, 0, 1, 1),
-(14, 'MARVO L-21 Optical Mouse', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis noexercit ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id.', 150, 'souris gamer.jpg', 40, 19, 14, 1, 1, 7),
-(15, 'JEDEL K90 Gaming Mouse', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis noexercit ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id.', 250, 'souris roccat.jpg', 0, 10, 14, 5, 2, 3),
-(16, 'Razer Scorpion F13', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis noexercit ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id.', 1000, 'clavier2.jpg', 37.5, 5, 15, 0, 2, 3),
-(17, 'Razer Scorpion - Special Edition', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis noexercit ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id.', 2225, 'clavier2.jpg', 26, 14, 15, 1, 1, 3),
-(18, 'MSI GTX 1080 Graphics Card', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis noexercit ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id.', 1500, 'geforce.jpg', 18, 10, 3, 5, 2, 4),
-(19, 'Gaming PC - AMD Ryzen 5', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis noexercit ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id.', 2600, 'amd1.png', 15, 3, 20, 0, 2, 7),
-(20, 'Gaming PC - AMD Ryzen 9', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis noexercit ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id.', 900, 'amd2.png', 22, 3, 20, 1, 1, 7),
-(21, 'Gaming PC - Intel i7', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis noexercit ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id.', 3000, 'intel1.png', 5.5, 4, 21, 2, 2, 0);
+(1, 'NVIDIA RTX 2080', 'Card đồ họa hiệu suất cao.', 1890, 'palit rtx.jpg', 15, 9, 3, 9, 1, 6),
+(2, 'Nvidia ZOTAC', 'Card đồ họa hiệu suất cao.', 2530, 'zotac.jpg', 30, 3, 3, 5, 2, 2),
+(3, 'MSI GTX 1080 Graphics Card', 'Card đồ họa hiệu suất cao.', 1500, 'geforce.jpg', 18, 10, 3, 5, 2, 4),
+(4, 'MSI GTX 2060 Graphics Card', 'Card đồ họa hiệu suất cao.', 950, 'GTX ventus.jpg', 13.5, 9, 3, 6, 1, 4),
+(5, 'ACER Monitor - PREDATOR', 'Màn hình độ phân giải cao.', 1200, 'acer ecran.jpg', 17.5, 18, 12, 2, 2, 1),
+(6, 'MSI Monitor - 120Hz', 'Màn hình tần số quét cao.', 800, 'msi ecran.jpg', 46.5, 3, 12, 6, 1, 4),
+(7, 'SAMSUNG Monitor', 'Màn hình độ phân giải cao.', 1000, 'moniteur lcd.jpg', 9.5, 20, 12, 0, 2, 6),
+(8, 'ACER Mouse - 1800 DPI', 'Chuột độ chính xác cao.', 250, 'acer souris.jpg', 6, 30, 14, 0, 1, 1),
+(9, 'MARVO L-21 Optical Mouse', 'Chuột độ chính xác cao.', 150, 'souris gamer.jpg', 40, 19, 14, 1, 1, 7),
+(10, 'JEDEL K90 Gaming Mouse', 'Chuột chơi game độ chính xác cao.', 250, 'souris roccat.jpg', 0, 10, 14, 5, 2, 3),
+(11, 'Razer Scorpion F13', 'Bàn phím hiệu suất cao.', 1000, 'clavier2.jpg', 37.5, 5, 15, 0, 2, 3),
+(12, 'Razer Scorpion - Special Edition', 'Bàn phím hiệu suất cao.', 2225, 'clavier2.jpg', 26, 14, 15, 1, 1, 3),
+(13, 'Gaming PC - AMD Ryzen 5', 'PC chơi game hiệu suất cao.', 2600, 'amd1.png', 15, 3, 20, 0, 2, 7),
+(14, 'Gaming PC - AMD Ryzen 9', 'PC chơi game hiệu suất cao.', 900, 'amd2.png', 22, 3, 20, 1, 1, 7),
+(15, 'Gaming PC - Intel i7', 'PC chơi game hiệu suất cao.', 3000, 'intel1.png', 5.5, 4, 21, 2, 2, 0),
+(16, 'Gaming PC ALIEN Build', 'PC chơi game hiệu suất cao.', 2790, 'alien.jpg', 50, 6, 17, 13, 2, 0),
+(17, 'PC MSI Ryzen 5', 'PC hiệu suất cao.', 2500, '1.jpg', 0, 12, 20, 5, 1, 7),
+(18, 'ASUS Laptop', 'Laptop hiệu suất cao.', 1350, 'Asus.png', 19, 0, 18, 12, 1, 2),
+(19, 'DELL Laptop i7', 'Laptop hiệu suất cao.', 1700, 'dell.webp', 12.5, 8, 18, 50, 2, 8);
+
+UPDATE `product`
+SET `idCategory` = 
+    CASE 
+        WHEN `name_prod` LIKE '%Graphics Card%' THEN 1
+        WHEN `name_prod` LIKE '%Monitor%' THEN 10
+        WHEN `name_prod` LIKE '%Mouse%' THEN 11
+        WHEN `name_prod` LIKE '%Keyboard%' THEN 12
+        WHEN `name_prod` LIKE '%Gaming PC - AMD%' THEN 14
+        WHEN `name_prod` LIKE '%Gaming PC - Intel%' THEN 15
+        WHEN `name_prod` LIKE '%Laptop%' THEN 18
+        ELSE `idCategory`  -- Keep existing value if no match
+    END;
+
+UPDATE `product`
+SET `brand` = 
+    CASE 
+        WHEN UPPER(`name_prod`) LIKE '%ACER%' THEN 1
+        WHEN UPPER(`name_prod`) LIKE '%ASUS%' THEN 2
+        WHEN UPPER(`name_prod`) LIKE '%HP%' THEN 3
+        WHEN UPPER(`name_prod`) LIKE '%MSI%' THEN 4
+        WHEN UPPER(`name_prod`) LIKE '%ALIEN%' THEN 5
+        WHEN UPPER(`name_prod`) LIKE '%PREDATOR%' THEN 6
+        WHEN UPPER(`name_prod`) LIKE '%LCD%' THEN 7
+        WHEN UPPER(`name_prod`) LIKE '%DELL%' THEN 8
+        ELSE `brand`  -- Keep existing value if no match
+    END;
+
 
 -- --------------------------------------------------------
 
@@ -622,7 +668,7 @@ ALTER TABLE `address`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `idAdmin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idAdmin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `brand`
@@ -646,7 +692,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `client`
 --
 ALTER TABLE `client`
-  MODIFY `idClient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idClient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `delivery`
@@ -697,9 +743,7 @@ ALTER TABLE `cart_products`
 --
 ALTER TABLE `catalog_products`
   ADD CONSTRAINT `catalog_products_ibfk_1` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`),
-  ADD CONSTRAINT `catalog_products_ibfk_2` FOREIGN KEY (`idCatalog`) REFERENCES `catalog` (`idCatalog`),
-  ADD CONSTRAINT `catalog_products_ibfk_3` FOREIGN KEY (`idProduct`) REFERENCES `product` (`idProduct`),
-  ADD CONSTRAINT `catalog_products_ibfk_4` FOREIGN KEY (`idCatalog`) REFERENCES `catalog` (`idCatalog`);
+  ADD CONSTRAINT `catalog_products_ibfk_2` FOREIGN KEY (`idCatalog`) REFERENCES `catalog` (`idCatalog`);
 
 --
 -- Constraints for table `delivery`

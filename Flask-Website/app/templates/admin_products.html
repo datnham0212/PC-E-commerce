@@ -18,6 +18,7 @@
                     <th>Name</th>
                     <th>Price</th>
                     <th>Stock</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,6 +28,11 @@
                     <td>{{ product.name_prod }}</td>
                     <td>{{ product.price }}</td>
                     <td>{{ product.stock }}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('admin.delete_product', product_id=product.idProduct) }}" style="display:inline;">
+                            <button type="submit" class="delete-button">X</button>
+                        </form>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

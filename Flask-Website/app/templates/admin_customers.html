@@ -18,6 +18,8 @@
                     <th>LastName</th>
                     <th>FirstName</th>
                     <th>Email</th>
+                    <th>Actions</th>
+                    <th>Loyal Client</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,6 +29,19 @@
                     <td>{{ client.lastName }}</td>
                     <td>{{ client.firstName }}</td>
                     <td>{{ client.email }}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('admin.delete_customer', client_id=client.idClient) }}" style="display:inline;">
+                            <button type="submit" class="delete-button">X</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="POST" action="{{ url_for('admin.verify_loyal_client', client_id=client.idClient) }}" style="display:inline;">
+                            <label class="switch">
+                                <input type="checkbox" name="loyal_client" onchange="this.form.submit()" {% if client.idClient in loyal_clients %}checked{% endif %}>
+                                <span class="slider round"></span>
+                            </label>
+                        </form>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

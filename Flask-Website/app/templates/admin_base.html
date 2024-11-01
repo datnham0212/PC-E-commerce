@@ -16,9 +16,10 @@
             </div>
             <ul class="admin-menu">
                 <li><a href="{{ url_for('admin.dashboard') }}" class="{% if request.endpoint == 'admin.dashboard' %}active{% endif %}">Dashboard</a></li>
+                <li><a href="{{ url_for('admin.categories') }}" class="{% if request.endpoint == 'admin.categories' %}active{% endif %}">Categories</a></li>
                 <li><a href="{{ url_for('admin.products') }}" class="{% if request.endpoint == 'admin.products' %}active{% endif %}">Products</a></li>
                 <li><a href="{{ url_for('admin.customers') }}" class="{% if request.endpoint == 'admin.customers' %}active{% endif %}">Customers</a></li>
-                <li><a href="{{ url_for('admin.categories') }}" class="{% if request.endpoint == 'admin.categories' %}active{% endif %}">Categories</a></li>
+                <li><a href="{{ url_for('admin.registration') }}" class="{% if request.endpoint == 'admin.registration' %}active{% endif %}">Admins</a></li>
                 <li><a href="{{ url_for('admin.logout') }}" class="{% if request.endpoint == 'admin.logout' %}active{% endif %}">Logout</a></li>
             </ul>            
         </nav>

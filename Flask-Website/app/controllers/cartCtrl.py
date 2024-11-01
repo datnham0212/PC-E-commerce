@@ -42,3 +42,6 @@ def remove_product_from_cart(product_id):
     session[cart_key] = cart_items
 
 
+def clear_cart():
+    cart_key = f'cart_{current_user.idClient}'
+    session.pop(cart_key, None)

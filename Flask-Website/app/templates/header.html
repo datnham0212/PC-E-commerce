@@ -1,12 +1,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <header class="header">
     <h1>PC - Store</h1>
     <nav class="nav">
         <a href="/">Trang Chủ</a>
         <a href="/product_catalog">Sản Phẩm Của Chúng Tôi</a>
-        <a href="/help">Trợ Giúp</a>
-        <a href="/contact">Liên Hệ</a>
+        <a href="/product_catalog/favorites">Sản phẩm ưa thích</a>
+        <a href="/contact-help">Trợ Giúp & Liên Hệ</a>
     </nav>   
 
     <button class="search-icon" style="display: flex; align-items: center; border: none; background: none; padding: 0;">
@@ -30,7 +31,6 @@
     <div class="suggestions"></div>
 </div>
 
-<!-- <script src="../static/search.js"></script> Your JavaScript file -->
 <script src="{{ url_for('static', filename='search.js') }}"></script>
 
 <script>

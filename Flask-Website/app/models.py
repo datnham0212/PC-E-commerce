@@ -44,8 +44,8 @@ class Category(db.Model):
     __tablename__ = 'category'
     idCategory = db.Column(db.Integer, primary_key=True)  # Thay đổi tên cột
     description_cat = db.Column(db.String(1000), nullable=False)  # Thay đổi tên cột
-    idParent_cat = db.Column(db.Integer)  # Thay đổi tên cột
-
+    idCatalog = db.Column(db.Integer, db.ForeignKey('catalog.idCatalog'), nullable=False)  # Thay đổi tên bảng và cột
+    
 # Product Model
 class Product(db.Model):
     __tablename__ = 'product'  
