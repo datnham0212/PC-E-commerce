@@ -1,9 +1,9 @@
 <aside class="sidebar">
     <h2>Danh Mục Của Chúng Tôi</h2>
     <ul>
-        <li><a href="#">Linh Kiện</a></li>
-        <li><a href="#">Thiết Bị Ngoại Vi</a></li>
-        <li><a href="#">PC Gamer</a></li>
-        <li><a href="#">PC Portable</a></li>
+        <li><a href="{{ url_for('product_catalog.product_catalog_route', category='Component') }}">Linh Kiện</a></li>
+        <li><a href="{{ url_for('product_catalog.product_catalog_route', category='Peripherals') }}">Thiết Bị Ngoại Vi</a></li>
+        <li><a href="{{ url_for('product_catalog.product_catalog_route', category='Gaming PC') }}">Gaming PC</a></li>
+        <li><a href="{{ url_for('product_catalog.product_catalog_route', category='Laptop') }}">Laptop</a></li>
     </ul>
 </aside>

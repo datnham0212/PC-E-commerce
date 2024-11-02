@@ -148,9 +148,9 @@
         <form id="filterForm" action="{{ url_for('product_catalog.product_catalog_route') }}" method="get">
             <div class="price-range">
                 <label for="minPrice">Giá tối thiểu:</label>
-                <input type="number" id="minPrice" name="minPrice" min="0" max="999999" value="0">
+                <input type="number" id="minPrice" name="minPrice" min="0" max="9999999" value="0">
                 <label for="maxPrice">Giá tối đa:</label>
-                <input type="number" id="maxPrice" name="maxPrice" min="0" max="999999" value="999999">
+                <input type="number" id="maxPrice" name="maxPrice" min="0" max="9999999" value="9999999">
             </div>
             <h4>Sắp xếp theo:</h4>
             <label><input type="radio" name="sort" value="lowToHigh"> Giá thấp đến cao</label><br>

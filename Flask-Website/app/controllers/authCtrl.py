@@ -25,12 +25,13 @@ def signup_user(first_name, last_name, email, password, phone_number=None):
 
 def user_login(user, password):
     # Debugging: Print the stored password and the provided password
-    print(f"Stored password: {user.password}")
-    print(f"Provided password: {password}")
+    # print(f"Stored password: {user.password}")
+    # print(f"Provided password: {password}")
     
     if user.password == password:  # Compare plain text passwords
         login_user(user)
-        flash("Login successful!", "success")
+        if not isinstance(user, Admin):
+            flash("Login successful!", "success")
         return True
     else:
         flash("Invalid credentials", "danger")

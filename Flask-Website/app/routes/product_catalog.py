@@ -15,7 +15,7 @@ product_catalog = Blueprint('product_catalog', __name__)
 def product_catalog_route():
     # Get filter parameters from the request
     min_price = request.args.get('minPrice', 0, type=float)
-    max_price = request.args.get('maxPrice', 999999, type=float)
+    max_price = request.args.get('maxPrice', 99999999, type=float)
     sort_by = request.args.get('sort', 'nameAZ')
     selected_brands = request.args.getlist('brand')
     category_name = request.args.get('category', 'all')

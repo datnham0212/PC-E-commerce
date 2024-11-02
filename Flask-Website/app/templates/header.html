@@ -6,7 +6,9 @@
     <nav class="nav">
         <a href="/">Trang Chủ</a>
         <a href="/product_catalog">Sản Phẩm Của Chúng Tôi</a>
-        <a href="/product_catalog/favorites">Sản phẩm ưa thích</a>
+        {% if current_user.is_authenticated %}
+            <a href="/product_catalog/favorites">Sản phẩm ưa thích</a>
+        {% endif %}
         <a href="/contact-help">Trợ Giúp & Liên Hệ</a>
     </nav>   
 

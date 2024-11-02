@@ -4,7 +4,7 @@ from config import Config
 from .extensions import db, bcrypt, login_manager  # Nhập từ extensions.py
 from .models import Client, Admin  # Import Client & Admin model
 from flask_login import LoginManager
-    
+
 login_manager = LoginManager()
 login_manager.login_view = 'auth.auth_route'  # Đảm bảo rằng đây là route đăng nhập
 

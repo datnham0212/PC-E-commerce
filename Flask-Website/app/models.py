@@ -117,11 +117,11 @@ class Cart(db.Model):
 # Delivery Model
 class Delivery(db.Model):
     __tablename__ = 'delivery'
-    idDelivery = db.Column(db.Integer, primary_key=True)  # Thay đổi tên cột
-    idOrder = db.Column(db.Integer, db.ForeignKey('order.idOrder'), nullable=False)  # Thay đổi tên bảng và cột
-    status_del = db.Column(db.Integer, nullable=False)  # Thay đổi tên cột
-    date_del = db.Column(db.DateTime, nullable=False)  # Thay đổi tên cột
-    idAddress = db.Column(db.Integer, db.ForeignKey('address.idAddress'), nullable=False)  # Thay đổi tên bảng và cột
+    idDelivery = db.Column(db.Integer, primary_key=True)
+    idOrder = db.Column(db.Integer, db.ForeignKey('order.idOrder'), nullable=False)
+    status_del = db.Column(db.Integer, nullable=False, default=0)  # 0 for Pending, 1 for Completed
+    date_del = db.Column(db.DateTime, nullable=True)  # Nullable to allow N/A until confirmed
+    idAddress = db.Column(db.Integer, db.ForeignKey('address.idAddress'), nullable=False)
 
 # DeliveryType Model
 class DeliveryType(db.Model):
