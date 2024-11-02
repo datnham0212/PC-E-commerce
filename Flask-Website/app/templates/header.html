@@ -1,0 +1,60 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<header class="header">
+    <h1>PC - Store</h1>
+    <nav class="nav">
+        <a href="/">Trang Chủ</a>
+        <a href="/product_catalog">Sản Phẩm Của Chúng Tôi</a>
+        {% if current_user.is_authenticated %}
+            <a href="/product_catalog/favorites">Sản phẩm ưa thích</a>
+        {% endif %}
+        <a href="/contact-help">Trợ Giúp & Liên Hệ</a>
+    </nav>   
+
+    <button class="search-icon" style="display: flex; align-items: center; border: none; background: none; padding: 0;">
+        <h6 style="margin: 0; display: inline;">Tìm kiếm</h6>
+        <i class="fa fa-search" style="margin-left: 4px;"></i>
+    </button>
+          <div class="auth-cart">
+          {% if current_user.is_authenticated %}
+              <span>Welcome, {{ current_user.firstName }}!</span>
+              <a href="{{ url_for('auth.logout') }}">Logout</a>
+          {% else %}
+              <a href="{{ url_for('auth.auth_route') }}">Đăng Nhập</a>
+          {% endif %}
+          <a href="/cart"> <i class="fa fa-shopping-cart"></i> </a>
+      </div>
+  </header>
+
+<!-- Search bar and suggestions -->
+<div class="search-container">
+    <input type="text" class="search-bar" placeholder="Search for products...">
+    <div class="suggestions"></div>
+</div>
+
+<script src="{{ url_for('static', filename='search.js') }}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const flashMessages = document.getElementById('flash-messages');
+        if (flashMessages) {
+            setTimeout(() => {
+                flashMessages.style.display = 'none'; // Ẩn thông báo sau 2 giây
+            }, 1000); // Thời gian 1000ms = 1 giây
+        }
+    });
+</script>
+
+<body>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-messages" id="flash-messages">
+                {% for message in messages %}
+                    <div class="alert alert-success">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    <!-- Phần còn lại của mã header -->
+</body>

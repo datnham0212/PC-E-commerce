@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sản phẩm của chúng tôi</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .navbar-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .navbar {
+            display: flex;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .navbar li {
+            margin: 0 5px;
+        }
+        .navbar a {
+            text-decoration: none;
+            color: #333;
+            padding: 10px 15px;
+        }
+        .navbar a:hover {
+            background-color: #e2e6ea; /* Màu nền khi hover */
+            color: #000; /* Màu chữ khi hover */
+        }
+        .filter-button {
+            margin-left: auto;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .filter-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 100%;
+            background-color: #fff;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+            padding: 20px;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        .filter-menu h3 {
+            margin-top: 0;
+        }
+        .filter-menu .close-button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 5px 10px;
+            margin-bottom: 20px;
+        }
+        .price-range {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .price-range input {
+            width: 45%;
+        }
+        .brand-checkboxes {
+            margin-top: 20px;
+        }
+        .brand-checkboxes label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .confirm-button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 10px 15px;
+            margin-top: 20px;
+            width: 100%;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .product-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .product-card img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+        .product-card h2 {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+        .product-card .price {
+            font-size: 1.1em;
+            color: #007bff;
+        }
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #dc3545;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="navbar-container">
+        <ul class="navbar">
+            <li><a href="{{ url_for('product_catalog.product_catalog_route', category='all') }}">Tất Cả</a></li>
+            {% for category in categories %}
+                <li><a href="{{ url_for('product_catalog.product_catalog_route', category=category.name_cat) }}">{{ category.name_cat }}</a></li>
+            {% endfor %}
+        </ul>
+        <button class="filter-button" onclick="toggleFilterMenu()">Lọc</button>
+    </div>
+
+    <div class="filter-menu" id="filterMenu">
+        <button class="close-button" onclick="toggleFilterMenu()">Đóng</button>
+        <h3>Tùy chọn lọc</h3>
+        <form id="filterForm" action="{{ url_for('product_catalog.product_catalog_route') }}" method="get">
+            <div class="price-range">
+                <label for="minPrice">Giá tối thiểu:</label>
+                <input type="number" id="minPrice" name="minPrice" min="0" max="9999999" value="0">
+                <label for="maxPrice">Giá tối đa:</label>
+                <input type="number" id="maxPrice" name="maxPrice" min="0" max="9999999" value="9999999">
+            </div>
+            <h4>Sắp xếp theo:</h4>
+            <label><input type="radio" name="sort" value="lowToHigh"> Giá thấp đến cao</label><br>
+            <label><input type="radio" name="sort" value="highToLow"> Giá cao đến thấp</label><br>
+            <label><input type="radio" name="sort" value="nameAZ"> Tên sản phẩm A-Z</label><br>
+            <label><input type="radio" name="sort" value="nameZA"> Tên sản phẩm Z-A</label>
+            <div class="brand-checkboxes">
+                <h4>Thương hiệu:</h4>
+                {% for brand in brands %}
+                    <label><input type="checkbox" name="brand" value="{{ brand.brand }}">{{ brand.brand_name }}</label>
+                {% endfor %}
+            </div>
+            <button class="confirm-button" type="submit">Xác nhận</button>
+        </form>
+    </div>
+    
+    <div class="product-grid">
+        {% for product in products %}
+        <div class="product-card">
+            <a href="{{ url_for('product_catalog.product_detail', product_id=product.idProduct) }}">
+                {% if product.promo %}
+                    <div class="discount-badge">{{ product.promo }}%</div>
+                {% endif %}
+                <img src="{{ url_for('static', filename='img/' + product.img_prod) }}" alt="{{ product.name_prod }}">
+                <h2>{{ product.name_prod }}</h2>
+                <p class="price">{{ product.price }} VND</p>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% include 'footer.html' %}
+    <script>
+        function toggleFilterMenu() {
+            var filterMenu = document.getElementById('filterMenu');
+            if (filterMenu.style.display === 'none' || filterMenu.style.display === '') {
+                filterMenu.style.display = 'block';
+            } else {
+                filterMenu.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
