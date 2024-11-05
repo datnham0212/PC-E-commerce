@@ -1,5 +1,5 @@
 #app/admin/routes/admin_route.py
-from flask import Blueprint, render_template, redirect, url_for, flash, request
+from flask import Blueprint, render_template, redirect, url_for, flash, request, session
 from sqlalchemy import func
 from app import db
 from flask_login import login_required, current_user, logout_user
@@ -298,4 +298,5 @@ def update_delivery_status(order_id):
 @login_required
 def logout():
     logout_user()
+    session.clear()
     return redirect(url_for('main.home'))

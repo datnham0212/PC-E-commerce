@@ -23,12 +23,22 @@
     padding: 20px;
     background: var(--primary-color);
     color: white;
+    flex-wrap: wrap;
 }
 
 .header .logo {
     font-size: 1.5em;
     font-weight: bold;
     color: white;
+    flex: 1 1 auto;
+}
+
+.header .nav,
+.header .auth-cart {
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: flex-end;
+    flex-wrap: wrap;
 }
 
 .header .nav a,
@@ -45,12 +55,30 @@
     color: var(--accent-color);
 }
 
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .header .nav,
+    .header .auth-cart {
+        justify-content: center;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .header .nav a,
+    .header .auth-cart a {
+        margin: 5px 10px;
+    }
+}
+
 /* Sidebar */
 .sidebar {
     width: 200px;
     padding: 20px;
     background: var(--bg-color);
-    border-right: 2px solid #ddd;
 }
 
 .sidebar h2 {
