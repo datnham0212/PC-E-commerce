@@ -1,32 +1,26 @@
 # app/__init__.py
 from flask import Flask
 from config import Config
-from .extensions import db, bcrypt, login_manager  # Nhập từ extensions.py
-from .models import Client, Admin  # Import Client & Admin model
+from .extensions import db, bcrypt, login_manager
+from .models import Client, Admin
 from flask_login import LoginManager
 
 login_manager = LoginManager()
-login_manager.login_view = 'auth.auth_route'  # Đảm bảo rằng đây là route đăng nhập
+login_manager.login_view = 'auth.auth_route'
 
 @login_manager.user_loader
-def load_user(user_id):
-    # Try loading admin first
-    admin = Admin.query.get(int(user_id))
-    if admin:
-        return admin
-    # If not admin, try client
-    return Client.query.get(int(user_id))
-
+def load_user_by_id(user_id):
+    user_id = int(user_id)
+    return Admin.query.get(user_id) or Client.query.get(user_id)
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
     # Initialize extensions
-    db.init_app(app)  # Đảm bảo rằng db được khởi tạo với app
+    db.init_app(app)
     bcrypt.init_app(app)
     login_manager.init_app(app)
-    login_manager.login_view = 'auth.login'  # Đảm bảo rằng đây là route đăng nhập
 
     # Register blueprints
     from .routes.auth import auth as auth_blueprint

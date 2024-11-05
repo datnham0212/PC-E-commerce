@@ -1,13 +1,14 @@
 # app/routes/auth.py
-from flask import Blueprint, render_template, request, redirect, url_for, flash
-from flask_login import logout_user, current_user
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from flask_login import current_user, login_required
 from app.models import Admin, Client
-from app.controllers.authCtrl import signup_user, user_login  # Import functions from authCtrl
+from app.controllers.authCtrl import signup_user, user_login, user_logout  # Import functions from authCtrl
 
 auth = Blueprint('auth', __name__)
 
 @auth.route('/', methods=['GET', 'POST'])
 def auth_route():
+    next_url = request.args.get('next')
     if request.method == 'POST':
         action = request.form.get('action')  # "login" or "signup"
 
@@ -40,13 +41,16 @@ def auth_route():
             if signup_user(first_name, last_name, email, password, phone_number):
                 return redirect(url_for('auth.auth_route'))
 
+    # If the next parameter is present, redirect to the home page
+    if next_url:
+        return redirect(url_for('main.home'))
+
     # Render the combined form template
     return render_template('login.html')
 
 
 @auth.route('/logout')
+@login_required
 def logout():
-    if current_user.is_authenticated:
-        flash("You have been logged out.", "info")
-        logout_user()
+    user_logout()
     return redirect(url_for('auth.auth_route'))

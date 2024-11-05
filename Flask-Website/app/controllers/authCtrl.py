@@ -1,5 +1,5 @@
-from flask import flash
-from flask_login import login_user
+from flask import flash, session
+from flask_login import login_user, logout_user, current_user
 from app.models import Admin, Client  # Import the Admin and Client models
 from app import db
 from datetime import datetime
@@ -18,17 +18,15 @@ def signup_user(first_name, last_name, email, password, phone_number=None):
         phone=phone_number,
         creationDate=datetime.now()
     )
+    
     db.session.add(new_client)
     db.session.commit()
     flash("Registration successful! Please log in.", "success")
     return True
 
 def user_login(user, password):
-    # Debugging: Print the stored password and the provided password
-    # print(f"Stored password: {user.password}")
-    # print(f"Provided password: {password}")
-    
     if user.password == password:  # Compare plain text passwords
+        session.clear()  # Clear session cookies
         login_user(user)
         if not isinstance(user, Admin):
             flash("Login successful!", "success")
@@ -36,3 +34,9 @@ def user_login(user, password):
     else:
         flash("Invalid credentials", "danger")
         return False
+
+def user_logout():
+    if current_user.is_authenticated:
+        logout_user()
+        session.clear()
+        flash("You have been logged out.", "info")

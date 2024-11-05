@@ -57,15 +57,24 @@
             let total = 0;
 
             rows.forEach(row => {
-                const price = parseInt(row.querySelector('.price').textContent);
-                const quantity = parseInt(row.querySelector('.quantity').textContent);
-                const itemTotal = price * quantity;
+                const priceElement = row.querySelector('.price');
+                const quantityElement = row.querySelector('.quantity');
+                const itemTotalElement = row.querySelector('.item-total');
 
-                row.querySelector('.item-total').textContent = itemTotal + 'VND';
-                total += itemTotal;
+                if (priceElement && quantityElement && itemTotalElement) {
+                    const price = parseInt(priceElement.textContent);
+                    const quantity = parseInt(quantityElement.textContent);
+                    const itemTotal = price * quantity;
+
+                    itemTotalElement.textContent = itemTotal + ' VND';
+                    total += itemTotal;
+                }
             });
 
-            document.getElementById('total').textContent = 'Tổng Cộng: ' + total + ' VND';
+            const totalElement = document.getElementById('total');
+            if (totalElement) {
+                totalElement.textContent = 'Tổng Cộng: ' + total + ' VND';
+            }
         }
 
         window.onload = calculateTotals;
