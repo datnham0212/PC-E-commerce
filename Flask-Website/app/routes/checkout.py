@@ -12,6 +12,7 @@ def checkout_page():
 
 @checkout.route('/process_checkout', methods=['POST'])
 def process_checkout():
-    if process_order(request.form):
-        return redirect(url_for('main.home'))
+    order_details = process_order(request.form)
+    if order_details:
+        return render_template('receipt.html', order=order_details)
     return redirect(url_for('cart.cart_page'))

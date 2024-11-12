@@ -1,3 +1,4 @@
+#app/controllers/authCtrl.py
 from flask import flash, session
 from flask_login import login_user, logout_user, current_user
 from app.models import Admin, Client  # Import the Admin and Client models

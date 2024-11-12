@@ -1,7 +1,8 @@
+#app/controllers/checkoutCtrl.py
 from flask import session, flash
 from flask_login import current_user
 from datetime import datetime
-from app.models import Order, OrderProducts, Delivery, Address, Coupon
+from app.models import Order, OrderProducts, Delivery, Address, Coupon, Product
 from app.extensions import db
 from app.controllers.cartCtrl import get_cart_items
 
@@ -15,7 +16,7 @@ def validate_checkout():
 def process_order(form_data):
     cart_items = get_cart_items()
     if not cart_items:
-        return False
+        return None
     
     # Calculate total
     total = sum(item['price'] * item['quantity'] for item in cart_items.values())
@@ -37,7 +38,8 @@ def process_order(form_data):
     db.session.add(new_order)
     db.session.flush()  # Get the order ID
     
-    # Create order products
+    # Create order products and update stock
+    order_products = []
     for product_id, item in cart_items.items():
         order_product = OrderProducts(
             idOrder=new_order.idOrder,
@@ -45,6 +47,17 @@ def process_order(form_data):
             quantity=item['quantity']
         )
         db.session.add(order_product)
+        order_products.append({
+            'product_id': product_id,
+            'quantity': item['quantity'],
+            'price': item['price']
+        })
+        
+        # Update stock
+        product = Product.query.get(product_id)
+        if product:
+            product.stock -= item['quantity']
+            db.session.add(product)
     
     # Create delivery address
     address = Address(
@@ -70,11 +83,22 @@ def process_order(form_data):
         db.session.commit()
         session.pop(f'cart_{current_user.idClient}', None)  # Clear cart
         flash('Order placed successfully!', 'success')
-        return True
+        return {
+            'order_id': new_order.idOrder,
+            'total': total,
+            'delivery_type': delivery_option,
+            'address': {
+                'city': address.city,
+                'country': address.country,
+                'zipCode': address.zipCode,
+                'details': address.details
+            },
+            'products': order_products
+        }
     except Exception as e:
         db.session.rollback()
         flash('Error processing order', 'error')
-        return False
+        return None
 
 def apply_coupon(coupon_code):
     coupon = Coupon.query.get(coupon_code)

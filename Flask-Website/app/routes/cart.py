@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, session, request, redirect, url_for, flash
-from app.controllers.cartCtrl import add_product_to_cart, remove_product_from_cart, get_cart_items, clear_cart
+from app.controllers.cartCtrl import add_product_to_cart, remove_product_from_cart, get_cart_items, clear_cart, update_product_quantity_in_cart
 
 cart = Blueprint('cart', __name__)
 
@@ -16,7 +16,7 @@ def add_to_cart():
     quantity = int(request.form.get('quantity'))  # Lấy số lượng từ form
     
     add_product_to_cart(product_id, product_name, product_price, quantity)  # Gọi hàm thêm sản phẩm vào giỏ hàng
-    return redirect(url_for('product_catalog.product_catalog_route'))  # Chuyển hướng đến trang danh mục sản phẩm
+    return redirect(url_for('product_catalog.product_detail', product_id=product_id))  # Chuyển hướng đến trang chi tiết sản phẩm
 
 @cart.route('/remove_from_cart/<product_id>', methods=['POST'])
 def remove_from_cart(product_id):
@@ -28,3 +28,12 @@ def delete_cart():
     clear_cart()  # Gọi hàm xóa toàn bộ giỏ hàng
     flash('Giỏ hàng đã được xóa thành công!')  # Hiển thị thông báo thành công
     return redirect(url_for('cart.cart_page'))  # Chuyển hướng đến trang giỏ hàng
+
+@cart.route('/update_quantity', methods=['POST'])
+def update_quantity():
+    data = request.get_json()
+    product_id = data.get('product_id')
+    quantity = int(data.get('quantity'))
+
+    update_product_quantity_in_cart(product_id, quantity)  # Gọi hàm cập nhật số lượng sản phẩm trong giỏ hàng
+    return '', 204  # Trả về mã trạng thái 204 No Content
