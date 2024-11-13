@@ -4,6 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giỏ Hàng</title>
+    <style>
+        .quantity-changer {
+            display: flex;
+            align-items: center;
+        }
+        .quantity-btn {
+            padding: 5px 10px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        .quantity-input {
+            width: 50px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     {% include 'header.html' %}
@@ -28,7 +43,13 @@
                         <tr>
                             <td>{{ item.name }}</td>
                             <td class="price">{{ price }} VND</td>
-                            <td class="quantity">{{ quantity }}</td>
+                            <td class="quantity">
+                                <div class="quantity-changer">
+                                    <button class="quantity-btn" onclick="changeQuantity('{{ product_id }}', -1)">-</button>
+                                    <input type="number" class="quantity-input" data-product-id="{{ product_id }}" value="{{ quantity }}" min="1" max="{{ item.stock }}" onchange="updateQuantity('{{ product_id }}')">
+                                    <button class="quantity-btn" onclick="changeQuantity('{{ product_id }}', 1)">+</button>
+                                </div>
+                            </td>
                             <td class="item-total">{{ item_total }} VND</td>
                             <td>
                                 <form method="POST" action="{{ url_for('cart.remove_from_cart', product_id=product_id) }}">
@@ -52,18 +73,51 @@
     {% include 'footer.html' %}
 
     <script>
-        function calculateTotals() {
+        function changeQuantity(productId, amount) {
+            const input = document.querySelector(`.quantity-input[data-product-id="${productId}"]`);
+            let currentValue = parseInt(input.value);
+            const maxStock = parseInt(input.getAttribute('max'));
+
+            // Ensure currentValue is a valid number
+            if (isNaN(currentValue)) currentValue = 1;
+
+            currentValue += amount;
+            if (currentValue < 1) currentValue = 1; // Ensure quantity doesn't go below 1
+            if (currentValue > maxStock) currentValue = maxStock; // Ensure quantity doesn't exceed stock
+
+            input.value = currentValue;
+            updateQuantity(productId);
+        }
+
+        function updateQuantity(productId) {
+            const input = document.querySelector(`.quantity-input[data-product-id="${productId}"]`);
+            const quantity = input.value;
+
+            fetch(`{{ url_for('cart.update_quantity') }}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ product_id: productId, quantity: quantity })
+            }).then(response => {
+                if (response.ok) {
+                    updateTotals();
+                }
+            });
+        }
+
+        function updateTotals() {
             const rows = document.querySelectorAll('tbody tr');
             let total = 0;
 
             rows.forEach(row => {
                 const priceElement = row.querySelector('.price');
-                const quantityElement = row.querySelector('.quantity');
+                const quantityElement = row.querySelector('.quantity-input');
                 const itemTotalElement = row.querySelector('.item-total');
 
                 if (priceElement && quantityElement && itemTotalElement) {
                     const price = parseInt(priceElement.textContent);
-                    const quantity = parseInt(quantityElement.textContent);
+                    const quantity = parseInt(quantityElement.value);
                     const itemTotal = price * quantity;
 
                     itemTotalElement.textContent = itemTotal + ' VND';
@@ -77,7 +131,7 @@
             }
         }
 
-        window.onload = calculateTotals;
+        window.onload = updateTotals;
     </script>
     <script>
         function goToCheckout() {

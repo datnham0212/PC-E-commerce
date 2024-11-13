@@ -118,15 +118,7 @@
 <body>
     {% include 'header.html' %}
     <div class="container">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flash-messages">
-                    {% for category, message in messages %}
-                        <div class="flash-message {{ category }}">{{ message }}</div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
+
         <div class="product-detail">
             <div class="product-info">
                 <img src="{{ url_for('static', filename='img/' + product.img_prod) }}" alt="{{ product.name_prod }}">
@@ -138,11 +130,9 @@
                     {% endif %}
                     <div class="quantity-changer">
                         <button class="quantity-btn" onclick="changeQuantity(-1)">-</button>
-                        <input type="number" class="quantity-input" value="1" min="1" onchange="updateHiddenInput()">
+                        <input type="number" class="quantity-input" value="1" min="1" max="{{ product.stock }}" onchange="updateHiddenInput()">
                         <button class="quantity-btn" onclick="changeQuantity(1)">+</button>
                     </div>
-                    <input type="hidden" name="quantity" class="quantity-hidden" value="1">
-                    
                     <div class="button-container">
                         <form method="POST" action="{{ url_for('cart.add_to_cart') }}" onsubmit="checkQuantity()">
                             <input type="hidden" name="product_id" value="{{ product.idProduct }}">
@@ -219,12 +209,14 @@
         function changeQuantity(amount) {
             const input = document.querySelector('.quantity-input');
             let currentValue = parseInt(input.value);
+            const maxStock = parseInt(input.getAttribute('max'));
 
             // Ensure currentValue is a valid number
             if (isNaN(currentValue)) currentValue = 1;
 
             currentValue += amount;
             if (currentValue < 1) currentValue = 1; // Ensure quantity doesn't go below 1
+            if (currentValue > maxStock) currentValue = maxStock; // Ensure quantity doesn't exceed stock
 
             input.value = currentValue;
             updateHiddenInput(currentValue);
