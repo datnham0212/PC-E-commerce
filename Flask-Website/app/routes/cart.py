@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, session, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app.controllers.cartCtrl import add_product_to_cart, remove_product_from_cart, get_cart_items, clear_cart, update_product_quantity_in_cart
 
 cart = Blueprint('cart', __name__)
