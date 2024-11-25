@@ -1,0 +1,7 @@
+[
+  {
+    "route": "POST /admin/verify_loyal_client/{client_id}",
+    "parameters": "(,)",
+    "status": 302
+  }
+]

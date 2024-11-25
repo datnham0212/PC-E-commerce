@@ -1,0 +1,7 @@
+[
+  {
+    "route": "GET /admin/categories",
+    "parameters": "()",
+    "status": 200
+  }
+]

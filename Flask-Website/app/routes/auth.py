@@ -1,6 +1,6 @@
 # app/routes/auth.py
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
-from flask_login import current_user, login_required
+from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask_login import login_required
 from app.models import Admin, Client
 from app.controllers.authCtrl import signup_user, user_login, user_logout  # Import functions from authCtrl
 

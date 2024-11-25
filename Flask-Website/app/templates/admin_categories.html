@@ -27,7 +27,7 @@
                     <td>{{ category.idCategory }}</td>
                     <td>{{ category.description_cat }}</td>
                     <td>
-                        <button class="edit-button" onclick="openEditModal({{ category.idCategory }}, '{{ category.description_cat }}', {{ category.idCatalog }})">Edit</button>
+                        <button class="edit-button" onclick="openEditModal('{{ category.idCategory }}', '{{ category.description_cat }}', '{{ category.idCatalog }}')">Edit</button>
                         <form method="POST" action="{{ url_for('admin.delete_category', category_id=category.idCategory) }}" style="display:inline;">
                             <button type="submit" class="delete-button">X</button>
                         </form>
@@ -77,7 +77,7 @@
     function openEditModal(categoryId, categoryName, catalogId) {
         document.getElementById('editCategoryName').value = categoryName;
         document.getElementById('editCatalogId').value = catalogId;
-        document.getElementById('editCategoryForm').action = '/edit_category/' + categoryId;
+        document.getElementById('editCategoryForm').action = '/admin/edit_category/' + categoryId;
         document.getElementById('editCategoryModal').style.display = 'block';
     }
 </script>

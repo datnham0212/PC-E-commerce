@@ -1,0 +1,7 @@
+[
+  {
+    "route": "POST /admin/add_product",
+    "parameters": "(,,,,,,,)",
+    "status": 302
+  }
+]

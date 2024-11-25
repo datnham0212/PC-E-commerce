@@ -1,5 +1,5 @@
 # app/controllers/cartCtrl.py
-from flask import Blueprint, render_template, session, request, redirect, url_for, flash
+from flask import Blueprint, session, flash
 from flask_login import current_user
 import MySQLdb
 

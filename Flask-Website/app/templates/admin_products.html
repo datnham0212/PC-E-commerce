@@ -30,7 +30,7 @@
                     <td>{{ product.price }}</td>
                     <td>{{ product.stock }}</td>
                     <td>
-                        <button class="edit-button" onclick="openEditProductModal({{ product.idProduct }}, '{{ product.name_prod }}', '{{ product.description_prod }}', {{ product.price }}, '{{ product.img_prod }}', {{ product.promo }}, {{ product.stock }}, {{ product.idCategory }}, {{ product.brand }})">Edit</button>
+                        <button class="edit-button" onclick="openEditProductModal('{{ product.idProduct }}', '{{ product.name_prod }}', '{{ product.description_prod }}', '{{ product.price }}', '{{ product.img_prod }}', '{{ product.promo }}', '{{ product.stock }}', '{{ product.idCategory }}', '{{ product.brand }}')">Edit</button>
                         <form method="POST" action="{{ url_for('admin.delete_product', product_id=product.idProduct) }}" style="display:inline;">
                             <button type="submit" class="delete-button">X</button>
                         </form>
@@ -98,7 +98,7 @@ function openEditProductModal(productId, name, description, price, img, promo, s
     document.getElementById('editProductStock').value = stock;
     document.getElementById('editProductCategory').value = category;
     document.getElementById('editProductBrand').value = brand;
-    document.getElementById('editProductForm').action = '/edit_product/' + productId;
+    document.getElementById('editProductForm').action = '/admin/edit_product/' + productId;
     document.getElementById('editProductModal').style.display = 'block';
 }
 </script>

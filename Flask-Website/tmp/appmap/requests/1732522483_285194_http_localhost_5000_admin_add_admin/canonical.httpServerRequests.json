@@ -1,0 +1,7 @@
+[
+  {
+    "route": "POST /admin/add_admin",
+    "parameters": "(,,,)",
+    "status": 302
+  }
+]

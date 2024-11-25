@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request,
 from sqlalchemy import func
 from app import db
 from flask_login import login_required, current_user, logout_user
-from app.models import Admin, Client, Product, Category, Order, OrderProducts, Delivery, LoyalClient, Catalog, DeliveryType, Address
+from app.models import Admin, Cart, Client, Product, Category, Order, OrderProducts, Delivery, LoyalClient, Catalog, DeliveryType, Address, Review, Wish
 from datetime import datetime
 
 admin_bp = Blueprint('admin', __name__)
@@ -71,13 +71,52 @@ def customers():
 def delete_customer(client_id):
     if not isinstance(current_user, Admin):
         return redirect(url_for('main.home'))
+    
+    print(f"Attempting to delete client with ID: {client_id}")  # Debug statement
+    
     client = Client.query.get(client_id)
     if client:
-        db.session.delete(client)
-        db.session.commit()
-        flash('Customer has been deleted successfully.', 'success')
+        try:
+            # Delete related orders and their associated records
+            orders = Order.query.filter_by(idClient=client_id).all()
+            for order in orders:
+                OrderProducts.query.filter_by(idOrder=order.idOrder).delete()
+                Delivery.query.filter_by(idOrder=order.idOrder).delete()
+                db.session.delete(order)
+            
+            # Delete related deliveries
+            deliveries = Delivery.query.filter(Delivery.idAddress.in_(
+                db.session.query(Address.idAddress).filter_by(idClient=client_id)
+            )).all()
+            for delivery in deliveries:
+                db.session.delete(delivery)
+            
+            # Delete related addresses
+            addresses = Address.query.filter_by(idClient=client_id).all()
+            for address in addresses:
+                Delivery.query.filter_by(idAddress=address.idAddress).delete()
+                db.session.delete(address)
+            
+            # Delete related loyal client records
+            LoyalClient.query.filter_by(idClient=client_id).delete()
+            # Delete related cart records
+            Cart.query.filter_by(idClient=client_id).delete()
+            # Delete related wish records
+            Wish.query.filter_by(idClient=client_id).delete()
+            # Delete related review records
+            Review.query.filter_by(idClient=client_id).delete()
+            
+            # Finally, delete the client
+            db.session.delete(client)
+            db.session.commit()
+            flash('Customer has been deleted successfully.', 'success')
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error deleting client: {e}")  # Debug statement
+            flash('An error occurred while deleting the customer.', 'error')
     else:
         flash('Customer not found.', 'error')
+    
     return redirect(url_for('admin.customers'))
 
 @admin_bp.route('/verify_loyal_client/<int:client_id>', methods=['POST'])
@@ -202,7 +241,8 @@ def products():
     if not isinstance(current_user, Admin):
         return redirect(url_for('main.home'))
     products = Product.query.all()  # Fetch all products from the database
-    return render_template('admin_products.html', products=products)
+    categories = Category.query.all() # Fetch all categories from the database
+    return render_template('admin_products.html', products=products, categories=categories)
 
 @admin_bp.route('/add_product', methods=['POST'])
 @login_required

@@ -1,0 +1,7 @@
+[
+  {
+    "route": "POST /admin/delete_customer/{client_id}",
+    "parameters": "()",
+    "status": 302
+  }
+]

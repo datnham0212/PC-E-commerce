@@ -64,7 +64,7 @@
                     <td>{{ order.amount }}</td>
                     <td>{{ order.order_date }}</td>
                     <td>
-                        <button class="status-button" onclick="confirmStatusChange({{ order.order_id }}, '{{ order.delivery_status }}')">
+                        <button class="status-button" onclick="confirmStatusChange('{{ order.order_id }}', '{{ order.delivery_status }}')">
                             {{ order.delivery_status }}
                         </button>
                     </td>

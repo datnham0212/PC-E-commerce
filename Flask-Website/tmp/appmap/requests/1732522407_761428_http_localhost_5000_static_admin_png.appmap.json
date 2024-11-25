@@ -1,0 +1,89 @@
+{
+  "events": [
+    {
+      "http_server_request": {
+        "request_method": "GET",
+        "protocol": "HTTP/1.1",
+        "path_info": "/static/admin.png",
+        "normalized_path_info": "/static/{filename}",
+        "headers": {
+          "Host": "localhost:5000",
+          "Connection": "keep-alive",
+          "Sec-Ch-Ua-Platform": "\"Windows\"",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+          "Sec-Ch-Ua": "\"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\"",
+          "Sec-Ch-Ua-Mobile": "?0",
+          "Accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+          "Sec-Fetch-Site": "same-origin",
+          "Sec-Fetch-Mode": "no-cors",
+          "Sec-Fetch-Dest": "image",
+          "Referer": "http://localhost:5000/admin/customers",
+          "Accept-Encoding": "gzip, deflate, br, zstd",
+          "Accept-Language": "en-US,en;q=0.9",
+          "Cookie": "session=.eJwljjEOwjAMAP-SmcFOYsfuZ5Dj2IK1pRPi71Sgm2453bvcc4_jUbbXfsat3J-rbMXdBiIrVEwUWNlyWRqxQbCz1mAzb4p9onSgyo0EZk1qkpQ0ejP6yQgSD1UlaFOUOLvoVXddgwNkYAwlaReKDtOXO65yjZxH7P8bLJ8vlIourA.Z0QxHA.sso40-ycmg2tELBl_wr4GXkuYXw",
+          "If-None-Match": "\"1730089154.095492-18279-239541322\"",
+          "If-Modified-Since": "Mon, 28 Oct 2024 04:19:14 GMT"
+        }
+      },
+      "message": [
+        {
+          "object_id": 1757146396656,
+          "value": "<builtins.str object at 0x1991e1637f0>"
+        }
+      ],
+      "id": 1,
+      "event": "call",
+      "thread_id": 18
+    },
+    {
+      "http_server_response": {
+        "status_code": 304,
+        "mime_type": "image/png",
+        "headers": {
+          "Content-Disposition": "inline; filename=admin.png",
+          "Content-Type": "image/png",
+          "Content-Length": "18279",
+          "Last-Modified": "Mon, 28 Oct 2024 04:19:14 GMT",
+          "Cache-Control": "no-cache",
+          "ETag": "\"1730089154.095492-18279-239541322\"",
+          "Date": "Mon, 25 Nov 2024 08:13:27 GMT"
+        }
+      },
+      "parent_id": 1,
+      "elapsed": 0.015000000013969839,
+      "id": 2,
+      "event": "return",
+      "thread_id": 18
+    }
+  ],
+  "version": "1.9",
+  "metadata": {
+    "language": {
+      "name": "python",
+      "engine": "CPython",
+      "version": "3.12.4"
+    },
+    "client": {
+      "name": "appmap",
+      "url": "https://github.com/applandinc/appmap-python"
+    },
+    "name": "GET /static/admin.png (304) - 15:13:27.761",
+    "timestamp": 1732522407.761428,
+    "recorder": {
+      "name": "record_requests",
+      "type": "requests"
+    }
+  },
+  "classMap": [
+    {
+      "type": "http",
+      "name": "HTTP server requests",
+      "children": [
+        {
+          "type": "route",
+          "name": "GET /static/{filename}"
+        }
+      ]
+    }
+  ]
+}

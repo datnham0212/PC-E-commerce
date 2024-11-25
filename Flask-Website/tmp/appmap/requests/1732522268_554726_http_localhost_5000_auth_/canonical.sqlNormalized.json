@@ -1,0 +1,3 @@
+[
+  "SELECT admins.`idAdmin` AS `admins_idAdmin`, admins.email AS admins_email, admins.password AS admins_password, admins.`lastName` AS `admins_lastName`, admins.`firstName` AS `admins_firstName`, admins.`phoneNumber` AS `admins_phoneNumber`, admins.photo AS admins_photo \nFROM admins \nWHERE admins.email = %(email_1)s \n LIMIT %(param_1)s"
+]
