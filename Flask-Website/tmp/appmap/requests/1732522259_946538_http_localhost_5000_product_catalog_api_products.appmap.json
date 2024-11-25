@@ -1,0 +1,113 @@
+{
+  "events": [
+    {
+      "http_server_request": {
+        "request_method": "GET",
+        "protocol": "HTTP/1.1",
+        "path_info": "/product_catalog/api/products",
+        "normalized_path_info": "/product_catalog/api/products",
+        "headers": {
+          "Host": "localhost:5000",
+          "Connection": "keep-alive",
+          "Sec-Ch-Ua-Platform": "\"Windows\"",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+          "Sec-Ch-Ua": "\"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\"",
+          "Sec-Ch-Ua-Mobile": "?0",
+          "Accept": "*/*",
+          "Sec-Fetch-Site": "same-origin",
+          "Sec-Fetch-Mode": "cors",
+          "Sec-Fetch-Dest": "empty",
+          "Referer": "http://localhost:5000/auth/",
+          "Accept-Encoding": "gzip, deflate, br, zstd",
+          "Accept-Language": "en-US,en;q=0.9",
+          "Cookie": "session=eyJfZnJlc2giOmZhbHNlfQ.Z0QxEw.RLaLqrhtemm4928wA-1hgvm6lI4"
+        }
+      },
+      "id": 1,
+      "event": "call",
+      "thread_id": 20
+    },
+    {
+      "sql_query": {
+        "sql": "SELECT product.`idProduct` AS `product_idProduct`, product.name_prod AS product_name_prod, product.description_prod AS product_description_prod, product.price AS product_price, product.img_prod AS product_img_prod, product.promo AS product_promo, product.stock AS product_stock, product.`idCategory` AS `product_idCategory`, product.sold AS product_sold, product.shipped AS product_shipped, product.brand AS product_brand \nFROM product",
+        "database_type": "mysql",
+        "server_version": "10.4.32"
+      },
+      "id": 2,
+      "event": "call",
+      "thread_id": 20
+    },
+    {
+      "parent_id": 2,
+      "elapsed": 0,
+      "id": 3,
+      "event": "return",
+      "thread_id": 20
+    },
+    {
+      "http_server_response": {
+        "status_code": 200,
+        "mime_type": "application/json",
+        "headers": {
+          "Content-Type": "application/json",
+          "Content-Length": "1164"
+        }
+      },
+      "parent_id": 1,
+      "elapsed": 0,
+      "id": 4,
+      "event": "return",
+      "thread_id": 20
+    }
+  ],
+  "version": "1.9",
+  "metadata": {
+    "language": {
+      "name": "python",
+      "engine": "CPython",
+      "version": "3.12.4"
+    },
+    "client": {
+      "name": "appmap",
+      "url": "https://github.com/applandinc/appmap-python"
+    },
+    "frameworks": [
+      {
+        "name": "flask",
+        "version": "3.1.0"
+      },
+      {
+        "name": "SQLAlchemy",
+        "version": "2.0.36"
+      }
+    ],
+    "name": "GET /product_catalog/api/products (200) - 15:10:59.946",
+    "timestamp": 1732522259.946538,
+    "recorder": {
+      "name": "record_requests",
+      "type": "requests"
+    }
+  },
+  "classMap": [
+    {
+      "type": "http",
+      "name": "HTTP server requests",
+      "children": [
+        {
+          "type": "route",
+          "name": "GET /product_catalog/api/products"
+        }
+      ]
+    },
+    {
+      "type": "database",
+      "name": "Database",
+      "children": [
+        {
+          "type": "query",
+          "name": "SELECT product.`idProduct` AS `product_idProduct`, product.name_prod AS product_name_prod, product.description_prod AS product_description_prod, product.price AS product_price, product.img_prod AS product_img_prod, product.promo AS product_promo, product.stock AS product_stock, product.`idCategory` AS `product_idCategory`, product.sold AS product_sold, product.shipped AS product_shipped, product.brand AS product_brand \nFROM product"
+        }
+      ]
+    }
+  ]
+}

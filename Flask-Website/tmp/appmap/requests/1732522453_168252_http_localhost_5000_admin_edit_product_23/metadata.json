@@ -1,0 +1,27 @@
+{
+  "language": {
+    "name": "python",
+    "engine": "CPython",
+    "version": "3.12.4"
+  },
+  "client": {
+    "name": "appmap",
+    "url": "https://github.com/applandinc/appmap-python"
+  },
+  "frameworks": [
+    {
+      "name": "flask",
+      "version": "3.1.0"
+    },
+    {
+      "name": "SQLAlchemy",
+      "version": "2.0.36"
+    }
+  ],
+  "name": "POST /admin/edit_product/23 (302) - 15:14:13.168",
+  "timestamp": 1732522453.168252,
+  "recorder": {
+    "name": "record_requests",
+    "type": "requests"
+  }
+}
