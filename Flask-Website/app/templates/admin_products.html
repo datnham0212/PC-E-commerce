@@ -46,11 +46,11 @@
         <div class="modal-content">
             <span onclick="document.getElementById('addProductModal').style.display='none'" class="close">&times;</span>
             <h2>Add New Product</h2>
-            <form method="POST" action="{{ url_for('admin.add_product') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ url_for('admin.add_product') }}">
                 <input type="text" name="name_prod" placeholder="Product Name" required>
                 <input type="text" name="description_prod" placeholder="Description" required>
                 <input type="number" step="0.01" name="price" placeholder="Price" required>
-                <input type="file" name="img_prod" accept="image/*" required>
+                <input type="text" name="img_prod" placeholder="Image URL" required>
                 <input type="number" step="0.01" name="promo" placeholder="Promo" value="0">
                 <input type="number" name="stock" placeholder="Stock" required>
                 <select name="idCategory" required>
@@ -69,11 +69,11 @@
         <div class="modal-content">
             <span onclick="document.getElementById('editProductModal').style.display='none'" class="close">&times;</span>
             <h2>Edit Product</h2>
-            <form method="POST" id="editProductForm" enctype="multipart/form-data">
+            <form method="POST" id="editProductForm">
                 <input type="text" name="name_prod" id="editProductName" placeholder="Product Name" required>
                 <input type="text" name="description_prod" id="editProductDescription" placeholder="Description" required>
                 <input type="number" step="0.01" name="price" id="editProductPrice" placeholder="Price" required>
-                <input type="file" name="img_prod" id="editProductImage" accept="image/*">
+                <input type="text" name="img_prod" id="editProductImage" placeholder="Image URL" required>
                 <input type="number" step="0.01" name="promo" id="editProductPromo" placeholder="Promo" value="0">
                 <input type="number" name="stock" id="editProductStock" placeholder="Stock" required>
                 <select name="idCategory" id="editProductCategory" required>
@@ -93,7 +93,7 @@ function openEditProductModal(productId, name, description, price, img, promo, s
     document.getElementById('editProductName').value = name;
     document.getElementById('editProductDescription').value = description;
     document.getElementById('editProductPrice').value = price;
-    // Image input should not be pre-filled
+    document.getElementById('editProductImage').value = img;
     document.getElementById('editProductPromo').value = promo;
     document.getElementById('editProductStock').value = stock;
     document.getElementById('editProductCategory').value = category;

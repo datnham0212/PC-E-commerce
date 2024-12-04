@@ -7,14 +7,6 @@ main = Blueprint('main', __name__)
 def home():
     return render_template('home.html')
 
-@main.route('/favorites')
-def help_page():
-    return render_template('favorites.html')
-
-@main.route('/contact-help')
-def contact_page():
-    return render_template('contact-help.html')
-
 @main.route('/guidelines')
 def guidelines_page():
     return render_template('guidelines.html')
@@ -26,3 +18,11 @@ def about_page():
 @main.route('/policies')
 def policies_page():
     return render_template('policies.html')
+
+@main.route('/favorites')
+def help_page():
+    return render_template('favorites.html')
+
+@main.route('/contact-help')
+def contact_page():
+    return render_template('contact-help.html')
