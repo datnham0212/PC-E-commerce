@@ -12,7 +12,7 @@ def get_cart_items():
     cart_key = f'cart_{current_user.idClient}'
     return session.get(cart_key, {})
 
-def add_product_to_cart(product_id, product_name, product_price, quantity):
+def add_product_to_cart(product_id, product_name, product_price, quantity, product_image):
     if not current_user.is_authenticated:
         flash('Please login to add items to cart')
         return
@@ -26,7 +26,8 @@ def add_product_to_cart(product_id, product_name, product_price, quantity):
         cart_items[product_id] = {
             'name': product_name,
             'price': product_price,
-            'quantity': quantity
+            'quantity': quantity,
+            'image': product_image
         }
     
     session[cart_key] = cart_items
