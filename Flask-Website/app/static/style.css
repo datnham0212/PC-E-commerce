@@ -100,6 +100,111 @@
     color: var(--accent-color);
 }
 
+/* Shared styles for policy, guidelines and about pages */
+.policy-container,
+.guidelines,
+.about-container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+/* Section styling */
+.policy-section,
+.guidelines section,
+.about-container section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+/* Headings */
+.policy-container h1,
+.guidelines h1,
+.about-container h2 {
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* Lists */
+.policy-section ul,
+.guidelines ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.policy-section ul li,
+.guidelines ul li {
+    position: relative;
+    padding: 8px 0;
+    padding-left: 20px;
+}
+
+.policy-section ul li:before,
+.guidelines ul li:before {
+    content: "•";
+    color: #3498db;
+    position: absolute;
+    left: 0;
+}
+
+/* Paragraphs */
+.policy-section p,
+.guidelines p,
+.about-container p {
+    line-height: 1.6;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+/* Hover effects */
+.policy-section:hover,
+.guidelines section:hover,
+.about-container section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .policy-container,
+    .guidelines,
+    .about-container {
+        margin: 10px;
+        padding: 15px;
+    }
+    
+    .policy-section,
+    .guidelines section,
+    .about-container section {
+        padding: 15px;
+    }
+}
+
+/* Adjust main content positioning for policy, guidelines and about pages */
+.policy-container,
+.guidelines,
+.about-container {
+    margin-top: -120px;
+    position: relative;
+}
+
+/* Maintain spacing between elements */
+.main-content .policy-container,
+.main-content .guidelines,
+.main-content .about-container {
+    padding-top: 0;
+}
+
+
+
 /* Main Content */
 .main-content {
     padding: 20px;
@@ -192,11 +297,11 @@
     justify-content: space-between;
 }
 
-.footer-info, .footer-links, .newsletter {
+.footer-info, .footer-links{
     width: 30%;
 }
 
-.footer-info h3, .footer-links ul, .newsletter h4 {
+.footer-info h3, .footer-links ul{
     margin-bottom: 15px;
     color: white;
 }
@@ -214,27 +319,6 @@
 
 .footer-links ul li a:hover, .footer-info a:hover {
     color: var(--accent-color);
-}
-
-.newsletter input[type="email"] {
-    padding: 8px;
-    width: 70%;
-    border-radius: 5px;
-    border: none;
-}
-
-.newsletter button {
-    padding: 8px 15px;
-    border: none;
-    border-radius: 5px;
-    background: var(--accent-color);
-    color: white;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.newsletter button:hover {
-    background: #b2001a;
 }
 
 /* Authentication */

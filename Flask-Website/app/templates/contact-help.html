@@ -4,11 +4,157 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trợ giúp - Liên Hệ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .container {
+            padding: 20px;
+        }
+        .contact-info, .faq, .contact-form {
+            margin-bottom: 40px;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .faq-item {
+            margin-bottom: 10px;
+        }
+        .faq-item button {
+            width: 100%;
+            text-align: left;
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+            padding: 10px;
+            cursor: pointer;
+            color: #333;
+        }
+        .faq-item button:hover {
+            background-color: #e1e1e1;
+        }
+        .faq-item .answer {
+            display: none;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+    </style>
 </head>
 <body>
     {% include 'header.html' %}
-    <h1>Trợ giúp - Liên Hệ</h1>
-    <p>Nội dung liên hệ sẽ được hiển thị ở đây.</p>
+    <div class="container">
+        
+        <div class="faq">
+            <h2>Câu hỏi thường gặp</h2>
+            <div class="faq-item">
+                <button type="button">Q: Làm thế nào để liên hệ với bộ phận hỗ trợ?</button>
+                <div class="answer">
+                    <p>A: Bạn có thể liên hệ với chúng tôi qua biểu mẫu liên hệ trên trang này hoặc gọi điện thoại trực tiếp.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button type="button">Q: Thời gian phản hồi là bao lâu?</button>
+                <div class="answer">
+                    <p>A: Chúng tôi sẽ cố gắng phản hồi trong vòng 24 giờ làm việc.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button type="button">Q: Tôi có thể hủy đơn hàng của mình không?</button>
+                <div class="answer">
+                    <p>A: Có, bạn có thể hủy đơn hàng của mình trong vòng 24 giờ sau khi đặt hàng.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button type="button">Q: Tôi có thể đổi trả sản phẩm không?</button>
+                <div class="answer">
+                    <p>A: Có, bạn có thể đổi trả sản phẩm trong vòng 30 ngày kể từ ngày nhận hàng.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button type="button">Q: Làm thế nào để theo dõi đơn hàng của tôi?</button>
+                <div class="answer">
+                    <p>A: Bạn có thể theo dõi đơn hàng của mình bằng cách đăng nhập vào tài khoản của bạn và truy cập vào phần "Đơn hàng của tôi".</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button type="button">Q: Tôi có thể thay đổi địa chỉ giao hàng sau khi đặt hàng không?</button>
+                <div class="answer">
+                    <p>A: Có, bạn có thể thay đổi địa chỉ giao hàng trước khi đơn hàng được xử lý.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-info">
+            <h2>Thông tin liên hệ</h2>
+            <p>Địa chỉ: 123 Đường ABC, Quận XYZ, Thành phố HCM</p>
+            <p>Điện thoại: (012) 345-6789</p>
+            <p>Email: support@example.com</p>
+        </div>
+        
+        <p>Nếu bạn có bất kỳ câu hỏi nào, vui lòng liên hệ với chúng tôi qua biểu mẫu dưới đây.</p>
+        <div class="contact-form">
+            <form id="contactForm">
+                <label for="name">Tên của bạn:</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="email">Email của bạn:</label>
+                <input type="email" id="email" name="email" required>
+                
+                <label for="message">Tin nhắn của bạn:</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+                
+                <button type="submit">Gửi</button>
+            </form>
+        </div>
+    </div>
     {% include 'footer.html' %}
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            if (name && email && message) {
+                alert('Cảm ơn bạn đã liên hệ với chúng tôi!');
+                // Here you can add code to send the form data to the server
+            } else {
+                alert('Vui lòng điền vào tất cả các trường.');
+            }
+        });
+
+        document.querySelectorAll('.faq-item button').forEach(button => {
+            button.addEventListener('click', () => {
+                const answer = button.nextElementSibling;
+                answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+    </script>
 </body>
 </html>

@@ -14,3 +14,15 @@ def help_page():
 @main.route('/contact-help')
 def contact_page():
     return render_template('contact-help.html')
+
+@main.route('/guidelines')
+def guidelines_page():
+    return render_template('guidelines.html')
+
+@main.route('/about')
+def about_page():
+    return render_template('about.html')
+
+@main.route('/policies')
+def policies_page():
+    return render_template('policies.html')
