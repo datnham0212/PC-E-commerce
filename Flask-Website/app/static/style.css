@@ -100,6 +100,88 @@
     color: var(--accent-color);
 }
 
+/* About, Guidelines, and Policies Pages Shared Styles */
+.about-container,
+.guidelines,
+.policy-container {
+    max-width: 800px;
+    margin: 0 auto;
+    margin-top: -10em;
+    padding: 30px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Section Styling */
+.history,
+.goals,
+.product-origins,
+.policy-section,
+.guidelines section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: var(--bg-color);
+    border-radius: 8px;
+}
+
+/* Headings */
+.about-container h2,
+.guidelines h2,
+.policy-container h2 {
+    color: var(--primary-color);
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 10px;
+}
+
+/* Main Titles */
+.about-container h1,
+.guidelines h1,
+.policy-container h1 {
+    text-align: center;
+    color: var(--primary-color);
+    font-size: 2em;
+    margin-bottom: 30px;
+}
+
+/* Paragraphs */
+.about-container p,
+.guidelines p,
+.policy-container p {
+    line-height: 1.6;
+    color: var(--text-color);
+    margin-bottom: 15px;
+}
+
+/* Lists */
+.guidelines ul,
+.policy-container ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.guidelines li,
+.policy-container li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+    color: var(--text-color);
+}
+
+/* Hover Effects */
+.history:hover,
+.goals:hover,
+.product-origins:hover,
+.policy-section:hover,
+.guidelines section:hover {
+    transform: translateY(-2px);
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+
 /* Main Content */
 .main-content {
     padding: 20px;

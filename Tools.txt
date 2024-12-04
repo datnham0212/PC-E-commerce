@@ -1,1 +1,0 @@
-PHPUnit for integration and unit tests. Codeception for E2E  functional tests.

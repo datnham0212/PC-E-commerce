@@ -1,7 +1,8 @@
 # app/controllers/cartCtrl.py
 from flask import Blueprint, session, flash
 from flask_login import current_user
-import MySQLdb
+# import MySQLdb Gặp lỗi SSL khi xoá sạch giỏ hàng nên thay bằng mysql-connector-python, chưa rõ tại sao khi folder Flask-Website nằm đâu đó khác PC-E-Commerce thì vẫn chạy được mà lại không chạy được trong PC-E-Commerce
+import mysql.connector
 
 cart = Blueprint('cart', __name__)
 
@@ -52,14 +53,20 @@ def clear_cart():
     session.pop(cart_key, None)
     
     # Clear cart in the database
-    db = MySQLdb.connect(user='root', passwd='', db='ecommerce3', host='localhost')
+    db = mysql.connector.connect(user='root', passwd='', db='ecommerce3', host='localhost')
+
     cursor = db.cursor()
     cursor.execute("SELECT empty_cart(%s)", (current_user.idClient,))
+    
+    # Fetch any potential results to clear the unread result
+    cursor.fetchall()
+    
     db.commit()
     cursor.close()
     db.close()
     
     flash('Giỏ hàng đã được xóa thành công!')
+
 
 def update_product_quantity_in_cart(product_id, quantity):
     if not current_user.is_authenticated:
