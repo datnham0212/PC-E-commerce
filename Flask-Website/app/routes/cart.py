@@ -26,7 +26,6 @@ def remove_from_cart(product_id):
 @cart.route('/delete_cart', methods=['POST'])
 def delete_cart():
     clear_cart()  # Gọi hàm xóa toàn bộ giỏ hàng
-    flash('Giỏ hàng đã được xóa thành công!')  # Hiển thị thông báo thành công
     return redirect(url_for('cart.cart_page'))  # Chuyển hướng đến trang giỏ hàng
 
 @cart.route('/update_quantity', methods=['POST'])
