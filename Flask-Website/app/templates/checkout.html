@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang="vi">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout</title>
+    <title>Thanh Toán</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
@@ -13,32 +13,32 @@
 
     <div class="checkout-container">
         <div class="checkout-wrapper">
-            <!-- Left Column -->
+            <!-- Cột Trái -->
             <div class="checkout-details">
                 <div class="checkout-header">
-                    <h1>Checkout</h1>
+                    <h1>Thanh Toán</h1>
                     <div class="checkout-steps">
                         <div class="step active">
                             <span class="step-number">1</span>
-                            <span class="step-text">Shipping</span>
+                            <span class="step-text">Giao Hàng</span>
                         </div>
                         <div class="step">
                             <span class="step-number">2</span>
-                            <span class="step-text">Payment</span>
+                            <span class="step-text">Thanh Toán</span>
                         </div>
                     </div>
                 </div>
 
                 <form method="POST" action="{{ url_for('checkout.process_checkout') }}" class="checkout-form">
-                    <!-- Shipping Section -->
+                    <!-- Phần Giao Hàng -->
                     <div id="shipping-section" class="form-section active">
                         <div class="form-group-row">
                             <div class="form-group">
-                                <label for="first_name">First Name</label>
+                                <label for="first_name">Tên</label>
                                 <input type="text" name="first_name" id="first_name" required>
                             </div>
                             <div class="form-group">
-                                <label for="last_name">Last Name</label>
+                                <label for="last_name">Họ</label>
                                 <input type="text" name="last_name" id="last_name" required>
                             </div>
                         </div>
@@ -49,86 +49,86 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="phone">Phone</label>
+                            <label for="phone">Số Điện Thoại</label>
                             <input type="tel" name="phone" id="phone" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="address">Address</label>
+                            <label for="address">Địa Chỉ</label>
                             <input type="text" name="address" id="address" required>
                         </div>
 
                         <div class="form-group-row">
                             <div class="form-group">
-                                <label for="country">Country</label>
+                                <label for="country">Quốc Gia</label>
                                 <select name="country" id="country" required>
-                                    <option value="">Select Country</option>
-                                    <option value="USA">USA</option>
+                                    <option value="">Chọn Quốc Gia</option>
+                                    <option value="USA">Mỹ</option>
                                     <option value="Canada">Canada</option>
-                                    <option value="UK">UK</option>
-                                    <option value="VN">Viet Nam</option>
-                                    <!-- Add more countries as needed -->
+                                    <option value="UK">Anh</option>
+                                    <option value="VN">Việt Nam</option>
+                                    <!-- Thêm các quốc gia khác nếu cần -->
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="city">City</label>
+                                <label for="city">Thành Phố</label>
                                 <select name="city" id="city" required>
-                                    <option value="">Select City</option>
+                                    <option value="">Chọn Thành Phố</option>
                                     <option value="New York">New York</option>
                                     <option value="Los Angeles">Los Angeles</option>
                                     <option value="Chicago">Chicago</option>
-                                    <option value="HCM">Ho Chi Minh</option>
-                                    <!-- Add more cities as needed -->
+                                    <option value="HCM">Hồ Chí Minh</option>
+                                    <!-- Thêm các thành phố khác nếu cần -->
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="zipCode">Postal Code</label>
+                                <label for="zipCode">Mã Bưu Chính</label>
                                 <input type="text" name="zipCode" id="zipCode" required>
                             </div>
                         </div>
 
                         <div class="delivery-options">
-                            <h3>Delivery Method</h3>
+                            <h3>Phương Thức Giao Hàng</h3>
                             <div class="delivery-choice">
                                 <input type="radio" id="standard" name="delivery_option" value="standard" checked>
                                 <label for="standard">
-                                    <span class="delivery-title">Standard Delivery</span>
-                                    <span class="delivery-time">5-7 business days</span>
-                                    <span class="delivery-price">Free</span>
+                                    <span class="delivery-title">Giao Hàng Tiêu Chuẩn</span>
+                                    <span class="delivery-time">5-7 ngày làm việc</span>
+                                    <span class="delivery-price">Miễn phí</span>
                                 </label>
                             </div>
                             <div class="delivery-choice">
                                 <input type="radio" id="express" name="delivery_option" value="express">
                                 <label for="express">
-                                    <span class="delivery-title">Express Delivery</span>
-                                    <span class="delivery-time">2-3 business days</span>
+                                    <span class="delivery-title">Giao Hàng Nhanh</span>
+                                    <span class="delivery-time">2-3 ngày làm việc</span>
                                     <span class="delivery-price">15000 VND</span>
                                 </label>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Payment Section -->
+                    <!-- Phần Thanh Toán -->
                     <div id="payment-section" class="form-section">
                         <div class="payment-methods">
                             <div class="payment-method">
                                 <input type="radio" id="card" name="payment_method" value="card" checked>
-                                <label for="card">Credit Card</label>
+                                <label for="card">Thẻ Tín Dụng</label>
                             </div>
                             <div class="payment-method">
                                 <input type="radio" id="cash" name="payment_method" value="cash">
-                                <label for="cash">Cash on Delivery</label>
+                                <label for="cash">Thanh Toán Khi Nhận Hàng</label>
                             </div>
                         </div>
 
                         <div id="card-details">
                             <div class="form-group">
-                                <label for="card_number">Card Number</label>
+                                <label for="card_number">Số Thẻ</label>
                                 <input type="text" name="card_number" id="card_number" placeholder="1234 5678 9012 3456">
                             </div>
                             <div class="form-group-row">
                                 <div class="form-group">
-                                    <label for="expiry">Expiry Date</label>
+                                    <label for="expiry">Ngày Hết Hạn</label>
                                     <input type="text" name="expiry" id="expiry" placeholder="MM/YY">
                                 </div>
                                 <div class="form-group">
@@ -140,17 +140,17 @@
                     </div>
 
                     <div class="form-navigation">
-                        <button type="button" id="prev-btn" class="nav-btn" onclick="prevStep()">Previous</button>
-                        <button type="button" id="next-btn" class="nav-btn primary" onclick="nextStep()">Next</button>
-                        <button type="submit" id="submit-btn" class="nav-btn primary" style="display: none;">Complete Order</button>
+                        <button type="button" id="prev-btn" class="nav-btn" onclick="prevStep()">Trước</button>
+                        <button type="button" id="next-btn" class="nav-btn primary" onclick="nextStep()">Tiếp</button>
+                        <button type="submit" id="submit-btn" class="nav-btn primary" style="display: none;">Hoàn Tất Đơn Hàng</button>
                     </div>
                 </form>
-                <div id="warning-message" class="warning-message" style="display: none;">Please fill in all required fields.</div>
+                <div id="warning-message" class="warning-message" style="display: none;">Vui lòng điền đầy đủ các trường bắt buộc.</div>
             </div>
 
-            <!-- Right Column -->
+            <!-- Cột Phải -->
             <div class="order-summary">
-                <h2>Order Summary</h2>
+                <h2>Tóm Tắt Đơn Hàng</h2>
                 <div class="order-items">
                     {% for item_id, item in cart_items.items() %}
                     <div class="order-item">
@@ -164,21 +164,21 @@
                 </div>
 
                 <div class="coupon-section">
-                    <input type="text" placeholder="Promo Code" id="coupon-code">
-                    <button onclick="applyCoupon(event)" class="coupon-btn">Apply</button>
+                    <input type="text" placeholder="Mã Khuyến Mãi" id="coupon-code">
+                    <button onclick="applyCoupon(event)" class="coupon-btn">Áp Dụng</button>
                 </div>
 
                 <div class="order-totals">
                     <div class="subtotal">
-                        <span>Subtotal</span>
+                        <span>Tổng Phụ</span>
                         <span id="subtotal">{{ "%.2f"|format(total) }} VND</span>
                     </div>
                     <div class="shipping">
-                        <span>Shipping</span>
-                        <span id="shipping-cost">Free</span>
+                        <span>Phí Giao Hàng</span>
+                        <span id="shipping-cost">Miễn phí</span>
                     </div>
                     <div class="total">
-                        <span>Total</span>
+                        <span>Tổng Cộng</span>
                         <span class="total-amount">{{ "%.2f"|format(total) }} VND</span>
                     </div>
                 </div>
@@ -189,7 +189,7 @@
     {% include 'footer.html' %}
     
     <script>
-        // State management
+        // Quản lý trạng thái
         const state = {
             currentStep: 1,
             totalSteps: 2,
@@ -197,7 +197,7 @@
             subtotal: parseFloat(document.getElementById('subtotal').textContent.replace(' VND', '').trim())
         };
 
-        // Form validation
+        // Xác thực biểu mẫu
         const validateShippingForm = () => {
             const requiredFields = [
                 'first_name', 'last_name', 'email',
@@ -216,7 +216,7 @@
                 }
             });
 
-            console.log('Shipping form valid:', isValid);
+            console.log('Biểu mẫu giao hàng hợp lệ:', isValid);
             return isValid;
         };
 
@@ -237,11 +237,11 @@
                 });
             }
 
-            console.log('Payment form valid:', isValid);
+            console.log('Biểu mẫu thanh toán hợp lệ:', isValid);
             return isValid;
         };
 
-        // Navigation functions
+        // Chức năng điều hướng
         const updateSteps = () => {
             document.querySelectorAll('.step').forEach((step, index) => {
                 step.classList.toggle('active', index + 1 <= state.currentStep);
@@ -282,7 +282,7 @@
             }
         };
 
-        // Coupon logic
+        // Logic mã khuyến mãi
         const applyCoupon = (e) => {
             e.preventDefault();
             const couponCode = document.getElementById('coupon-code').value.trim();
@@ -302,17 +302,17 @@
             }
         };
 
-        // Update total price after applying coupon or shipping changes
+        // Cập nhật tổng giá sau khi áp dụng mã khuyến mãi hoặc thay đổi phí giao hàng
         const updateTotalPrice = () => {
             const total = state.subtotal + state.deliveryPrice;
             document.querySelector('.total-amount').textContent = total.toFixed(2) + ' VND';
-            document.querySelector('#shipping-cost').textContent = state.deliveryPrice === 0 ? 'Free' : state.deliveryPrice + ' VND';
+            document.querySelector('#shipping-cost').textContent = state.deliveryPrice === 0 ? 'Miễn phí' : state.deliveryPrice + ' VND';
         };
 
-        // Event Listeners
+        // Trình nghe sự kiện
         document.querySelectorAll('input[name="delivery_option"]').forEach(input => {
             input.addEventListener('change', (e) => {
-                // Set delivery price to 15000 VND for express delivery, 0 for standard
+                // Đặt giá giao hàng là 15000 VND cho giao hàng nhanh, 0 cho giao hàng tiêu chuẩn
                 state.deliveryPrice = e.target.value === 'express' ? 15000 : 0;
                 updateTotalPrice();
             });
@@ -334,7 +334,7 @@
                 });
             });
 
-            // Initial check to set the correct display state
+            // Kiểm tra ban đầu để đặt trạng thái hiển thị chính xác
             if (document.querySelector('input[name="payment_method"]:checked').value === 'cash') {
                 cardDetails.style.display = 'none';
             }

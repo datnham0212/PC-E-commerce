@@ -731,6 +731,18 @@ th, td {
     margin-bottom: 10px;
 }
 
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    width: 12em; /* Ensure the width adjusts to the text length */
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block; /* Ensure the button fits the content */
+}
+
 /* Comment style*/
 .comment-section {
     margin-top: 20px;
