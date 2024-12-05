@@ -5,7 +5,7 @@
     <header class="admin-header">
         <h1>Product List</h1>
         <div class="admin-actions">
-            <input type="search" placeholder="Search...">
+            <input type="search" placeholder="Search..." oninput="searchTable()">
             <button class="add-product-button" onclick="document.getElementById('addProductModal').style.display='block'">Add Product</button>
         </div>
     </header>
@@ -130,6 +130,28 @@
   }
   </script>
   </main>
+
+  <script>
+  function searchTable() {
+      const input = document.querySelector('.admin-actions input[type="search"]');
+      const filter = input.value.toLowerCase();
+      const tbody = document.querySelector('tbody');
+      const rows = tbody.getElementsByTagName('tr');
+  
+      for (let row of rows) {
+          let cells = row.getElementsByTagName('td');
+          let found = false;
+          for (let cell of cells) {
+              if (cell.textContent.toLowerCase().indexOf(filter) > -1) {
+                  found = true;
+                  break;
+              }
+          }
+          row.style.display = found ? '' : 'none';
+      }
+  }
+  </script>
+  
 
 <script>
     function openEditProductModal(productId, name, description, price, img, promo, stock, category, brand) {
