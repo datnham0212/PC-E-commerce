@@ -8,10 +8,11 @@ from app.controllers.product_catalogCtrl import (
 )
 from flask_login import login_required, current_user
 from app.models import Product, Catalog, Category # Import the Product, Catalog, Category models
-
+from app.decorators.auth_decorators import client_required
 product_catalog = Blueprint('product_catalog', __name__)
 
 @product_catalog.route('/')
+@client_required
 def product_catalog_route():
     # Get filter parameters from the request
     min_price = request.args.get('minPrice', 0, type=float)
@@ -42,6 +43,7 @@ def product_catalog_route():
     return render_template('product_catalog.html', products=products, brands=brands, categories=categories)
 
 @product_catalog.route('/api/products')
+@client_required
 def get_products():
     products = Product.query.all()  # Lấy tất cả sản phẩm từ cơ sở dữ liệu
     return {
@@ -52,6 +54,7 @@ def get_products():
     }
 
 @product_catalog.route('/<int:product_id>')
+@client_required
 def product_detail(product_id):
     product, review_details = get_product_details(product_id)
     if product is None:
@@ -60,12 +63,14 @@ def product_detail(product_id):
 
 @product_catalog.route('/favorites')
 @login_required
+@client_required
 def favorites():
     favorite_products = get_favorite_products()
     return render_template('favorites.html', products=favorite_products)
 
 @product_catalog.route('/add_to_favorites', methods=['POST'])
 @login_required
+@client_required
 def add_to_favorites():
     product_id = request.form.get('product_id')
     if product_id:
@@ -75,6 +80,7 @@ def add_to_favorites():
 
 @product_catalog.route('/remove_from_favorites/<int:product_id>', methods=['POST'])
 @login_required
+@client_required
 def remove_from_favorites(product_id):
     message = remove_product_from_favorites(product_id)
     if message:
@@ -83,6 +89,7 @@ def remove_from_favorites(product_id):
 
 @product_catalog.route('/clear_favorites', methods=['POST'])
 @login_required
+@client_required
 def clear_favorites():
     message, category = clear_all_favorites()
     flash(message, category)
@@ -90,6 +97,7 @@ def clear_favorites():
 
 @product_catalog.route('/add_review', methods=['POST'])
 @login_required
+@client_required
 def add_review_route():
     product_id = request.form.get('product_id')
     comment = request.form.get('comment')
@@ -101,6 +109,7 @@ def add_review_route():
 
 @product_catalog.route('/update_review', methods=['POST'])
 @login_required
+@client_required
 def update_review_route():
     product_id = request.form.get('product_id')
     comment = request.form.get('comment')
@@ -112,6 +121,7 @@ def update_review_route():
 
 @product_catalog.route('/delete_review/<int:product_id>', methods=['POST'])
 @login_required
+@client_required
 def delete_review_route(product_id):
     message, category = delete_review(product_id)
     flash(message, category)
