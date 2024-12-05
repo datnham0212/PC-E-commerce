@@ -82,22 +82,62 @@
 }
 
 .sidebar h2 {
-    font-size: 1.2em;
-    margin-bottom: 15px;
+    font-size: 1.5em; /* Slightly bigger title */
+    margin-bottom: 20px;
     color: var(--primary-color);
+    font-weight: 600;
+    letter-spacing: 1px; /* Adds a bit of space between letters for modern style */
+}
+
+.sidebar ul {
+    list-style: none; /* Removes bullet points */
+    padding-left: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 15px; /* More space between items */
 }
 
 .sidebar ul li a {
-    display: block;
+    display: flex;
+    align-items: center;
     margin: 10px 0;
     text-decoration: none;
     color: var(--text-color);
     font-weight: 500;
-    transition: color 0.3s ease;
+    font-size: 1em;
+    padding: 8px 12px; /* Adds some padding for a cleaner look */
+    border-radius: 6px; /* Slight roundness to the edges */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .sidebar ul li a:hover {
-    color: var(--accent-color);
+    background-color: var(--accent-color); /* Highlight the background */
+    color: #fff;  /* Change text color when hovered */
+}
+
+.sidebar ul li a i {
+    margin-right: 15px; /* Space between icon and text */
+    font-size: 1.1em; /* Slightly larger icons */
+    transition: transform 0.3s ease; /* Smooth icon hover effect */
+}
+
+.sidebar ul li a:hover i {
+    transform: scale(1.1); /* Icon grows slightly on hover */
+}
+
+/* Optional: For a collapsed sidebar */
+.sidebar.collapsed {
+    transform: translateX(-100%); /* Moves sidebar out of view */
+}
+
+/* For small screens, ensure the sidebar remains responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px; /* A bit smaller on mobile */
+        position: absolute; /* Changes position on mobile */
+        z-index: 999; /* Ensures it's above content when toggled */
+    }
 }
 
 /* About, Guidelines, and Policies Pages Shared Styles */
