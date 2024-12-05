@@ -14,8 +14,9 @@ def add_to_cart():
     product_name = request.form.get('product_name')
     product_price = float(request.form.get('product_price'))
     quantity = int(request.form.get('quantity'))  # Lấy số lượng từ form
+    product_image = request.form.get('product_image')
     
-    add_product_to_cart(product_id, product_name, product_price, quantity)  # Gọi hàm thêm sản phẩm vào giỏ hàng
+    add_product_to_cart(product_id, product_name, product_price, quantity, product_image)  # Gọi hàm thêm sản phẩm vào giỏ hàng
     return redirect(url_for('product_catalog.product_detail', product_id=product_id))  # Chuyển hướng đến trang chi tiết sản phẩm
 
 @cart.route('/remove_from_cart/<product_id>', methods=['POST'])

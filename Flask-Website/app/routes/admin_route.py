@@ -5,6 +5,8 @@ from app import db
 from flask_login import login_required, current_user, logout_user
 from app.models import Admin, Cart, Client, Product, Category, Order, OrderProducts, Delivery, LoyalClient, Catalog, DeliveryType, Address, Review, Wish
 from datetime import datetime
+from werkzeug.utils import secure_filename
+import os
 
 admin_bp = Blueprint('admin', __name__)
 
@@ -250,10 +252,19 @@ def add_product():
     if not isinstance(current_user, Admin):
         return redirect(url_for('main.home'))
     
+    file = request.files['img_prod']
+    if file and file.filename:
+        filename = secure_filename(file.filename)
+        file.save(os.path.join('app', 'static', 'img', filename))
+        img_prod = filename
+    else:
+        img_prod = 'téléchargement.png'
+
+    
     name_prod = request.form.get('name_prod')
     description_prod = request.form.get('description_prod')
     price = request.form.get('price')
-    img_prod = request.form.get('img_prod')
+    # img_prod is already defined up there
     promo = request.form.get('promo')
     stock = request.form.get('stock')
     idCategory = request.form.get('idCategory')
