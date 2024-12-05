@@ -297,16 +297,21 @@ def edit_product(product_id):
     
     product = Product.query.get(product_id)
     if product:
+        file = request.files['img_prod']
+        if file and file.filename:
+            filename = secure_filename(file.filename)
+            file.save(os.path.join('app', 'static', 'img', filename))
+            product.img_prod = filename
+
         product.name_prod = request.form.get('name_prod')
         product.description_prod = request.form.get('description_prod')
         product.price = request.form.get('price')
-        product.img_prod = request.form.get('img_prod')
         product.promo = request.form.get('promo')
         product.stock = request.form.get('stock')
         product.idCategory = request.form.get('idCategory')
         product.brand = request.form.get('brand')
         
-        if product.name_prod and product.description_prod and product.price and product.img_prod and product.stock and product.idCategory and product.brand:
+        if product.name_prod and product.description_prod and product.price and product.stock and product.idCategory and product.brand:
             db.session.commit()
             flash('Product updated successfully.', 'success')
         else:
@@ -315,6 +320,7 @@ def edit_product(product_id):
         flash('Product not found.', 'error')
     
     return redirect(url_for('admin.products'))
+
 
 @admin_bp.route('/delete_product/<int:product_id>', methods=['POST'])
 @login_required
