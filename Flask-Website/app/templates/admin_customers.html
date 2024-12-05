@@ -5,7 +5,7 @@
     <header class="admin-header">
         <h1>Customers List</h1>
         <div class="admin-actions">
-            <input type="search" placeholder="Search...">
+            <input type="search" placeholder="Search..." oninput="searchTable()">
         </div>
     </header>
 
@@ -231,4 +231,25 @@ function toggleOtherReason() {
     otherField.required = reason === 'other';
 }
 </script>
+<script>
+function searchTable() {
+    const input = document.querySelector('.admin-actions input[type="search"]');
+    const filter = input.value.toLowerCase();
+    const tbody = document.querySelector('tbody');
+    const rows = tbody.getElementsByTagName('tr');
+
+    for (let row of rows) {
+        let cells = row.getElementsByTagName('td');
+        let found = false;
+        for (let cell of cells) {
+            if (cell.textContent.toLowerCase().indexOf(filter) > -1) {
+                found = true;
+                break;
+            }
+        }
+        row.style.display = found ? '' : 'none';
+    }
+}
+</script>
+
 {% endblock %}
