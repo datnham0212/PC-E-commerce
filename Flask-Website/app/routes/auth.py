@@ -3,10 +3,11 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required
 from app.models import Admin, Client
 from app.controllers.authCtrl import signup_user, user_login, user_logout  # Import functions from authCtrl
-
+from app.decorators.auth_decorators import client_required
 auth = Blueprint('auth', __name__)
 
 @auth.route('/', methods=['GET', 'POST'])
+@client_required
 def auth_route():
     next_url = request.args.get('next')
     if request.method == 'POST':
@@ -53,4 +54,4 @@ def auth_route():
 @login_required
 def logout():
     user_logout()
-    return redirect(url_for('auth.auth_route'))
+    return redirect(url_for('main.home'))

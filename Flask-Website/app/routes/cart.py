@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app.controllers.cartCtrl import add_product_to_cart, remove_product_from_cart, get_cart_items, clear_cart, update_product_quantity_in_cart
-
+from app.decorators.auth_decorators import client_required
 cart = Blueprint('cart', __name__)
 
 @cart.route('/')
