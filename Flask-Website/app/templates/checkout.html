@@ -1,194 +1,345 @@
 <!doctype html>
-<html lang="en">
+<html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout</title>
+    <title>Thanh Toán</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <style>
-        html, body {
-            overflow-x: hidden; /* Prevent horizontal overflow */
-        }
-
-        .form-check-inline {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-        }
-
-        .form-check-input, .form-check-label {
-            flex: 0.1;
-        }
-
-        .container {
-            max-width: 100%; /* Ensure container does not exceed viewport width */
-        }
-
-        .row {
-            margin-right: 0;
-            margin-left: 0;
-        }
-
-        .col-md-8, .col-md-4 {
-            padding-right: 0;
-            padding-left: 0;
-        }
-    </style>
 </head>
+
 <body>
     {% include 'header.html' %}
-    <div class="container mt-5">
-        <h2 class="checkout-title">Hoàn thành đơn hàng</h2>
-        <div class="row">
-            <!-- Left Column: Shipping & Payment -->
-            <div class="col-md-8">
-                <form method="POST" action="{{ url_for('checkout.process_checkout') }}">
-                    <div class="checkout-tabs">
-                        <div class="tab-container">
-                            <div class="tab shipping-tab active" onclick="switchTab('shipping')">Chi tiết vận chuyển</div>
-                            <div class="tab payment-tab" onclick="switchTab('payment')">Hình thức thanh toán</div>
+
+    <div class="checkout-container">
+        <div class="checkout-wrapper">
+            <!-- Cột Trái -->
+            <div class="checkout-details">
+                <div class="checkout-header">
+                    <h1>Thanh Toán</h1>
+                    <div class="checkout-steps">
+                        <div class="step active">
+                            <span class="step-number">1</span>
+                            <span class="step-text">Giao Hàng</span>
                         </div>
-                        
-                        <!-- Shipping Form -->
-                        <div id="shipping-form" class="tab-content active">
+                        <div class="step">
+                            <span class="step-number">2</span>
+                            <span class="step-text">Thanh Toán</span>
+                        </div>
+                    </div>
+                </div>
+
+                <form method="POST" action="{{ url_for('checkout.process_checkout') }}" class="checkout-form">
+                    <!-- Phần Giao Hàng -->
+                    <div id="shipping-section" class="form-section active">
+                        <div class="form-group-row">
                             <div class="form-group">
-                                <label>Họ và tên</label>
-                                <input type="text" class="form-control" name="full_name" required>
+                                <label for="first_name">Tên</label>
+                                <input type="text" name="first_name" id="first_name" required>
                             </div>
                             <div class="form-group">
-                                <label>Email</label>
-                                <input type="email" class="form-control" name="email" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Số điện thoại</label>
-                                <input type="tel" class="form-control" name="phone" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Quốc gia</label>
-                                <input type="text" class="form-control" name="country" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Thành phố</label>
-                                <input type="text" class="form-control" name="city" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Mã bưu điện</label>
-                                <input type="text" class="form-control" name="zipCode" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Địa chỉ chi tiết</label>
-                                <textarea class="form-control" name="address" required></textarea>
-                            </div>
-                            <!-- Delivery Options -->
-                            <div class="form-group">
-                                <label>Tùy chọn giao hàng</label>
-                                <div class="form-check-inline">
-                                    <input class="form-check-input" type="radio" name="delivery_option" id="standardDelivery" value="standard" checked>
-                                    <label class="form-check-label" for="standardDelivery">
-                                        Giao hàng tiêu chuẩn (5-7 ngày)
-                                    </label>
-                                </div>
-                                <div class="form-check-inline">
-                                    <input class="form-check-input" type="radio" name="delivery_option" id="expressDelivery" value="express">
-                                    <label class="form-check-label" for="expressDelivery">
-                                        Giao hàng nhanh (2-3 ngày)
-                                    </label>
-                                </div>
+                                <label for="last_name">Họ</label>
+                                <input type="text" name="last_name" id="last_name" required>
                             </div>
                         </div>
 
-                        <!-- Payment Form -->
-                        <div id="payment-form" class="tab-content">
-                            <div class="payment-methods">
-                                <div class="payment-method-tabs">
-                                    <div class="payment-tab active" onclick="selectPaymentMethod('cash')">Thanh toán khi nhận hàng</div>
-                                    <div class="payment-tab" onclick="selectPaymentMethod('card')">Thẻ tín dụng</div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Số Điện Thoại</label>
+                            <input type="tel" name="phone" id="phone" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address">Địa Chỉ</label>
+                            <input type="text" name="address" id="address" required>
+                        </div>
+
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <label for="country">Quốc Gia</label>
+                                <select name="country" id="country" required>
+                                    <option value="">Chọn Quốc Gia</option>
+                                    <option value="USA">Mỹ</option>
+                                    <option value="Canada">Canada</option>
+                                    <option value="UK">Anh</option>
+                                    <option value="VN">Việt Nam</option>
+                                    <!-- Thêm các quốc gia khác nếu cần -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="city">Thành Phố</label>
+                                <select name="city" id="city" required>
+                                    <option value="">Chọn Thành Phố</option>
+                                    <option value="New York">New York</option>
+                                    <option value="Los Angeles">Los Angeles</option>
+                                    <option value="Chicago">Chicago</option>
+                                    <option value="HCM">Hồ Chí Minh</option>
+                                    <!-- Thêm các thành phố khác nếu cần -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="zipCode">Mã Bưu Chính</label>
+                                <input type="text" name="zipCode" id="zipCode" required>
+                            </div>
+                        </div>
+
+                        <div class="delivery-options">
+                            <h3>Phương Thức Giao Hàng</h3>
+                            <div class="delivery-choice">
+                                <input type="radio" id="standard" name="delivery_option" value="standard" checked>
+                                <label for="standard">
+                                    <span class="delivery-title">Giao Hàng Tiêu Chuẩn</span>
+                                    <span class="delivery-time">5-7 ngày làm việc</span>
+                                    <span class="delivery-price">Miễn phí</span>
+                                </label>
+                            </div>
+                            <div class="delivery-choice">
+                                <input type="radio" id="express" name="delivery_option" value="express">
+                                <label for="express">
+                                    <span class="delivery-title">Giao Hàng Nhanh</span>
+                                    <span class="delivery-time">2-3 ngày làm việc</span>
+                                    <span class="delivery-price">15000 VND</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Phần Thanh Toán -->
+                    <div id="payment-section" class="form-section">
+                        <div class="payment-methods">
+                            <div class="payment-method">
+                                <input type="radio" id="card" name="payment_method" value="card" checked>
+                                <label for="card">Thẻ Tín Dụng</label>
+                            </div>
+                            <div class="payment-method">
+                                <input type="radio" id="cash" name="payment_method" value="cash">
+                                <label for="cash">Thanh Toán Khi Nhận Hàng</label>
+                            </div>
+                        </div>
+
+                        <div id="card-details">
+                            <div class="form-group">
+                                <label for="card_number">Số Thẻ</label>
+                                <input type="text" name="card_number" id="card_number" placeholder="1234 5678 9012 3456">
+                            </div>
+                            <div class="form-group-row">
+                                <div class="form-group">
+                                    <label for="expiry">Ngày Hết Hạn</label>
+                                    <input type="text" name="expiry" id="expiry" placeholder="MM/YY">
                                 </div>
-                                
-                                <!-- Credit Card Form -->
-                                <div id="card-payment-form" class="payment-form">
-                                    <div class="form-group">
-                                        <label>Số thẻ</label>
-                                        <input type="text" class="form-control" name="card_number" placeholder="1234 5678 9012 3456">
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Ngày hết hạn</label>
-                                                <input type="text" class="form-control" name="expiry" placeholder="MM/YY">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>CVV</label>
-                                                <input type="text" class="form-control" name="cvv" placeholder="123">
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="form-group">
+                                    <label for="cvv">CVV</label>
+                                    <input type="text" name="cvv" id="cvv" placeholder="123">
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- Move button outside tabs but inside form -->
-                    <button type="submit" class="btn btn-primary checkout-btn mt-3">Hoàn tất đơn hàng</button>
+
+                    <div class="form-navigation">
+                        <button type="button" id="prev-btn" class="nav-btn" onclick="prevStep()">Trước</button>
+                        <button type="button" id="next-btn" class="nav-btn primary" onclick="nextStep()">Tiếp</button>
+                        <button type="submit" id="submit-btn" class="nav-btn primary" style="display: none;">Hoàn Tất Đơn Hàng</button>
+                    </div>
                 </form>
+                <div id="warning-message" class="warning-message" style="display: none;">Vui lòng điền đầy đủ các trường bắt buộc.</div>
             </div>
 
-            <!-- Right Column: Order Summary -->
-            <div class="col-md-4">
-                <div class="card order-summary">
-                    <div class="card-body">
-                        <h5 class="card-title">Tóm tắt đơn hàng</h5>
-                        <div class="order-items">
-                            {% for item_id, item in cart_items.items() %}
-                            <div class="order-item">
-                                <span class="item-name">{{ item.name }} (x{{ item.quantity }})</span>
-                                <span class="item-price">{{ "%.2f"|format(item.price * item.quantity) }} VND</span>
-                            </div>
-                            {% endfor %}
+            <!-- Cột Phải -->
+            <div class="order-summary">
+                <h2>Tóm Tắt Đơn Hàng</h2>
+                <div class="order-items">
+                    {% for item_id, item in cart_items.items() %}
+                    <div class="order-item">
+                        <div class="item-details">
+                            <span class="item-name">{{ item.name }}</span>
+                            <span class="item-quantity">x{{ item.quantity }}</span>
                         </div>
-                        <hr>
-                        <!-- Add this inside the order-summary card, before the total -->
-                        <div class="coupon-section">
-                            <h6>Bạn có mã giảm giá?</h6>
-                            <div class="coupon-input">
-                                <input type="text" class="form-control" id="coupon-code" placeholder="Nhập mã giảm giá">
-                                <button class="btn btn-secondary" onclick="applyCoupon()">Áp dụng</button>
-                            </div>
-                        </div>
-                        <div class="total-amount">
-                            <strong>Tổng số tiền:</strong>
-                            <strong class="price">{{ "%.2f"|format(total) }} VND</strong>
-                        </div>
+                        <span class="item-price">{{ "%.2f"|format(item.price * item.quantity) }} VND</span>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="coupon-section">
+                    <input type="text" placeholder="Mã Khuyến Mãi" id="coupon-code">
+                    <button onclick="applyCoupon(event)" class="coupon-btn">Áp Dụng</button>
+                </div>
+
+                <div class="order-totals">
+                    <div class="subtotal">
+                        <span>Tổng Phụ</span>
+                        <span id="subtotal">{{ "%.2f"|format(total) }} VND</span>
+                    </div>
+                    <div class="shipping">
+                        <span>Phí Giao Hàng</span>
+                        <span id="shipping-cost">Miễn phí</span>
+                    </div>
+                    <div class="total">
+                        <span>Tổng Cộng</span>
+                        <span class="total-amount">{{ "%.2f"|format(total) }} VND</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Add this to the checkout form -->
-    <div class="payment-section">
-        <div id="card-details" style="display: none;">
-            <div class="form-group">
-                <label>Số thẻ</label>
-                <input type="text" class="form-control" name="card_number" pattern="[0-9]{16}">
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Ngày hết hạn</label>
-                        <input type="text" class="form-control" name="expiry" placeholder="MM/YY">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>CVV</label>
-                        <input type="text" class="form-control" name="cvv" pattern="[0-9]{3,4}">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
     {% include 'footer.html' %}
-    <script src = "{{ url_for('static', filename='payment.js') }}"></script>
+    
+    <script>
+        // Quản lý trạng thái
+        const state = {
+            currentStep: 1,
+            totalSteps: 2,
+            deliveryPrice: 0,
+            subtotal: parseFloat(document.getElementById('subtotal').textContent.replace(' VND', '').trim())
+        };
+
+        // Xác thực biểu mẫu
+        const validateShippingForm = () => {
+            const requiredFields = [
+                'first_name', 'last_name', 'email',
+                'phone', 'address', 'country', 'city', 'zipCode'
+            ];
+
+            let isValid = true;
+
+            requiredFields.forEach(field => {
+                const input = document.getElementById(field);
+                if (!input.value.trim()) {
+                    input.classList.add('error');
+                    isValid = false;
+                } else {
+                    input.classList.remove('error');
+                }
+            });
+
+            console.log('Biểu mẫu giao hàng hợp lệ:', isValid);
+            return isValid;
+        };
+
+        const validatePaymentForm = () => {
+            const paymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
+            let isValid = true;
+
+            if (paymentMethod === 'card') {
+                const cardFields = ['card_number', 'expiry', 'cvv'];
+                cardFields.forEach(field => {
+                    const input = document.getElementById(field);
+                    if (!input.value.trim()) {
+                        input.classList.add('error');
+                        isValid = false;
+                    } else {
+                        input.classList.remove('error');
+                    }
+                });
+            }
+
+            console.log('Biểu mẫu thanh toán hợp lệ:', isValid);
+            return isValid;
+        };
+
+        // Chức năng điều hướng
+        const updateSteps = () => {
+            document.querySelectorAll('.step').forEach((step, index) => {
+                step.classList.toggle('active', index + 1 <= state.currentStep);
+            });
+
+            document.querySelectorAll('.form-section').forEach((section, index) => {
+                section.classList.toggle('active', index + 1 === state.currentStep);
+            });
+
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const submitBtn = document.getElementById('submit-btn');
+
+            prevBtn.style.display = state.currentStep === 1 ? 'none' : 'block';
+            nextBtn.style.display = state.currentStep === state.totalSteps ? 'none' : 'block';
+            submitBtn.style.display = state.currentStep === state.totalSteps ? 'block' : 'none';
+        };
+
+        const nextStep = () => {
+            const warningMessage = document.getElementById('warning-message');
+            if (state.currentStep === 1 && !validateShippingForm()) {
+                warningMessage.style.display = 'block';
+                return;
+            } else {
+                warningMessage.style.display = 'none';
+            }
+
+            if (state.currentStep < state.totalSteps) {
+                state.currentStep++;
+                updateSteps();
+            }
+        };
+
+        const prevStep = () => {
+            if (state.currentStep > 1) {
+                state.currentStep--;
+                updateSteps();
+            }
+        };
+
+        // Logic mã khuyến mãi
+        const applyCoupon = (e) => {
+            e.preventDefault();
+            const couponCode = document.getElementById('coupon-code').value.trim();
+            if (couponCode) {
+                fetch('/api/validate-coupon', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code: couponCode })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.valid) {
+                        state.subtotal *= (1 - data.discount);
+                        updateTotalPrice();
+                    }
+                });
+            }
+        };
+
+        // Cập nhật tổng giá sau khi áp dụng mã khuyến mãi hoặc thay đổi phí giao hàng
+        const updateTotalPrice = () => {
+            const total = state.subtotal + state.deliveryPrice;
+            document.querySelector('.total-amount').textContent = total.toFixed(2) + ' VND';
+            document.querySelector('#shipping-cost').textContent = state.deliveryPrice === 0 ? 'Miễn phí' : state.deliveryPrice + ' VND';
+        };
+
+        // Trình nghe sự kiện
+        document.querySelectorAll('input[name="delivery_option"]').forEach(input => {
+            input.addEventListener('change', (e) => {
+                // Đặt giá giao hàng là 15000 VND cho giao hàng nhanh, 0 cho giao hàng tiêu chuẩn
+                state.deliveryPrice = e.target.value === 'express' ? 15000 : 0;
+                updateTotalPrice();
+            });
+        });
+
+        updateSteps();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const cardDetails = document.getElementById('card-details');
+            const paymentMethods = document.querySelectorAll('input[name="payment_method"]');
+
+            paymentMethods.forEach(method => {
+                method.addEventListener('change', (e) => {
+                    if (e.target.value === 'cash') {
+                        cardDetails.style.display = 'none';
+                    } else {
+                        cardDetails.style.display = 'block';
+                    }
+                });
+            });
+
+            // Kiểm tra ban đầu để đặt trạng thái hiển thị chính xác
+            if (document.querySelector('input[name="payment_method"]:checked').value === 'cash') {
+                cardDetails.style.display = 'none';
+            }
+        });
+    </script>
 </body>
+
 </html>
