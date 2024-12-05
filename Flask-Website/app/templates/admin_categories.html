@@ -27,12 +27,86 @@
                     <td>{{ category.description_cat }}</td>
                     <td>
                         <button class="edit-button" onclick="openEditModal('{{ category.idCategory }}', '{{ category.description_cat }}', '{{ category.idCatalog }}')">Edit</button>
-                        <form method="POST" action="{{ url_for('admin.delete_category', category_id=category.idCategory) }}" style="display:inline;">
-                            <button type="submit" class="delete-button">X</button>
-                        </form>
+                        <button class="delete-button" onclick="openDeleteCategoryModal('{{ category.idCategory }}')">X</button>
                     </td>
                 </tr>
-                {% endfor %}
+
+<!-- Add this modal -->
+<div id="deleteCategoryModal" class="modal">
+    <div class="modal-content delete-modal">
+        <span onclick="document.getElementById('deleteCategoryModal').style.display='none'" class="close">×</span>
+        <h2>Confirm Deletion</h2>
+        <p>Are you sure you want to delete this category?</p>
+        <form id="deleteCategoryForm" method="POST">
+            <select name="delete_reason" id="deleteReason" onchange="toggleOtherReason()" required>
+                <option value="">Select reason for deletion</option>
+                <option value="discontinued">Product Discontinued</option>
+                <option value="out_of_stock">Permanently Out of Stock</option>
+                <option value="replaced">Replaced by Newer Model</option>
+                <option value="quality">Quality Control Issues</option>
+                <option value="other">Other</option>
+            </select>
+            <textarea id="otherReason" name="other_reason" style="display: none;" placeholder="Please specify the reason"></textarea>
+            <div class="button-group">
+                <button type="submit" class="delete-button">Delete</button>
+                <button type="button" onclick="document.getElementById('deleteCategoryModal').style.display='none'" class="cancel-button">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Add these styles -->
+<style>
+.delete-modal {
+    max-width: 400px;
+}
+
+.delete-modal textarea {
+    width: 100%;
+    height: 80px;
+    padding: 8px;
+    margin: 10px 0;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    resize: none;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.button-group button {
+    width: 100px;
+    padding: 8px;
+}
+
+.cancel-button {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+</style>
+
+<!-- Add this script -->
+<script>
+function openDeleteCategoryModal(categoryId) {
+    document.getElementById('deleteCategoryForm').action = '/admin/delete_category/' + categoryId;
+    document.getElementById('deleteCategoryModal').style.display = 'block';
+}
+
+function toggleOtherReason() {
+    const reason = document.getElementById('deleteReason').value;
+    const otherField = document.getElementById('otherReason');
+    otherField.style.display = reason === 'other' ? 'block' : 'none';
+    otherField.required = reason === 'other';
+}
+</script>                {% endfor %}
             </tbody>
         </table>
     </div>
