@@ -7,4 +7,6 @@ Flask-SQLAlchemy
 PyMySQL
 Flask-Migrate
 mysql-connector-python
+pytest
+Flask-Testing
 

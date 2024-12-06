@@ -1,0 +1,10 @@
+[
+  "app/tests/test_auth.py::AuthTestCase::test_signup_user",
+  "app/tests/test_auth.py::AuthTestCase::test_user_login",
+  "app/tests/test_auth.py::AuthTestCase::test_user_logout",
+  "app/tests/test_cart.py::CartTestCase::test_add_multiple_items_to_cart",
+  "app/tests/test_cart.py::CartTestCase::test_add_to_cart_success",
+  "app/tests/test_cart.py::CartTestCase::test_clear_cart",
+  "app/tests/test_cart.py::CartTestCase::test_remove_item_from_cart",
+  "app/tests/test_cart.py::CartTestCase::test_update_item_quantity_in_cart"
+]
