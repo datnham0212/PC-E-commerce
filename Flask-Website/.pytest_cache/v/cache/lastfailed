@@ -1,0 +1,4 @@
+{
+  "app/tests/test_cart.py::TestCase": true,
+  "app/tests/test_cart.py::CartTestCase": true
+}

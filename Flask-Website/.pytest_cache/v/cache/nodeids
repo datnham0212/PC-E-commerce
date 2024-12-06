@@ -1,0 +1,3 @@
+[
+  "app/tests/test_cart.py::CartTestCase::test_add_to_cart_success"
+]
