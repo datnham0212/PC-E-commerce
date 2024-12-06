@@ -82,5 +82,140 @@ class CartTestCase(TestCase):
             self.assertEqual(sess[cart_key]['1']['quantity'], 1)
             self.assertEqual(sess[cart_key]['1']['image'], 'palit rtx.jpg')
 
+    def test_add_multiple_items_to_cart(self):
+        """Test adding multiple items to the cart"""
+        with self.app.app_context():
+            self.client_user = db.session.query(Client).filter_by(idClient=12).first()
+
+        # Simulate login
+        self.client.post('/auth/', data={
+            'email': self.client_user.email,
+            'password': 'a',
+            'action': 'login'
+        })
+
+        # Add first item
+        form_data_1 = {
+            'product_id': '1',
+            'product_name': 'NVIDIA RTX 2080',
+            'product_price': '1890000.0',
+            'product_image': 'palit rtx.jpg',
+            'quantity': '1'
+        }
+        self.client.post('/cart/add_to_cart', data=form_data_1)
+
+        # Add second item
+        form_data_2 = {
+            'product_id': '13',
+            'product_name': 'Gaming PC - AMD Ryzen 9',
+            'product_price': '900000.0',
+            'product_image': 'amd2.png',
+            'quantity': '2'
+        }
+        self.client.post('/cart/add_to_cart', data=form_data_2)
+
+        # Check if cart contains both items
+        with self.client.session_transaction() as sess:
+            cart_key = f'cart_{self.client_user.idClient}'
+            self.assertIn(cart_key, sess)
+            self.assertIn('1', sess[cart_key])
+            self.assertIn('13', sess[cart_key])
+            self.assertEqual(sess[cart_key]['1']['name'], 'NVIDIA RTX 2080')
+            self.assertEqual(sess[cart_key]['13']['name'], 'Gaming PC - AMD Ryzen 9')
+
+    def test_remove_item_from_cart(self):
+        """Test removing an item from the cart"""
+        with self.app.app_context():
+            self.client_user = db.session.query(Client).filter_by(idClient=12).first()
+
+        # Simulate login
+        self.client.post('/auth/', data={
+            'email': self.client_user.email,
+            'password': 'a',
+            'action': 'login'
+        })
+
+        # Add item to cart
+        form_data = {
+            'product_id': '1',
+            'product_name': 'NVIDIA RTX 2080',
+            'product_price': '1890000.0',
+            'product_image': 'palit rtx.jpg',
+            'quantity': '1'
+        }
+        self.client.post('/cart/add_to_cart', data=form_data)
+
+        # Remove item from cart
+        self.client.post('/cart/remove_from_cart/1')
+
+        # Check if cart is empty
+        with self.client.session_transaction() as sess:
+            cart_key = f'cart_{self.client_user.idClient}'
+            self.assertNotIn('1', sess[cart_key])
+
+    def test_clear_cart(self):
+        """Test clearing the cart"""
+        with self.app.app_context():
+            self.client_user = db.session.query(Client).filter_by(idClient=12).first()
+
+        # Simulate login
+        self.client.post('/auth/', data={
+            'email': self.client_user.email,
+            'password': 'a',
+            'action': 'login'
+        })
+
+        # Add item to cart
+        form_data = {
+            'product_id': '1',
+            'product_name': 'NVIDIA RTX 2080',
+            'product_price': '1890000.0',
+            'product_image': 'palit rtx.jpg',
+            'quantity': '1'
+        }
+        self.client.post('/cart/add_to_cart', data=form_data)
+
+        # Clear cart
+        self.client.post('/cart/delete_cart')
+
+        # Check if cart is empty
+        with self.client.session_transaction() as sess:
+            cart_key = f'cart_{self.client_user.idClient}'
+            self.assertNotIn(cart_key, sess)
+
+    def test_update_item_quantity_in_cart(self):
+        """Test updating the quantity of an item in the cart"""
+        with self.app.app_context():
+            self.client_user = db.session.query(Client).filter_by(idClient=12).first()
+
+        # Simulate login
+        self.client.post('/auth/', data={
+            'email': self.client_user.email,
+            'password': 'a',
+            'action': 'login'
+        })
+
+        # Add item to cart
+        form_data = {
+            'product_id': '1',
+            'product_name': 'NVIDIA RTX 2080',
+            'product_price': '1890000.0',
+            'product_image': 'palit rtx.jpg',
+            'quantity': '1'
+        }
+        self.client.post('/cart/add_to_cart', data=form_data)
+
+        # Update item quantity
+        update_data = {
+            'product_id': '1',
+            'quantity': '3'
+        }
+        self.client.post('/cart/update_quantity', json=update_data)
+
+        # Check if item quantity is updated
+        with self.client.session_transaction() as sess:
+            cart_key = f'cart_{self.client_user.idClient}'
+            self.assertEqual(sess[cart_key]['1']['quantity'], 3)
+
 if __name__ == "__main__":
     unittest.main()
