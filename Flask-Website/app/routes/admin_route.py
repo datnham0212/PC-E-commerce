@@ -191,6 +191,13 @@ def add_category():
     
     category_name = request.form.get('category_name')
     catalog_id = request.form.get('catalog_id')
+    
+    # Check if the category already exists
+    existing_category = Category.query.filter_by(description_cat=category_name, idCatalog=catalog_id).first()
+    if existing_category:
+        flash('Category already exists.', 'error')
+        return redirect(url_for('admin.categories'))
+    
     if category_name and catalog_id:
         new_category = Category(description_cat=category_name, idCatalog=catalog_id)
         db.session.add(new_category)
@@ -259,16 +266,20 @@ def add_product():
         img_prod = filename
     else:
         img_prod = 'téléchargement.png'
-
     
     name_prod = request.form.get('name_prod')
     description_prod = request.form.get('description_prod')
     price = request.form.get('price')
-    # img_prod is already defined up there
     promo = request.form.get('promo')
     stock = request.form.get('stock')
     idCategory = request.form.get('idCategory')
     brand = request.form.get('brand')
+    
+    # Check if the product already exists
+    existing_product = Product.query.filter_by(name_prod=name_prod, idCategory=idCategory, brand=brand).first()
+    if existing_product:
+        flash('Product already exists.', 'error')
+        return redirect(url_for('admin.products'))
     
     if name_prod and description_prod and price and img_prod and stock and idCategory and brand:
         new_product = Product(

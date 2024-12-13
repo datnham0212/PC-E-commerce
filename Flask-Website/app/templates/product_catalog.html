@@ -1,7 +1,7 @@
 <!doctype html>
-<html lang="vi">
+<html lang="vi"></html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="""UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sản phẩm của chúng tôi</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
@@ -148,9 +148,9 @@
         <form id="filterForm" action="{{ url_for('product_catalog.product_catalog_route') }}" method="get">
             <div class="price-range">
                 <label for="minPrice">Giá tối thiểu:</label>
-                <input type="number" id="minPrice" name="minPrice" min="0" max="9999999" value="0">
+                <input type="number" id="minPrice" name="minPrice" min="0" max="9999999" value="{{ min_price_value }}">
                 <label for="maxPrice">Giá tối đa:</label>
-                <input type="number" id="maxPrice" name="maxPrice" min="0" max="9999999" value="9999999">
+                <input type="number" id="maxPrice" name="maxPrice" min="0" max="9999999" value="{{ max_price_value }}">
             </div>
             <h4>Sắp xếp theo:</h4>
             <label><input type="radio" name="sort" value="lowToHigh"> Giá thấp đến cao</label><br>

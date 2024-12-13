@@ -11,6 +11,16 @@
         </div>
     </header>
 
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
     <div class="categories-list">
         <table>
             <thead>
@@ -91,6 +101,29 @@
     margin-left: 10px;
 }
 
+</style>
+
+<style>
+    .flashes {
+        list-style-type: none;
+        padding: 0;
+    }
+    
+    .flashes li {
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+    }
+    
+    .flashes .success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    
+    .flashes .error {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
 </style>
 
 <!-- Add this script -->

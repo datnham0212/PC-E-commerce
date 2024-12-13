@@ -1,0 +1,300 @@
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+import unittest
+from datetime import datetime, date
+from flask_testing import TestCase
+from flask_login import current_user
+from app import create_app
+from app.extensions import db
+from app.models import Admin, Client, Product, Category, Order, Delivery, Address, LoyalClient
+
+class AdminRouteTestCase(TestCase):
+    def create_app(self):
+        """Set up the Flask test client"""
+        self.app = create_app()
+        self.app.config['TESTING'] = True
+        self.app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
+        return self.app
+
+    def setUp(self):
+        """Set up the Flask test client"""
+        with self.app.app_context():
+            db.create_all()
+            self.admin_user = Admin(
+                idAdmin=2,
+                firstName='bee',
+                lastName='bee',
+                email='admin2@gmail.com',
+                password='admin2'
+            )
+            db.session.add(self.admin_user)
+            db.session.commit()
+
+            self.client_user = Client(
+                idClient=12,
+                lastName='a',
+                firstName='a',
+                email='a@a',
+                password='a',
+                phone='1',
+                user_img='NULL',
+                creationDate=date(2024, 10, 31),
+                is_admin=False
+            )
+            db.session.add(self.client_user)
+            db.session.commit()
+
+            self.category = Category(
+                idCategory=1,
+                description_cat='Graphics Cards',
+                idCatalog=1
+            )
+            db.session.add(self.category)
+            db.session.commit()
+
+            self.product = Product(
+                idProduct=1,
+                name_prod='NVIDIA RTX 2080',
+                description_prod='High performance graphics card.',
+                price=1890000.0,
+                stock=10,
+                img_prod='palit rtx.jpg',
+                idCategory=1,
+                brand=6
+            )
+            db.session.add(self.product)
+            db.session.commit()
+
+    def tearDown(self):
+        """Clean up after each test"""
+        with self.app.app_context():
+            db.session.remove()
+            db.drop_all()
+
+    def test_dashboard(self):
+        """Test accessing the dashboard"""
+        with self.app.app_context():
+            self.admin_user = Admin.query.get(self.admin_user.idAdmin)
+            self.client.post('/auth/', data={
+                'email': self.admin_user.email,
+                'password': 'admin',
+                'action': 'login'
+            })
+            response = self.client.get('/admin/dashboard')
+            self.assertEqual(response.status_code, 200)
+            self.assert_template_used('admin_dashboard.html')
+
+    def test_customers(self):
+        """Test viewing customers"""
+        with self.app.app_context():
+            self.admin_user = Admin.query.get(self.admin_user.idAdmin)
+            self.client.post('/auth/', data={
+                'email': self.admin_user.email,
+                'password': 'admin',
+                'action': 'login'
+            })
+            response = self.client.get('/admin/customers')
+            self.assertEqual(response.status_code, 200)
+            self.assert_template_used('admin_customers.html')
+
+    def test_delete_customer(self):
+        """Test deleting a customer"""
+        with self.app.app_context():
+            self.admin_user = Admin.query.get(self.admin_user.idAdmin)
+            self.client.post('/auth/', data={
+                'email': self.admin_user.email,
+                'password': 'admin',
+                'action': 'login'
+            })
+            response = self.client.post(f'/admin/delete_customer/{self.client_user.idClient}')
+            self.assertEqual(response.status_code, 302)
+            self.assertIsNone(Client.query.get(self.client_user.idClient))
+
+    def test_verify_loyal_client(self):
+        """Test verifying a loyal client"""
+        with self.app.app_context():
+            self.admin_user = Admin.query.get(self.admin_user.idAdmin)
+            self.client.post('/auth/', data={
+                'email': self.admin_user.email,
+                'password': 'admin',
+                'action': 'login'
+            })
+            response = self.client.post(f'/admin/verify_loyal_client/{self.client_user.idClient}')
+            self.assertEqual(response.status_code, 302)
+            loyal_client = LoyalClient.query.filter_by(idClient=self.client_user.idClient).first()
+            self.assertIsNotNone(loyal_client)
+
+    def test_add_category(self):
+        """Test adding a category"""
+        with self.app.app_context():
+            self.admin_user = Admin.query.get(self.admin_user.idAdmin)
+            self.client.post('/auth/', data={
+                'email': self.admin_user.email,
+                'password': 'admin',
+                'action': 'login'
+            })
+            response = self.client.post('/admin/add_category', data={
+                'category_name': 'Processors',
+                'catalog_id': 1
+            })
+            self.assertEqual(response.status_code, 302)
+            category = Category.query.filter_by(description_cat='Processors').first()
+            self.assertIsNotNone(category)
+
+    def test_edit_category(self):
+        """Test editing a category"""
+        with self.app.app_context():
+            self.admin_user = Admin.query.get(self.admin_user.idAdmin)
+            self.client.post('/auth/', data={
+                'email': self.admin_user.email,
+                'password': 'admin',
+                'action': 'login'
+            })
+            response = self.client.post(f'/admin/edit_category/{self.category.idCategory}', data={
+                'category_name': 'Updated Graphics Cards',
+                'catalog_id': 1
+            })
+            self.assertEqual(response.status_code, 302)
+            category = Category.query.get(self.category.idCategory)
+            self.assertEqual(category.description_cat, 'Updated Graphics Cards')
+
+    def test_delete_category(self):
+        """Test deleting a category"""
+        with self.app.app_context():
+            self.admin_user = Admin.query.get(self.admin_user.idAdmin)
+            self.client.post('/auth/', data={
+                'email': self.admin_user.email,
+                'password': 'admin',
+                'action': 'login'
+            })
+            response = self.client.post(f'/admin/delete_category/{self.category.idCategory}')
+            self.assertEqual(response.status_code, 302)
+            self.assertIsNone(Category.query.get(self.category.idCategory))
+
+    def test_add_product(self):
+        """Test adding a product"""
+        with self.app.app_context():
+            self.admin_user = Admin.query.get(self.admin_user.idAdmin)
+            self.client.post('/auth/', data={
+                'email': self.admin_user.email,
+                'password': 'admin',
+                'action': 'login'
+            })
+            response = self.client.post('/admin/add_product', data={
+                'name_prod': 'AMD Ryzen 9',
+                'description_prod': 'High performance processor.',
+                'price': 499000.0,
+                'img_prod': 'ryzen.jpg',
+                'promo': 0,
+                'stock': 5,
+                'idCategory': 1,
+                'brand': 7
+            })
+            self.assertEqual(response.status_code, 302)
+            product = Product.query.filter_by(name_prod='AMD Ryzen 9').first()
+            self.assertIsNotNone(product)
+
+    def test_edit_product(self):
+        """Test editing a product"""
+        with self.app.app_context():
+            self.admin_user = Admin.query.get(self.admin_user.idAdmin)
+            self.client.post('/auth/', data={
+                'email': self.admin_user.email,
+                'password': 'admin',
+                'action': 'login'
+            })
+            response = self.client.post(f'/admin/edit_product/{self.product.idProduct}', data={
+                'name_prod': 'Updated NVIDIA RTX 2080',
+                'description_prod': 'Updated high performance graphics card.',
+                'price': 1990000.0,
+                'img_prod': 'updated_rtx.jpg',
+                'promo': 0,
+                'stock': 8,
+                'idCategory': 1,
+                'brand': 6
+            })
+            self.assertEqual(response.status_code, 302)
+            product = Product.query.get(self.product.idProduct)
+            self.assertEqual(product.name_prod, 'Updated NVIDIA RTX 2080')
+
+    def test_delete_product(self):
+        """Test deleting a product"""
+        with self.app.app_context():
+            self.admin_user = Admin.query.get(self.admin_user.idAdmin)
+            self.client.post('/auth/', data={
+                'email': self.admin_user.email,
+                'password': 'admin',
+                'action': 'login'
+            })
+            response = self.client.post(f'/admin/delete_product/{self.product.idProduct}')
+            self.assertEqual(response.status_code, 302)
+            self.assertIsNone(Product.query.get(self.product.idProduct))
+
+    def test_update_delivery_status(self):
+        """Test updating delivery status"""
+        with self.app.app_context():
+            self.admin_user = Admin.query.get(self.admin_user.idAdmin)
+            self.client.post('/auth/', data={
+                'email': self.admin_user.email,
+                'password': 'admin',
+                'action': 'login'
+            })
+            order = Order(
+                idOrder=1,
+                idClient=self.client_user.idClient,
+                total_order=1890000.0,
+                date_order=datetime.now(),
+                id_deliveryType=1
+            )
+            db.session.add(order)
+            db.session.commit()
+
+            delivery = Delivery(
+                idDelivery=1,
+                idOrder=order.idOrder,
+                idAddress=1,
+                status_del=0
+            )
+            db.session.add(delivery)
+            db.session.commit()
+
+            response = self.client.post(f'/admin/update_delivery_status/{order.idOrder}')
+            self.assertEqual(response.status_code, 204)
+            delivery = Delivery.query.get(delivery.idDelivery)
+            self.assertEqual(delivery.status_del, 1)
+
+    def test_registration(self):
+        """Test admin registration"""
+        with self.app.app_context():
+            self.admin_user = Admin.query.get(self.admin_user.idAdmin)
+            self.client.post('/auth/', data={
+                'email': self.admin_user.email,
+                'password': 'admin',
+                'action': 'login'
+            })
+            response = self.client.post('/admin/add_admin', data={
+                'firstName': 'New',
+                'lastName': 'Admin',
+                'email': 'newadmin@admin.com',
+                'password': 'newadmin'
+            })
+            self.assertEqual(response.status_code, 302)
+            admin = Admin.query.filter_by(email='newadmin@admin.com').first()
+            self.assertIsNotNone(admin)
+
+    def test_logout(self):
+        """Test admin logout"""
+        with self.app.app_context():
+            self.admin_user = Admin.query.get(self.admin_user.idAdmin)
+            self.client.post('/auth/', data={
+                'email': self.admin_user.email,
+                'password': 'admin',
+                'action': 'login'
+            })
+            response = self.client.get('/admin/logout')
+            self.assertEqual(response.status_code, 302)
+            self.assertFalse(current_user.is_authenticated)
+
+if __name__ == "__main__":
+    unittest.main()

@@ -1,1 +1,21 @@
-{}
+{
+  "app/tests/test_admin.py::test_add_product": true,
+  "app/tests/test_admin.py::test_edit_product": true,
+  "app/tests/test_admin.py::test_delete_product": true,
+  "app/tests/test_admin.py::test_add_category": true,
+  "app/tests/test_admin.py::test_edit_category": true,
+  "app/tests/test_admin.py::test_delete_category": true,
+  "app/tests/test_admin.py::AdminRouteTestCase::test_edit_category": true,
+  "app/tests/test_admin.py::AdminRouteTestCase::test_edit_product": true,
+  "app/tests/test_admin.py::AdminRouteTestCase::test_categories": true,
+  "app/tests/test_admin.py::AdminRouteTestCase::test_customers": true,
+  "app/tests/test_admin.py::AdminRouteTestCase::test_dashboard": true,
+  "app/tests/test_admin.py::AdminRouteTestCase::test_delete_customer": true,
+  "app/tests/test_admin.py::AdminRouteTestCase::test_logout": true,
+  "app/tests/test_admin.py::AdminRouteTestCase::test_products": true,
+  "app/tests/test_admin.py::AdminRouteTestCase::test_registration": true,
+  "app/tests/test_admin.py::AdminRouteTestCase::test_update_delivery_status": true,
+  "app/tests/test_admin.py::AdminRouteTestCase::test_verify_loyal_client": true,
+  "app/tests/test_checkout.py::CheckoutTestCase::test_process_order": true,
+  "app/tests/test_checkout.py::CheckoutTestCase::test_validate_checkout": true
+}

@@ -1,82 +1,88 @@
 # app/controllers/cartCtrl.py
 from flask import Blueprint, session, flash
 from flask_login import current_user
-# import MySQLdb Gặp lỗi SSL khi xoá sạch giỏ hàng nên thay bằng mysql-connector-python, chưa rõ tại sao khi folder Flask-Website nằm đâu đó khác PC-E-Commerce thì vẫn chạy được mà lại không chạy được trong PC-E-Commerce
 import mysql.connector
+from app.extensions import db
+from app.models import Product, Cart
 
 cart = Blueprint('cart', __name__)
 
 def get_cart_items():
     if not current_user.is_authenticated:
         return {}
-    cart_key = f'cart_{current_user.idClient}'
-    return session.get(cart_key, {})
+    
+    cart_items = {}
+    cart_records = Cart.query.filter_by(idClient=current_user.idClient).all()
+    
+    for record in cart_records:
+        product = Product.query.get(record.idProduct)
+        cart_items[record.idProduct] = {
+            'name': product.name_prod,
+            'price': product.price,
+            'quantity': record.quantity,
+            'image': product.img_prod,
+            'stock': product.stock
+        }
+    
+    return cart_items
 
 def add_product_to_cart(product_id, product_name, product_price, quantity, product_image):
     if not current_user.is_authenticated:
         flash('Please login to add items to cart')
         return
     
-    cart_key = f'cart_{current_user.idClient}'
-    cart_items = session.get(cart_key, {})
+    cart_item = Cart.query.filter_by(idClient=current_user.idClient, idProduct=product_id).first()
     
-    if product_id in cart_items:
-        cart_items[product_id]['quantity'] += quantity
+    if cart_item:
+        new_quantity = cart_item.quantity + quantity
+        product = Product.query.get(product_id)
+        if new_quantity > product.stock:
+            flash('Cannot add more than available stock')
+            return
+        cart_item.quantity = new_quantity
     else:
-        cart_items[product_id] = {
-            'name': product_name,
-            'price': product_price,
-            'quantity': quantity,
-            'image': product_image
-        }
+        cart_item = Cart(
+            idClient=current_user.idClient,
+            idProduct=product_id,
+            quantity=quantity
+        )
+        db.session.add(cart_item)
     
-    session[cart_key] = cart_items
+    db.session.commit()
     flash(f'Added {product_name} to cart successfully!')
 
 def remove_product_from_cart(product_id):
     if not current_user.is_authenticated:
         return
-        
-    cart_key = f'cart_{current_user.idClient}'
-    cart_items = session.get(cart_key, {})
     
-    if product_id in cart_items:
-        del cart_items[product_id]
+    cart_item = Cart.query.filter_by(idClient=current_user.idClient, idProduct=product_id).first()
     
-    session[cart_key] = cart_items
+    if cart_item:
+        db.session.delete(cart_item)
+        db.session.commit()
 
 def clear_cart():
     if not current_user.is_authenticated:
         return
     
-    # Clear cart in the session
-    cart_key = f'cart_{current_user.idClient}'
-    session.pop(cart_key, None)
-    
-    # Clear cart in the database
-    db = mysql.connector.connect(user='root', passwd='', db='ecommerce3', host='localhost')
-
-    cursor = db.cursor()
-    cursor.execute("SELECT empty_cart(%s)", (current_user.idClient,))
-    
-    # Fetch any potential results to clear the unread result
-    cursor.fetchall()
-    
-    db.commit()
-    cursor.close()
-    db.close()
-    
+    Cart.query.filter_by(idClient=current_user.idClient).delete()
+    db.session.commit()
     flash('Giỏ hàng đã được xóa thành công!')
-
 
 def update_product_quantity_in_cart(product_id, quantity):
     if not current_user.is_authenticated:
         return
     
-    cart_key = f'cart_{current_user.idClient}'
-    cart_items = session.get(cart_key, {})
+    cart_item = Cart.query.filter_by(idClient=current_user.idClient, idProduct=product_id).first()
+    product = Product.query.get(product_id)
     
-    if product_id in cart_items:
-        cart_items[product_id]['quantity'] = quantity
+    if not product:
+        flash('Product not found')
+        return
     
-    session[cart_key] = cart_items
+    if cart_item:
+        if quantity > product.stock:
+            flash('Cannot add more than available stock')
+            return
+        cart_item.quantity = quantity
+        db.session.commit()
