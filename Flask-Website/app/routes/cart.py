@@ -34,6 +34,5 @@ def update_quantity():
     data = request.get_json()
     product_id = data.get('product_id')
     quantity = int(data.get('quantity'))
-
     update_product_quantity_in_cart(product_id, quantity)  # Gọi hàm cập nhật số lượng sản phẩm trong giỏ hàng
     return '', 204  # Trả về mã trạng thái 204 No Content

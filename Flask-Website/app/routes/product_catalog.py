@@ -38,9 +38,17 @@ def product_catalog_route():
         else:
             products = []
 
+    # Get the minimum and maximum prices from the products
+    if products:
+        min_price_value = min(product.price for product in products)
+        max_price_value = max(product.price for product in products)
+    else:
+        min_price_value = 0
+        max_price_value = 99999999
+
     brands = get_all_brands()
     categories = Catalog.query.all()
-    return render_template('product_catalog.html', products=products, brands=brands, categories=categories)
+    return render_template('product_catalog.html', products=products, brands=brands, categories=categories, min_price_value=min_price_value, max_price_value=max_price_value)
 
 @product_catalog.route('/api/products')
 @client_required
