@@ -52,6 +52,7 @@ def add_product_to_cart(product_id, product_name, product_price, quantity, produ
     db.session.commit()
     flash(f'Added {product_name} to cart successfully!')
     print(f'Cart item added: {cart_item}')  # Debugging statement
+    print(f'Cart contents: {Cart.query.filter_by(idClient=current_user.idClient).all()}')  # Debugging statement
 
 def remove_product_from_cart(product_id):
     if not current_user.is_authenticated:
