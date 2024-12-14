@@ -1,7 +1,7 @@
 <!doctype html>
-<html lang="vi"></html>
+<html lang="vi">
 <head>
-    <meta charset="""UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sản phẩm của chúng tôi</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
@@ -29,8 +29,8 @@
             padding: 10px 15px;
         }
         .navbar a:hover {
-            background-color: #e2e6ea; /* Màu nền khi hover */
-            color: #000; /* Màu chữ khi hover */
+            background-color: #e2e6ea;
+            color: #000;
         }
         .filter-button {
             margin-left: auto;
@@ -66,17 +66,25 @@
             padding: 5px 10px;
             margin-bottom: 20px;
         }
-        .price-range {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .filter-section {
             margin-bottom: 20px;
         }
-        .price-range input {
-            width: 45%;
+        .filter-section h4 {
+            margin-bottom: 10px;
         }
-        .brand-checkboxes {
-            margin-top: 20px;
+        .price-range {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+        .price-range #priceSlider {
+            width: 80%;
+            margin: 0 auto;
+        }
+        .price-range output {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
         }
         .brand-checkboxes label {
             display: block;
@@ -129,6 +137,7 @@
             border-radius: 5px;
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.css">
 </head>
 <body>
     {% include 'header.html' %}
@@ -146,22 +155,29 @@
         <button class="close-button" onclick="toggleFilterMenu()">Đóng</button>
         <h3>Tùy chọn lọc</h3>
         <form id="filterForm" action="{{ url_for('product_catalog.product_catalog_route') }}" method="get">
-            <div class="price-range">
-                <label for="minPrice">Giá tối thiểu:</label>
-                <input type="number" id="minPrice" name="minPrice" min="0" max="9999999" value="{{ min_price_value }}">
-                <label for="maxPrice">Giá tối đa:</label>
-                <input type="number" id="maxPrice" name="maxPrice" min="0" max="9999999" value="{{ max_price_value }}">
+            <div class="filter-section">
+                <h4>Giá</h4>
+                <div class="price-range">
+                    <div id="priceSlider"></div>
+                    <output id="priceOutput">{{ min_price_value }} - {{ max_price_value }} VND</output>
+                    <input type="hidden" id="minPrice" name="minPrice" value="{{ min_price_value }}">
+                    <input type="hidden" id="maxPrice" name="maxPrice" value="{{ max_price_value }}">
+                </div>
             </div>
-            <h4>Sắp xếp theo:</h4>
-            <label><input type="radio" name="sort" value="lowToHigh"> Giá thấp đến cao</label><br>
-            <label><input type="radio" name="sort" value="highToLow"> Giá cao đến thấp</label><br>
-            <label><input type="radio" name="sort" value="nameAZ"> Tên sản phẩm A-Z</label><br>
-            <label><input type="radio" name="sort" value="nameZA"> Tên sản phẩm Z-A</label>
-            <div class="brand-checkboxes">
-                <h4>Thương hiệu:</h4>
-                {% for brand in brands %}
-                    <label><input type="checkbox" name="brand" value="{{ brand.brand }}">{{ brand.brand_name }}</label>
-                {% endfor %}
+            <div class="filter-section">
+                <h4>Sắp xếp theo</h4>
+                <label><input type="radio" name="sort" value="lowToHigh"> Giá thấp đến cao</label><br>
+                <label><input type="radio" name="sort" value="highToLow"> Giá cao đến thấp</label><br>
+                <label><input type="radio" name="sort" value="nameAZ"> Tên sản phẩm A-Z</label><br>
+                <label><input type="radio" name="sort" value="nameZA"> Tên sản phẩm Z-A</label>
+            </div>
+            <div class="filter-section">
+                <h4>Thương hiệu</h4>
+                <div class="brand-checkboxes">
+                    {% for brand in brands %}
+                        <label><input type="checkbox" name="brand" value="{{ brand.brand }}">{{ brand.brand_name }}</label>
+                    {% endfor %}
+                </div>
             </div>
             <button class="confirm-button" type="submit">Xác nhận</button>
         </form>
@@ -182,6 +198,7 @@
         {% endfor %}
     </div>
     {% include 'footer.html' %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.js"></script>
     <script>
         function toggleFilterMenu() {
             var filterMenu = document.getElementById('filterMenu');
@@ -191,6 +208,35 @@
                 filterMenu.style.display = 'none';
             }
         }
+
+        function updatePriceOutput(values) {
+            document.getElementById('priceOutput').innerText = values[0] + ' - ' + values[1] + ' VND';
+            document.getElementById('minPrice').value = values[0];
+            document.getElementById('maxPrice').value = values[1];
+        }
+
+        var priceSlider = document.getElementById('priceSlider');
+        noUiSlider.create(priceSlider, {
+            start: [parseInt('{{ min_price_value }}'), parseInt('{{ max_price_value }}')],
+            connect: true,
+            range: {
+                'min': 0,
+                'max': 9999999
+            },
+            step: 1000,
+            format: {
+                to: function (value) {
+                    return Math.round(value);
+                },
+                from: function (value) {
+                    return Number(value);
+                }
+            }
+        });
+
+        priceSlider.noUiSlider.on('update', function (values) {
+            updatePriceOutput(values);
+        });
     </script>
 </body>
 </html>

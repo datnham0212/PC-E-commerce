@@ -31,6 +31,7 @@ def add_product_to_cart(product_id, product_name, product_price, quantity, produ
         flash('Please login to add items to cart')
         return
     
+    product_id = int(product_id)  # Ensure product_id is an integer
     cart_item = Cart.query.filter_by(idClient=current_user.idClient, idProduct=product_id).first()
     
     if cart_item:
@@ -50,6 +51,7 @@ def add_product_to_cart(product_id, product_name, product_price, quantity, produ
     
     db.session.commit()
     flash(f'Added {product_name} to cart successfully!')
+    print(f'Cart item added: {cart_item}')  # Debugging statement
 
 def remove_product_from_cart(product_id):
     if not current_user.is_authenticated:
