@@ -17,5 +17,8 @@
   "app/tests/test_admin.py::AdminRouteTestCase::test_update_delivery_status": true,
   "app/tests/test_admin.py::AdminRouteTestCase::test_verify_loyal_client": true,
   "app/tests/test_checkout.py::CheckoutTestCase::test_process_order": true,
-  "app/tests/test_checkout.py::CheckoutTestCase::test_validate_checkout": true
+  "app/tests/test_checkout.py::CheckoutTestCase::test_validate_checkout": true,
+  "app/tests/test_cart.py::CartTestCase::test_update_item_quantity_in_cart": true,
+  "app/tests/test_cart.py::CartTestCase::test_add_multiple_items_to_cart": true,
+  "app/tests/test_cart.py::CartTestCase::test_add_to_cart_success": true
 }
