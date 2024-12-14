@@ -18,7 +18,16 @@
   "app/tests/test_admin.py::AdminRouteTestCase::test_verify_loyal_client": true,
   "app/tests/test_checkout.py::CheckoutTestCase::test_process_order": true,
   "app/tests/test_checkout.py::CheckoutTestCase::test_validate_checkout": true,
+  "app/tests/test_cart.py::CartTestCase::test_update_quantity_in_cart": true,
+  "app/tests/test_cart.py::CartTestCase::test_add_to_cart_success": true,
+  "app/tests/test_cart.py::CartTestCase::test_remove_item_from_cart": true,
   "app/tests/test_cart.py::CartTestCase::test_update_item_quantity_in_cart": true,
-  "app/tests/test_cart.py::CartTestCase::test_add_multiple_items_to_cart": true,
-  "app/tests/test_cart.py::CartTestCase::test_add_to_cart_success": true
+  "app/tests/test_admin.py": true,
+  "app/tests/test_auth.py": true,
+  "app/tests/test_checkout.py": true,
+  "app/tests/test_cart.py::test_add_product_to_cart": true,
+  "app/tests/test_cart.py::test_update_product_quantity_in_cart": true,
+  "app/tests/unit/unittest_auth.py::TestAuthCtrl::test_user_login_invalid_credentials": true,
+  "app/tests/unit/unittest_auth.py::TestAuthCtrl::test_user_login_success": true,
+  "app/tests/unit/unittest_auth.py::TestAuthCtrl::test_user_logout": true
 }
