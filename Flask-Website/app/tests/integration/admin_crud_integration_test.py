@@ -3,17 +3,16 @@ import os
 import io
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..')))
 import unittest
-from datetime import datetime, date
+from datetime import datetime
 from flask_testing import TestCase
 from flask_login import current_user
 from app import create_app
 from app.extensions import db
-from app.models import Admin, Client, Product, Category
+from app.models import Admin, Category, Product, Catalog
 
-class AdminRouteTestCase(TestCase):
+class AdminCrudTestCase(TestCase):
     def create_app(self):
         """Set up the Flask test client"""
-        print("Creating Flask test client")
         self.app = create_app()
         self.app.config['TESTING'] = True
         self.app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
@@ -22,6 +21,7 @@ class AdminRouteTestCase(TestCase):
     def setUp(self):
         """Set up the Flask test client"""
         print("Setting up the test environment")
+        self.client = self.app.test_client()  # Initialize the test client
         with self.app.app_context():
             db.create_all()
             self.admin_user = Admin(
@@ -33,6 +33,7 @@ class AdminRouteTestCase(TestCase):
             )
             db.session.add(self.admin_user)
             db.session.commit()
+            db.session.refresh(self.admin_user)  # Ensure the instance is managed by the session
             print("Admin user created and committed to the database")
 
             self.category = Category(
@@ -60,222 +61,218 @@ class AdminRouteTestCase(TestCase):
 
     def tearDown(self):
         """Clean up after each test"""
-        print("Tearing down the test environment")
         with self.app.app_context():
             db.session.remove()
             db.drop_all()
-            print("Database tables dropped")
 
     def test_add_category(self):
         """Test adding a category"""
-        print("Testing adding a category")
-        with self.app.app_context():
-            self.admin_user = db.session.query(Admin).filter_by(idAdmin=2).first()
-            print(f"Queried admin user: {self.admin_user}")
+        with self.client:
+            with self.app.app_context():
+                self.admin_user = db.session.query(Admin).filter_by(idAdmin=2).first()
+                db.session.refresh(self.admin_user)  # Refresh the instance
 
-            self.client.post('/auth/', data={
+            # Simulate login
+            response = self.client.post('/auth/', data={
                 'email': self.admin_user.email,
                 'password': 'admin2',
                 'action': 'login'
             })
-            print("Admin user logged in")
+            print(f"Login response status code: {response.status_code}")
 
-            response = self.client.post('/admin/add_category', data={
-                'category_name': 'Processors',
-                'catalog_id': 1
-            })
+            # Add category
+            form_data = {
+                'category_name': 'Laptops',
+                'catalog_id': '1'
+            }
+            response = self.client.post('/admin/add_category', data=form_data)
             print(f"Add category response status code: {response.status_code}")
+            self.assertEqual(response.status_code, 302)  # Redirect after adding category
 
-            self.assertEqual(response.status_code, 302)
-            category = Category.query.filter_by(description_cat='Processors').first()
-            print(f"Queried category: {category}")
-            self.assertIsNotNone(category)
-
-    def test_delete_category(self):
-        """Test deleting a category"""
-        print("Testing deleting a category")
-        with self.app.app_context():
-            self.admin_user = db.session.query(Admin).filter_by(idAdmin=2).first()
-            print(f"Queried admin user: {self.admin_user}")
-
-            self.client.post('/auth/', data={
-                'email': self.admin_user.email,
-                'password': 'admin2',
-                'action': 'login'
-            })
-            print("Admin user logged in")
-
-            self.client.post('/admin/add_category', data={
-                'category_name': 'Processors',
-                'catalog_id': 1
-            })
-            print("Category added")
-
-            category = Category.query.filter_by(description_cat='Processors').first()
-            print(f"Queried category: {category}")
-            self.assertIsNotNone(category)
-
-            response = self.client.post(f'/admin/delete_category/{category.idCategory}')
-            print(f"Delete category response status code: {response.status_code}")
-
-            self.assertEqual(response.status_code, 302)
-            category = Category.query.filter_by(description_cat='Processors').first()
-            print(f"Queried category after deletion: {category}")
-            self.assertIsNone(category)
-
-    def test_update_category(self):
-        """Test updating a category"""
-        print("Testing updating a category")
-        with self.app.app_context():
-            self.admin_user = db.session.query(Admin).filter_by(idAdmin=2).first()
-            print(f"Queried admin user: {self.admin_user}")
-
-            self.client.post('/auth/', data={
-                'email': self.admin_user.email,
-                'password': 'admin2',
-                'action': 'login'
-            })
-            print("Admin user logged in")
-
-            self.client.post('/admin/add_category', data={
-                'category_name': 'Processors',
-                'catalog_id': 1
-            })
-            print("Category added")
-
-            category = Category.query.filter_by(description_cat='Processors').first()
-            print(f"Queried category: {category}")
-            self.assertIsNotNone(category)
-
-            response = self.client.post(f'/admin/edit_category/{category.idCategory}', data={
-                'category_name': 'Updated Processors',
-                'catalog_id': 1
-            })
-            print(f"Update category response status code: {response.status_code}")
-
-            self.assertEqual(response.status_code, 302)
-            updated_category = Category.query.filter_by(idCategory=category.idCategory).first()
-            print(f"Queried updated category: {updated_category}")
-            self.assertIsNotNone(updated_category)
-            self.assertEqual(updated_category.description_cat, 'Updated Processors')
+            # Check if category is added
+            with self.app.app_context():
+                category = Category.query.filter_by(description_cat='Laptops').first()
+                print(f"Category added: {category}")
+                self.assertIsNotNone(category)
+                self.assertEqual(category.description_cat, 'Laptops')
 
     def test_add_product(self):
         """Test adding a product"""
-        print("Testing adding a product")
-        with self.app.app_context():
-            self.admin_user = db.session.query(Admin).filter_by(idAdmin=2).first()
-            print(f"Queried admin user: {self.admin_user}")
+        with self.client:
+            with self.app.app_context():
+                self.admin_user = db.session.query(Admin).filter_by(idAdmin=2).first()
+                db.session.refresh(self.admin_user)  # Refresh the instance
 
-            self.client.post('/auth/', data={
+            # Simulate login
+            response = self.client.post('/auth/', data={
                 'email': self.admin_user.email,
                 'password': 'admin2',
                 'action': 'login'
             })
-            print("Admin user logged in")
+            print(f"Login response status code: {response.status_code}")
 
-            data = {
-                'name_prod': 'Intel i9',
-                'description_prod': 'High performance processor.',
-                'price': 500000.0,
-                'stock': 15,
-                'idCategory': 1,
-                'brand': 1,
-                'img_prod': (io.BytesIO(b"fake image data"), 'intel_i9.jpg')
+            # Add product
+            form_data = {
+                'name_prod': 'Laptop',
+                'description_prod': 'High performance laptop',
+                'price': '1000.0',
+                'promo': '10',
+                'stock': '50',
+                'idCategory': '1',
+                'brand': 'BrandX',
+                'img_prod': (io.BytesIO(b"fake image data"), 'laptop.jpg')
             }
-
-            response = self.client.post('/admin/add_product', data=data, content_type='multipart/form-data')
+            response = self.client.post('/admin/add_product', data=form_data, content_type='multipart/form-data')
             print(f"Add product response status code: {response.status_code}")
+            self.assertEqual(response.status_code, 302)  # Redirect after adding product
 
-            self.assertEqual(response.status_code, 302)
-            product = Product.query.filter_by(name_prod='Intel i9').first()
-            print(f"Queried product: {product}")
-            self.assertIsNotNone(product)
+            # Check if product is added
+            with self.app.app_context():
+                product = Product.query.filter_by(name_prod='Laptop').first()
+                print(f"Product added: {product}")
+                self.assertIsNotNone(product)
+                self.assertEqual(product.name_prod, 'Laptop')
 
     def test_delete_product(self):
         """Test deleting a product"""
-        print("Testing deleting a product")
-        with self.app.app_context():
-            self.admin_user = db.session.query(Admin).filter_by(idAdmin=2).first()
-            print(f"Queried admin user: {self.admin_user}")
+        with self.client:
+            with self.app.app_context():
+                self.admin_user = db.session.query(Admin).filter_by(idAdmin=2).first()
+                db.session.refresh(self.admin_user)  # Refresh the instance
 
-            self.client.post('/auth/', data={
+                # Refresh the product instance to ensure it is managed by the session
+                self.product = db.session.query(Product).filter_by(idProduct=1).first()
+                db.session.refresh(self.product)
+
+            # Simulate login
+            response = self.client.post('/auth/', data={
                 'email': self.admin_user.email,
                 'password': 'admin2',
                 'action': 'login'
             })
-            print("Admin user logged in")
+            print(f"Login response status code: {response.status_code}")
 
-            self.client.post('/admin/add_product', data={
-                'name_prod': 'Intel i9',
-                'description_prod': 'High performance processor.',
-                'price': 500000.0,
-                'stock': 15,
-                'idCategory': 1,
-                'brand': 1,
-                'img_prod': (io.BytesIO(b"fake image data"), 'intel_i9.jpg')
-            }, content_type='multipart/form-data')
-            print("Product added")
-
-            product = Product.query.filter_by(name_prod='Intel i9').first()
-            print(f"Queried product: {product}")
-            self.assertIsNotNone(product)
-
-            response = self.client.post(f'/admin/delete_product/{product.idProduct}')
+            # Delete product
+            response = self.client.post(f'/admin/delete_product/{self.product.idProduct}')
             print(f"Delete product response status code: {response.status_code}")
+            self.assertEqual(response.status_code, 302)  # Redirect after deleting product
 
-            self.assertEqual(response.status_code, 302)
-            product = Product.query.filter_by(name_prod='Intel i9').first()
-            print(f"Queried product after deletion: {product}")
-            self.assertIsNone(product)
+            # Check if product is deleted
+            with self.app.app_context():
+                deleted_product = Product.query.filter_by(idProduct=self.product.idProduct).first()
+                print(f"Product deleted: {deleted_product}")
+                self.assertIsNone(deleted_product)
 
-    def test_update_product(self):
-        """Test updating a product"""
-        print("Testing updating a product")
-        with self.app.app_context():
-            self.admin_user = db.session.query(Admin).filter_by(idAdmin=2).first()
-            print(f"Queried admin user: {self.admin_user}")
+    def test_delete_category(self):
+        """Test deleting a category"""
+        with self.client:
+            with self.app.app_context():
+                self.admin_user = db.session.query(Admin).filter_by(idAdmin=2).first()
+                db.session.refresh(self.admin_user)  # Refresh the instance
 
-            self.client.post('/auth/', data={
+                # Refresh the category instance to ensure it is managed by the session
+                self.category = db.session.query(Category).filter_by(idCategory=1).first()
+                db.session.refresh(self.category)
+
+            # Simulate login
+            response = self.client.post('/auth/', data={
                 'email': self.admin_user.email,
                 'password': 'admin2',
                 'action': 'login'
             })
-            print("Admin user logged in")
+            print(f"Login response status code: {response.status_code}")
 
-            self.client.post('/admin/add_product', data={
-                'name_prod': 'Intel i9',
-                'description_prod': 'High performance processor.',
-                'price': 500000.0,
-                'stock': 15,
-                'idCategory': 1,
-                'brand': 1,
-                'img_prod': (io.BytesIO(b"fake image data"), 'intel_i9.jpg')
-            }, content_type='multipart/form-data')
-            print("Product added")
+            # Delete category
+            response = self.client.post(f'/admin/delete_category/{self.category.idCategory}')
+            print(f"Delete category response status code: {response.status_code}")
+            self.assertEqual(response.status_code, 302)  # Redirect after deleting category
 
-            product = Product.query.filter_by(name_prod='Intel i9').first()
-            print(f"Queried product: {product}")
-            self.assertIsNotNone(product)
+            # Check if category is deleted
+            with self.app.app_context():
+                deleted_category = Category.query.filter_by(idCategory=self.category.idCategory).first()
+                print(f"Category deleted: {deleted_category}")
+                self.assertIsNone(deleted_category)
 
-            response = self.client.post(f'/admin/edit_product/{product.idProduct}', data={
-                'name_prod': 'Intel i9 Updated',
-                'description_prod': 'Updated high performance processor.',
-                'price': 600000.0,
-                'stock': 20,
-                'idCategory': 1,
-                'brand': 1,
-                'img_prod': (io.BytesIO(b"updated fake image data"), 'intel_i9_updated.jpg')
-            }, content_type='multipart/form-data')
-            print(f"Update product response status code: {response.status_code}")
+    def test_edit_product(self):
+        """Test editing a product"""
+        with self.client:
+            with self.app.app_context():
+                self.admin_user = db.session.query(Admin).filter_by(idAdmin=2).first()
+                db.session.refresh(self.admin_user)  # Refresh the instance
 
-            self.assertEqual(response.status_code, 302)
-            updated_product = Product.query.filter_by(idProduct=product.idProduct).first()
-            print(f"Queried updated product: {updated_product}")
-            self.assertIsNotNone(updated_product)
-            self.assertEqual(updated_product.name_prod, 'Intel i9 Updated')
-            self.assertEqual(updated_product.description_prod, 'Updated high performance processor.')
-            self.assertEqual(updated_product.price, 600000.0)
-            self.assertEqual(updated_product.stock, 20)
+                # Refresh the product instance to ensure it is managed by the session
+                self.product = db.session.query(Product).filter_by(idProduct=1).first()
+                db.session.refresh(self.product)
+
+            # Simulate login
+            response = self.client.post('/auth/', data={
+                'email': self.admin_user.email,
+                'password': 'admin2',
+                'action': 'login'
+            })
+            print(f"Login response status code: {response.status_code}")
+
+            # Edit product
+            form_data = {
+                'name_prod': 'Updated Laptop',
+                'description_prod': 'Updated high performance laptop',
+                'price': '1200.0',
+                'promo': '15',
+                'stock': '30',
+                'idCategory': '1',
+                'brand': 'UpdatedBrand',
+                'img_prod': (io.BytesIO(b"updated fake image data"), 'updated_laptop.jpg')
+            }
+            response = self.client.post(f'/admin/edit_product/{self.product.idProduct}', data=form_data, content_type='multipart/form-data')
+            print(f"Edit product response status code: {response.status_code}")
+            self.assertEqual(response.status_code, 302)  # Redirect after editing product
+
+            # Check if product is edited
+            with self.app.app_context():
+                edited_product = Product.query.filter_by(idProduct=self.product.idProduct).first()
+                print(f"Product edited: {edited_product}")
+                self.assertIsNotNone(edited_product)
+                self.assertEqual(edited_product.name_prod, 'Updated Laptop')
+                self.assertEqual(edited_product.description_prod, 'Updated high performance laptop')
+                self.assertEqual(edited_product.price, 1200.0)
+                self.assertEqual(edited_product.promo, 15)
+                self.assertEqual(edited_product.stock, 30)
+                self.assertEqual(edited_product.brand, 'UpdatedBrand')
+
+    def test_edit_category(self):
+        """Test editing a category"""
+        with self.client:
+            with self.app.app_context():
+                self.admin_user = db.session.query(Admin).filter_by(idAdmin=2).first()
+                db.session.refresh(self.admin_user)  # Refresh the instance
+
+                # Refresh the category instance to ensure it is managed by the session
+                self.category = db.session.query(Category).filter_by(idCategory=1).first()
+                db.session.refresh(self.category)
+
+            # Simulate login
+            response = self.client.post('/auth/', data={
+                'email': self.admin_user.email,
+                'password': 'admin2',
+                'action': 'login'
+            })
+            print(f"Login response status code: {response.status_code}")
+
+            # Edit category
+            form_data = {
+                'category_name': 'Updated Graphics Cards',
+                'catalog_id': '1'
+            }
+            response = self.client.post(f'/admin/edit_category/{self.category.idCategory}', data=form_data)
+            print(f"Edit category response status code: {response.status_code}")
+            self.assertEqual(response.status_code, 302)  # Redirect after editing category
+
+            # Check if category is edited
+            with self.app.app_context():
+                edited_category = Category.query.filter_by(idCategory=self.category.idCategory).first()
+                print(f"Category edited: {edited_category}")
+                self.assertIsNotNone(edited_category)
+                self.assertEqual(edited_category.description_cat, 'Updated Graphics Cards')
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

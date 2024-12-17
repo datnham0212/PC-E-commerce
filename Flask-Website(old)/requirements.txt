@@ -1,0 +1,12 @@
+flask 
+flask-mysqldb 
+flask-bcrypt 
+flask-login 
+flask-wtf 
+Flask-SQLAlchemy
+PyMySQL
+Flask-Migrate
+mysql-connector-python
+pytest
+Flask-Testing
+

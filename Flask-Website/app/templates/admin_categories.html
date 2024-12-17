@@ -149,7 +149,7 @@ function toggleOtherReason() {
         <div class="modal-content">
             <span onclick="document.getElementById('addCategoryModal').style.display='none'" class="close">&times;</span>
             <h2>Add New Category</h2>
-            <form method="POST" action="{{ url_for('admin.add_category') }}">
+            <form method="POST" action="{{ url_for('admin.add_category_route') }}">
                 <input type="text" name="category_name" placeholder="Category Name" required>
                 <select name="catalog_id" required>
                     {% for catalog in catalogs %}

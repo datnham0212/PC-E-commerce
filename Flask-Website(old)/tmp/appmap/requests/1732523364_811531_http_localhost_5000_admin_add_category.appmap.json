@@ -1,0 +1,207 @@
+{
+  "events": [
+    {
+      "http_server_request": {
+        "request_method": "POST",
+        "protocol": "HTTP/1.1",
+        "path_info": "/admin/add_category",
+        "normalized_path_info": "/admin/add_category",
+        "mime_type": "application/x-www-form-urlencoded",
+        "headers": {
+          "Host": "localhost:5000",
+          "Connection": "keep-alive",
+          "Content-Length": "36",
+          "Cache-Control": "max-age=0",
+          "Sec-Ch-Ua": "\"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\"",
+          "Sec-Ch-Ua-Mobile": "?0",
+          "Sec-Ch-Ua-Platform": "\"Windows\"",
+          "Origin": "http://localhost:5000",
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Upgrade-Insecure-Requests": "1",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+          "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+          "Sec-Fetch-Site": "same-origin",
+          "Sec-Fetch-Mode": "navigate",
+          "Sec-Fetch-User": "?1",
+          "Sec-Fetch-Dest": "document",
+          "Referer": "http://localhost:5000/admin/categories",
+          "Accept-Encoding": "gzip, deflate, br, zstd",
+          "Accept-Language": "en-US,en;q=0.9",
+          "Cookie": "session=.eJwljjEOwjAMAP-SmcFOYsfuZ5Dj2IK1pRPi71Sgm2453bvcc4_jUbbXfsat3J-rbMXdBiIrVEwUWNlyWRqxQbCz1mAzb4p9onSgyo0EZk1qkpQ0ejP6yQgSD1UlaFOUOLvoVXddgwNkYAwlaReKDtOXO65yjZxH7P8bLJ8vlIourA.Z0Q1LA.ge36Ml9qHt9Iateh3MWm6Nl5t6Y"
+        }
+      },
+      "message": [
+        {
+          "object_id": 2227879014128,
+          "value": "<builtins.str object at 0x206b7efeef0>"
+        },
+        {
+          "object_id": 140727498958856,
+          "value": "<builtins.str object at 0x7ffdac95e808>"
+        }
+      ],
+      "id": 1,
+      "event": "call",
+      "thread_id": 28
+    },
+    {
+      "sql_query": {
+        "sql": "SELECT admins.`idAdmin` AS `admins_idAdmin`, admins.email AS admins_email, admins.password AS admins_password, admins.`lastName` AS `admins_lastName`, admins.`firstName` AS `admins_firstName`, admins.`phoneNumber` AS `admins_phoneNumber`, admins.photo AS admins_photo \nFROM admins \nWHERE admins.`idAdmin` = %(pk_1)s",
+        "database_type": "mysql",
+        "server_version": "10.4.32"
+      },
+      "id": 2,
+      "event": "call",
+      "thread_id": 28
+    },
+    {
+      "parent_id": 2,
+      "elapsed": 0,
+      "id": 3,
+      "event": "return",
+      "thread_id": 28
+    },
+    {
+      "static": false,
+      "parameters": [
+        {
+          "kind": "req",
+          "object_id": 140727498105296,
+          "value": "<builtins.NoneType object at 0x7ffdac88e1d0>"
+        }
+      ],
+      "auxtype": "get",
+      "id": 4,
+      "event": "call",
+      "thread_id": 28,
+      "defined_class": "app.models.Admin",
+      "method_id": "is_authenticated (get)",
+      "path": "C:\\Users\\Admin\\OneDrive\\PythonProjects\\Flask-Website\\app\\models.py",
+      "lineno": 20
+    },
+    {
+      "return_value": {
+        "object_id": 140727498105232,
+        "value": "<builtins.bool object at 0x7ffdac88e190>"
+      },
+      "parent_id": 4,
+      "elapsed": 0,
+      "id": 5,
+      "event": "return",
+      "thread_id": 28
+    },
+    {
+      "sql_query": {
+        "sql": "INSERT INTO category (description_cat, `idCatalog`) VALUES (%(description_cat)s, %(idCatalog)s)",
+        "database_type": "mysql",
+        "server_version": "10.4.32"
+      },
+      "id": 6,
+      "event": "call",
+      "thread_id": 28
+    },
+    {
+      "parent_id": 6,
+      "elapsed": 0.015000000013969839,
+      "id": 7,
+      "event": "return",
+      "thread_id": 28
+    },
+    {
+      "http_server_response": {
+        "status_code": 302,
+        "mime_type": "text/html; charset=utf-8",
+        "headers": {
+          "Content-Type": "text/html; charset=utf-8",
+          "Content-Length": "221",
+          "Location": "/admin/categories",
+          "Vary": "Cookie",
+          "Set-Cookie": "session=.eJwtjsGKwzAMRH8l6FwWK45sK9d-RilFkaVtIVCIk0Mp_fc1u8schscww7zh5qu0uzWYL28Y9m7QDlVrDU5wlt2-n9trkFqtDv-BH-v6-oLr53rq9c3aHeZ9O6zTo8IMqpIRE4cRHUuoHr2KCyUJljTxaElEI-O0YJkCjSlSCcvoFIuTU56i0C9ko6LGzBTiUpiST4X7unLNyULJaJmpxC5GDYtWVaz9-O1otv29Qfj8AIgpRIU.Z0Q1ZA.2LPbDmFyrfZf_Td4ofnHQcqHu1o; HttpOnly; Path=/"
+        }
+      },
+      "parent_id": 1,
+      "elapsed": 0.0470000000204891,
+      "id": 8,
+      "event": "return",
+      "thread_id": 28
+    }
+  ],
+  "version": "1.9",
+  "metadata": {
+    "language": {
+      "name": "python",
+      "engine": "CPython",
+      "version": "3.12.4"
+    },
+    "client": {
+      "name": "appmap",
+      "url": "https://github.com/applandinc/appmap-python"
+    },
+    "frameworks": [
+      {
+        "name": "flask",
+        "version": "3.1.0"
+      },
+      {
+        "name": "SQLAlchemy",
+        "version": "2.0.36"
+      }
+    ],
+    "name": "POST /admin/add_category (302) - 15:29:24.811",
+    "timestamp": 1732523364.811531,
+    "recorder": {
+      "name": "record_requests",
+      "type": "requests"
+    }
+  },
+  "classMap": [
+    {
+      "name": "app",
+      "type": "package",
+      "children": [
+        {
+          "name": "models",
+          "type": "package",
+          "children": [
+            {
+              "name": "Admin",
+              "type": "class",
+              "children": [
+                {
+                  "name": "is_authenticated (get)",
+                  "type": "function",
+                  "static": false,
+                  "location": "C:\\Users\\Admin\\OneDrive\\PythonProjects\\Flask-Website\\app\\models.py:20"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "http",
+      "name": "HTTP server requests",
+      "children": [
+        {
+          "type": "route",
+          "name": "POST /admin/add_category"
+        }
+      ]
+    },
+    {
+      "type": "database",
+      "name": "Database",
+      "children": [
+        {
+          "type": "query",
+          "name": "SELECT admins.`idAdmin` AS `admins_idAdmin`, admins.email AS admins_email, admins.password AS admins_password, admins.`lastName` AS `admins_lastName`, admins.`firstName` AS `admins_firstName`, admins.`phoneNumber` AS `admins_phoneNumber`, admins.photo AS admins_photo \nFROM admins \nWHERE admins.`idAdmin` = %(pk_1)s"
+        },
+        {
+          "type": "query",
+          "name": "INSERT INTO category (description_cat, `idCatalog`) VALUES (%(description_cat)s, %(idCatalog)s)"
+        }
+      ]
+    }
+  ]
+}

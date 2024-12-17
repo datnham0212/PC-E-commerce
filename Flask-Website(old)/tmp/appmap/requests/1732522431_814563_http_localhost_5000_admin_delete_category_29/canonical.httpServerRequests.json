@@ -1,0 +1,7 @@
+[
+  {
+    "route": "POST /admin/delete_category/{category_id}",
+    "parameters": "()",
+    "status": 302
+  }
+]

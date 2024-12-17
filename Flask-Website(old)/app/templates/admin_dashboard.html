@@ -1,0 +1,118 @@
+<!-- app/admin/templates/admin_dashboard.html -->
+{% extends "admin_base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<main class="admin-main">
+    <header class="admin-header">
+        <h1>Dashboard</h1>
+    </header>
+    
+    <div class="dashboard-stats">
+        <div class="stat-card">
+            <h3>Total Sales</h3>
+            <p class="stat-number">{{ total_sales }} VND</p>
+        </div>
+        <div class="stat-card">
+            <h3>Total Orders</h3>
+            <p class="stat-number">{{ total_orders }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Total Customers</h3>
+            <p class="stat-number">{{ total_customers }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Total In Stocks</h3>
+            <p class="stat-number">{{ total_stocks }}</p>
+        </div>
+    </div>
+    
+    <div class="recent-activity">
+        <h2>Recent Activity</h2>
+        <table class="activity-table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Products</th>
+                    <th>Amount</th>
+                    <th>Order Date</th>
+                    <th>Delivery Status</th>
+                    <th>Delivery Date</th>
+                    <th>Delivery ID</th>
+                    <th>Delivery Address</th>
+                    <th>Delivery Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in recent_orders %}
+                <tr>
+                    <td>{{ order.order_id }}</td>
+                    <td>{{ order.customer_name }}</td>
+                    <td>
+                        <ul>
+                            {% for product in order.products %}
+                            <li>{{ product.name }} (x{{ product.quantity }})</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>{{ order.amount }}</td>
+                    <td>{{ order.order_date }}</td>
+                    <td>
+                        <button class="status-button" onclick="confirmStatusChange('{{ order.order_id }}', '{{ order.delivery_status }}')">
+                            {{ order.delivery_status }}
+                        </button>
+                    </td>
+                    <td>{{ order.delivery_date if order.delivery_date else 'N/A' }}</td>
+                    <td>{{ order.delivery_id }}</td>
+                    <td>{{ order.delivery_address }}</td>
+                    <td>{{ order.delivery_type }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<script>
+    function confirmStatusChange(orderId, currentStatus) {
+        if (currentStatus === 'Pending') {
+            if (confirm('Are you sure you want to mark this delivery as completed?')) {
+                fetch(`/admin/update_delivery_status/${orderId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                }).then(response => {
+                    if (response.status === 204) {
+                        location.reload();
+                    } else {
+                        response.text().then(text => {
+                            alert('Failed to update delivery status: ' + text);
+                        });
+                    }
+                }).catch(error => {
+                    alert('Failed to update delivery status: ' + error.message);
+                });
+            }
+        }
+    }
+</script>
+
+<style>
+    .status-button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .status-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}

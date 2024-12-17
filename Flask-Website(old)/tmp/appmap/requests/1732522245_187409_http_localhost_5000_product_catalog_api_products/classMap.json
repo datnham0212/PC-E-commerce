@@ -1,0 +1,22 @@
+[
+  {
+    "type": "http",
+    "name": "HTTP server requests",
+    "children": [
+      {
+        "type": "route",
+        "name": "GET /product_catalog/api/products"
+      }
+    ]
+  },
+  {
+    "type": "database",
+    "name": "Database",
+    "children": [
+      {
+        "type": "query",
+        "name": "SELECT product.`idProduct` AS `product_idProduct`, product.name_prod AS product_name_prod, product.description_prod AS product_description_prod, product.price AS product_price, product.img_prod AS product_img_prod, product.promo AS product_promo, product.stock AS product_stock, product.`idCategory` AS `product_idCategory`, product.sold AS product_sold, product.shipped AS product_shipped, product.brand AS product_brand \nFROM product"
+      }
+    ]
+  }
+]

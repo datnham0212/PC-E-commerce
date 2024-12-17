@@ -32,7 +32,7 @@
                         <button class="delete-button" onclick="openDeleteCustomerModal('{{ client.idClient }}')">X</button>
                     </td>
                     <td>
-                        <form method="POST" action="{{ url_for('admin.verify_loyal_client', client_id=client.idClient) }}" style="display:inline;">
+                        <form method="POST" action="{{ url_for('admin.verify_loyal_client_route', client_id=client.idClient) }}" style="display:inline;">
                             <label class="switch">
                                 <input type="checkbox" name="loyal_client" onchange="this.form.submit()" {% if client.idClient in loyal_clients %}checked{% endif %}>
                                 <span class="slider round"></span>
@@ -220,7 +220,7 @@
 
 <script>
 function openDeleteCustomerModal(clientId) {
-    document.getElementById('deleteCustomerForm').action = '/admin/delete_customer/' + clientId;
+    document.getElementById('deleteCustomerForm').action = '/admin/delete_customer_route/' + clientId;
     document.getElementById('deleteCustomerModal').style.display = 'block';
 }
 
