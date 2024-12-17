@@ -104,10 +104,8 @@ def apply_coupon(coupon_code):
     coupon = Coupon.query.get(coupon_code)
     if not coupon:
         return False, "Invalid coupon code"
-    
-    if coupon.expiration_date < datetime.now().date():
+    if coupon.expiration_date < datetime.now():
         return False, "Coupon has expired"
-        
     return True, coupon.value
 
 def process_payment(payment_method, payment_data):

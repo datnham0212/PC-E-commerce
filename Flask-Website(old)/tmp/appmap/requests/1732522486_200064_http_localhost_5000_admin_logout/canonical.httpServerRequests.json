@@ -1,0 +1,7 @@
+[
+  {
+    "route": "GET /admin/logout",
+    "parameters": "()",
+    "status": 302
+  }
+]

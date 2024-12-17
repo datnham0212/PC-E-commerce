@@ -1,0 +1,23 @@
+{
+  "language": {
+    "name": "python",
+    "engine": "CPython",
+    "version": "3.12.4"
+  },
+  "client": {
+    "name": "appmap",
+    "url": "https://github.com/applandinc/appmap-python"
+  },
+  "frameworks": [
+    {
+      "name": "flask",
+      "version": "3.1.0"
+    }
+  ],
+  "name": "GET /static/style.css (304) - 15:28:17.959",
+  "timestamp": 1732523297.959869,
+  "recorder": {
+    "name": "record_requests",
+    "type": "requests"
+  }
+}

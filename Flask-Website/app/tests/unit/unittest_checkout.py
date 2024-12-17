@@ -1,7 +1,7 @@
 import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../')))
-
+from datetime import datetime
 import unittest
 from unittest.mock import patch, MagicMock
 from flask import Flask, session
@@ -52,6 +52,8 @@ class TestCheckoutCtrl(unittest.TestCase):
                 'zipCode': '12345',
                 'address': 'Test Address'
             }
+
+            mock_address.return_value.city = 'Test City'
 
             result = process_order(form_data)
 

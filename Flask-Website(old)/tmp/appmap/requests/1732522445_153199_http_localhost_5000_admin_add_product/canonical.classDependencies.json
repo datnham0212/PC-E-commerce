@@ -1,0 +1,14 @@
+[
+  {
+    "caller": "POST /admin/add_product",
+    "callee": "INSERT INTO product (name_prod, description_prod, price, img_prod, promo, stock, `idCategory`, sold, shipped, brand) VALUES (%(name_prod)s, %(description_prod)s, %(price)s, %(img_prod)s, %(promo)s, %(stock)s, %(idCategory)s, %(sold)s, %(shipped)s, %(brand)s)"
+  },
+  {
+    "caller": "POST /admin/add_product",
+    "callee": "SELECT admins.`idAdmin` AS `admins_idAdmin`, admins.email AS admins_email, admins.password AS admins_password, admins.`lastName` AS `admins_lastName`, admins.`firstName` AS `admins_firstName`, admins.`phoneNumber` AS `admins_phoneNumber`, admins.photo AS admins_photo \nFROM admins \nWHERE admins.`idAdmin` = %(pk_1)s"
+  },
+  {
+    "caller": "POST /admin/add_product",
+    "callee": "app/models"
+  }
+]

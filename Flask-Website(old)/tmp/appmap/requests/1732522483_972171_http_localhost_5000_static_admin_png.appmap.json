@@ -1,0 +1,95 @@
+{
+  "events": [
+    {
+      "http_server_request": {
+        "request_method": "GET",
+        "protocol": "HTTP/1.1",
+        "path_info": "/static/admin.png",
+        "normalized_path_info": "/static/{filename}",
+        "headers": {
+          "Host": "localhost:5000",
+          "Connection": "keep-alive",
+          "Sec-Ch-Ua-Platform": "\"Windows\"",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+          "Sec-Ch-Ua": "\"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\"",
+          "Sec-Ch-Ua-Mobile": "?0",
+          "Accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+          "Sec-Fetch-Site": "same-origin",
+          "Sec-Fetch-Mode": "no-cors",
+          "Sec-Fetch-Dest": "image",
+          "Referer": "http://localhost:5000/admin/add_admin",
+          "Accept-Encoding": "gzip, deflate, br, zstd",
+          "Accept-Language": "en-US,en;q=0.9",
+          "Cookie": "session=.eJydksFqAyEQhl9FPIei6-pqbiUv0HsJYXYckwU3W3QNhJB3r00baKEtSfCg4_j98x088U2IkHeU-fL1xNlcN54LIuXMF3wFM22ndGTgPXn21QglxuMTX58X_xDlzdfjfcwOMuuJ9sxTpBvhlzT5gvPthlfgDsEr8ojfKg60_4YeKA1hqGy9ABanI0SGlzc3BiQap0PlQ5rGH3z-K6DkeRopPaT_7MfhY-Z2yDOlX5j1on6hRHnHl3MqVKvB8yVHhE5K40Qjg7TCBxU8BNAGBBk0riEDgMrJtpe2FboxSlvRN0ErG3TQXatAX4qOtEVyzmmheuu0Ca11NR2d7wwJ20nqnLaqLidR9OgRpa_qm5IpfdpIfn4HQkD4Tg.Z0Qx8w.4kneqyyMFVOW6HGqT4XTl4FzsVM",
+          "If-None-Match": "\"1730089154.095492-18279-239541322\"",
+          "If-Modified-Since": "Mon, 28 Oct 2024 04:19:14 GMT"
+        }
+      },
+      "message": [
+        {
+          "object_id": 1757147011888,
+          "value": "<builtins.str object at 0x1991e1f9b30>"
+        }
+      ],
+      "id": 1,
+      "event": "call",
+      "thread_id": 80
+    },
+    {
+      "http_server_response": {
+        "status_code": 304,
+        "mime_type": "image/png",
+        "headers": {
+          "Content-Disposition": "inline; filename=admin.png",
+          "Content-Type": "image/png",
+          "Content-Length": "18279",
+          "Last-Modified": "Mon, 28 Oct 2024 04:19:14 GMT",
+          "Cache-Control": "no-cache",
+          "ETag": "\"1730089154.095492-18279-239541322\"",
+          "Date": "Mon, 25 Nov 2024 08:14:43 GMT"
+        }
+      },
+      "parent_id": 1,
+      "elapsed": 0,
+      "id": 2,
+      "event": "return",
+      "thread_id": 80
+    }
+  ],
+  "version": "1.9",
+  "metadata": {
+    "language": {
+      "name": "python",
+      "engine": "CPython",
+      "version": "3.12.4"
+    },
+    "client": {
+      "name": "appmap",
+      "url": "https://github.com/applandinc/appmap-python"
+    },
+    "frameworks": [
+      {
+        "name": "flask",
+        "version": "3.1.0"
+      }
+    ],
+    "name": "GET /static/admin.png (304) - 15:14:43.972",
+    "timestamp": 1732522483.972171,
+    "recorder": {
+      "name": "record_requests",
+      "type": "requests"
+    }
+  },
+  "classMap": [
+    {
+      "type": "http",
+      "name": "HTTP server requests",
+      "children": [
+        {
+          "type": "route",
+          "name": "GET /static/{filename}"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,231 @@
+{
+  "events": [
+    {
+      "http_server_request": {
+        "request_method": "POST",
+        "protocol": "HTTP/1.1",
+        "path_info": "/admin/add_product",
+        "normalized_path_info": "/admin/add_product",
+        "mime_type": "application/x-www-form-urlencoded",
+        "headers": {
+          "Host": "localhost:5000",
+          "Connection": "keep-alive",
+          "Content-Length": "86",
+          "Cache-Control": "max-age=0",
+          "Sec-Ch-Ua": "\"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\"",
+          "Sec-Ch-Ua-Mobile": "?0",
+          "Sec-Ch-Ua-Platform": "\"Windows\"",
+          "Origin": "http://localhost:5000",
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Upgrade-Insecure-Requests": "1",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+          "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+          "Sec-Fetch-Site": "same-origin",
+          "Sec-Fetch-Mode": "navigate",
+          "Sec-Fetch-User": "?1",
+          "Sec-Fetch-Dest": "document",
+          "Referer": "http://localhost:5000/admin/products",
+          "Accept-Encoding": "gzip, deflate, br, zstd",
+          "Accept-Language": "en-US,en;q=0.9",
+          "Cookie": "session=.eJyVj8FqxDAMRH8l6ByKHUe2lWs_oyyLIslNIbRLnByWZf-9ZrfHUig6jAbxhtENzmXluliF6e0G3d4E6iFitUIPr7zb-9d27VjVtPs5lGNdry9wuvd_EMdF2_o_ZuHazWafndpqv8GnvvXdrC4w7dthzX0oTCDCyftIbvDFZ6clFOXCGNlZlEiDRWYJ5MfZ59HhEANmNw8FQy5YMI2B8WGSYRYjInRhzoSxjJlaupCmaC4nb4kwhzbkxc2iIl7bD-ej2vZs4-H-Dc34bDE.Z0Qxvw.ao7pbhM4e60iQiV82fYHZMvNaNc"
+        }
+      },
+      "message": [
+        {
+          "object_id": 140727503548680,
+          "value": "<builtins.str object at 0x7ffdacdbf108>"
+        },
+        {
+          "object_id": 140727503548680,
+          "value": "<builtins.str object at 0x7ffdacdbf108>"
+        },
+        {
+          "object_id": 140727503546376,
+          "value": "<builtins.str object at 0x7ffdacdbe808>"
+        },
+        {
+          "object_id": 140727503548680,
+          "value": "<builtins.str object at 0x7ffdacdbf108>"
+        },
+        {
+          "object_id": 140727503546328,
+          "value": "<builtins.str object at 0x7ffdacdbe7d8>"
+        },
+        {
+          "object_id": 140727503546376,
+          "value": "<builtins.str object at 0x7ffdacdbe808>"
+        },
+        {
+          "object_id": 140727503546376,
+          "value": "<builtins.str object at 0x7ffdacdbe808>"
+        },
+        {
+          "object_id": 140727503547144,
+          "value": "<builtins.str object at 0x7ffdacdbeb08>"
+        }
+      ],
+      "id": 1,
+      "event": "call",
+      "thread_id": 47
+    },
+    {
+      "sql_query": {
+        "sql": "SELECT admins.`idAdmin` AS `admins_idAdmin`, admins.email AS admins_email, admins.password AS admins_password, admins.`lastName` AS `admins_lastName`, admins.`firstName` AS `admins_firstName`, admins.`phoneNumber` AS `admins_phoneNumber`, admins.photo AS admins_photo \nFROM admins \nWHERE admins.`idAdmin` = %(pk_1)s",
+        "database_type": "mysql",
+        "server_version": "10.4.32"
+      },
+      "id": 2,
+      "event": "call",
+      "thread_id": 47
+    },
+    {
+      "parent_id": 2,
+      "elapsed": 0,
+      "id": 3,
+      "event": "return",
+      "thread_id": 47
+    },
+    {
+      "static": false,
+      "parameters": [
+        {
+          "kind": "req",
+          "object_id": 140727502692816,
+          "value": "<builtins.NoneType object at 0x7ffdaccee1d0>"
+        }
+      ],
+      "auxtype": "get",
+      "id": 4,
+      "event": "call",
+      "thread_id": 47,
+      "defined_class": "app.models.Admin",
+      "method_id": "is_authenticated (get)",
+      "path": "C:\\Users\\Admin\\OneDrive\\PythonProjects\\Flask-Website\\app\\models.py",
+      "lineno": 20
+    },
+    {
+      "return_value": {
+        "object_id": 140727502692752,
+        "value": "<builtins.bool object at 0x7ffdaccee190>"
+      },
+      "parent_id": 4,
+      "elapsed": 0,
+      "id": 5,
+      "event": "return",
+      "thread_id": 47
+    },
+    {
+      "sql_query": {
+        "sql": "INSERT INTO product (name_prod, description_prod, price, img_prod, promo, stock, `idCategory`, sold, shipped, brand) VALUES (%(name_prod)s, %(description_prod)s, %(price)s, %(img_prod)s, %(promo)s, %(stock)s, %(idCategory)s, %(sold)s, %(shipped)s, %(brand)s)",
+        "database_type": "mysql",
+        "server_version": "10.4.32"
+      },
+      "id": 6,
+      "event": "call",
+      "thread_id": 47
+    },
+    {
+      "parent_id": 6,
+      "elapsed": 0,
+      "id": 7,
+      "event": "return",
+      "thread_id": 47
+    },
+    {
+      "http_server_response": {
+        "status_code": 302,
+        "mime_type": "text/html; charset=utf-8",
+        "headers": {
+          "Content-Type": "text/html; charset=utf-8",
+          "Content-Length": "217",
+          "Location": "/admin/products",
+          "Vary": "Cookie",
+          "Set-Cookie": "session=.eJyVj01qxDAMRq8StA7FjuMfZdsLdF-GQZHkphA6xY4XwzB3r2m7bWnRQvoQTzzd4Jx3qptWWJ5vMBy9QW3MWiuM8EiHvlzKdSARleF7kdu-Xx_gdB9_Idq79PF_zEZ1WFXfBtFd_wg_lYs0Pn4wPI39waJ1g-UoTXt6FViAmaK1Ac1ks01GsstCmXwgo4EDThqI2KGdV5tm46fgfDLrlL1L2WcfZ0f-M0T1iRURvXFrQh_ynLBfZ5QY1KRoNaJPrhdaNisLs5XufW5Vy5eNhfsHTT19Mg.Z0QxzQ.x58ThzVIjk7OptLzXWcPYAtxNx4; HttpOnly; Path=/"
+        }
+      },
+      "parent_id": 1,
+      "elapsed": 0.046999999904073775,
+      "id": 8,
+      "event": "return",
+      "thread_id": 47
+    }
+  ],
+  "version": "1.9",
+  "metadata": {
+    "language": {
+      "name": "python",
+      "engine": "CPython",
+      "version": "3.12.4"
+    },
+    "client": {
+      "name": "appmap",
+      "url": "https://github.com/applandinc/appmap-python"
+    },
+    "frameworks": [
+      {
+        "name": "flask",
+        "version": "3.1.0"
+      },
+      {
+        "name": "SQLAlchemy",
+        "version": "2.0.36"
+      }
+    ],
+    "name": "POST /admin/add_product (302) - 15:14:05.153",
+    "timestamp": 1732522445.153199,
+    "recorder": {
+      "name": "record_requests",
+      "type": "requests"
+    }
+  },
+  "classMap": [
+    {
+      "name": "app",
+      "type": "package",
+      "children": [
+        {
+          "name": "models",
+          "type": "package",
+          "children": [
+            {
+              "name": "Admin",
+              "type": "class",
+              "children": [
+                {
+                  "name": "is_authenticated (get)",
+                  "type": "function",
+                  "static": false,
+                  "location": "C:\\Users\\Admin\\OneDrive\\PythonProjects\\Flask-Website\\app\\models.py:20"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "http",
+      "name": "HTTP server requests",
+      "children": [
+        {
+          "type": "route",
+          "name": "POST /admin/add_product"
+        }
+      ]
+    },
+    {
+      "type": "database",
+      "name": "Database",
+      "children": [
+        {
+          "type": "query",
+          "name": "SELECT admins.`idAdmin` AS `admins_idAdmin`, admins.email AS admins_email, admins.password AS admins_password, admins.`lastName` AS `admins_lastName`, admins.`firstName` AS `admins_firstName`, admins.`phoneNumber` AS `admins_phoneNumber`, admins.photo AS admins_photo \nFROM admins \nWHERE admins.`idAdmin` = %(pk_1)s"
+        },
+        {
+          "type": "query",
+          "name": "INSERT INTO product (name_prod, description_prod, price, img_prod, promo, stock, `idCategory`, sold, shipped, brand) VALUES (%(name_prod)s, %(description_prod)s, %(price)s, %(img_prod)s, %(promo)s, %(stock)s, %(idCategory)s, %(sold)s, %(shipped)s, %(brand)s)"
+        }
+      ]
+    }
+  ]
+}

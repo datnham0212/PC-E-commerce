@@ -1,0 +1,5 @@
+[
+  "SELECT admins.`idAdmin` AS `admins_idAdmin`, admins.email AS admins_email, admins.password AS admins_password, admins.`lastName` AS `admins_lastName`, admins.`firstName` AS `admins_firstName`, admins.`phoneNumber` AS `admins_phoneNumber`, admins.photo AS admins_photo \nFROM admins \nWHERE admins.`idAdmin` = %(pk_1)s",
+  "SELECT delivery.`idDelivery` AS `delivery_idDelivery`, delivery.`idOrder` AS `delivery_idOrder`, delivery.status_del AS delivery_status_del, delivery.date_del AS delivery_date_del, delivery.`idAddress` AS `delivery_idAddress` \nFROM delivery \nWHERE delivery.`idOrder` = %(idOrder_1)s \n LIMIT %(param_1)s",
+  "UPDATE delivery SET status_del=%(status_del)s, date_del=%(date_del)s WHERE delivery.`idDelivery` = %(delivery_idDelivery)s"
+]
