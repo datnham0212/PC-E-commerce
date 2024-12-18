@@ -1,5 +1,7 @@
 [
   "app/tests/integration/3_test_cases_admin_delete_product.py::AdminCrudTestCase::test_delete_product",
+  "app/tests/integration/8_test_cases_admin_add_product.py::AdminCrudTestCase::test_product_validations",
+  "app/tests/integration/8_test_cases_admin_edit_product.py::AdminCrudTestCase::test_product_validations",
   "app/tests/integration/admin_crud_integration_test.py::AdminCrudTestCase::test_add_category",
   "app/tests/integration/admin_crud_integration_test.py::AdminCrudTestCase::test_add_product",
   "app/tests/integration/admin_crud_integration_test.py::AdminCrudTestCase::test_add_product_missing_image",

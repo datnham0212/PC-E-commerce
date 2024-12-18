@@ -127,10 +127,15 @@ def products_route():
 def add_product_route():
     if not isinstance(current_user, Admin):
         return redirect(url_for('main.home'))
-    file = request.files['img_prod']
-    filename = secure_filename(file.filename) if file and file.filename else 'téléchargement.png'
-    if file and file.filename:
-        file.save(os.path.join('app', 'static', 'img', filename))
+    
+    file = request.files.get('img_prod')
+    if not file or not file.filename:
+        flash('Image is required', 'error')
+        return redirect(url_for('admin.products_route')), 400
+
+    filename = secure_filename(file.filename)
+    file.save(os.path.join('app', 'static', 'img', filename))
+
     name_prod = request.form.get('name_prod')
     description_prod = request.form.get('description_prod')
     price = request.form.get('price')
@@ -138,6 +143,7 @@ def add_product_route():
     stock = request.form.get('stock')
     idCategory = request.form.get('idCategory')
     brand = request.form.get('brand')
+
     success, message = add_product(name_prod, description_prod, price, promo, stock, idCategory, brand, filename)
     flash(message, 'success' if success else 'error')
     if success:

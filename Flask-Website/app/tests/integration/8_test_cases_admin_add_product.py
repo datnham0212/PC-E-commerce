@@ -3,10 +3,12 @@ import os
 import io
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..')))
 import unittest
+from datetime import datetime
 from flask_testing import TestCase
+from flask_login import current_user
 from app import create_app
 from app.extensions import db
-from app.models import Admin, Category, Product
+from app.models import Admin, Category, Product, Catalog
 
 class AdminCrudTestCase(TestCase):
     def create_app(self):
@@ -42,42 +44,31 @@ class AdminCrudTestCase(TestCase):
             db.session.add(self.category)
             db.session.commit()
 
-            # Create product
-            self.product = Product(
-                idProduct=1,
-                name_prod='NVIDIA RTX 2080',
-                description_prod='High performance graphics card.',
-                price=1890000.0,
-                stock=10,
-                img_prod='palit rtx.jpg',
-                idCategory=1,
-                brand='BrandX'
-            )
-            db.session.add(self.product)
-            db.session.commit()
-
     def tearDown(self):
         """Clean up after each test"""
         with self.app.app_context():
             db.session.remove()
             db.drop_all()
 
-    def edit_product(self, product_id, form_data):
-        """Reusable helper for editing a product"""
-        return self.client.post(f'/admin/edit_product/{product_id}', data=form_data, content_type='multipart/form-data')
+    def add_product(self, form_data):
+        """Reusable helper for adding a product"""
+        return self.client.post('/admin/add_product', data=form_data, content_type='multipart/form-data')
 
     def test_product_validations(self):
-        """Test editing a product with various invalid inputs"""
+        """Test adding a product with various invalid inputs"""
         test_cases = [
             # Valid data
-            {"name": "Updated Laptop", "quantity": 30, "price": 1200.0, "category": "1", "expected_status": 302},
+            {"name": "Laptop", "quantity": 5, "price": 1000.0, "category": "1", "expected_status": 302},
             # Invalid cases
-            {"name": "", "quantity": 30, "price": 1200.0, "category": "1", "expected_status": 400},  # Empty name
-            {"name": "Product with zero quantity", "quantity": 0, "price": 1200.0, "category": "1", "expected_status": 400},  # Zero quantity
-            {"name": "Product with negative price", "quantity": 30, "price": -1200.0, "category": "1", "expected_status": 400},  # Negative price
-            {"name": "Product with invalid category", "quantity": 30, "price": 1200.0, "category": "999", "expected_status": 400},  # Invalid category
-            {"name": "Product with negative quantity", "quantity": -30, "price": 1200.0, "category": "1", "expected_status": 400},  # Negative quantity
-            {"name": "Product with zero price", "quantity": 30, "price": 0.0, "category": "1", "expected_status": 400},  # Price = 0
+            {"name": "", "quantity": 5, "price": 1000.0, "category": "1", "expected_status": 400},  # Empty name
+            {"name": "T-Shirt", "quantity": 0, "price": 50.0, "category": "1", "expected_status": 400},  # Zero quantity
+            {"name": "Bread", "quantity": 10, "price": -5.0, "category": "1", "expected_status": 400},  # Negative price
+            {"name": "Phone", "quantity": 3, "price": 800.0, "category": "999", "expected_status": 400},  # Invalid category
+            {"name": "Monitor", "quantity": -2, "price": 300.0, "category": "1", "expected_status": 400},  # Negative quantity
+            {"name": "Headphones", "quantity": 7, "price": 0.0, "category": "1", "expected_status": 400},  # Price = 0
+            {"name": "Shoes", "quantity": 4, "price": 120.5, "category": "1", "expected_status": 302},  # Valid data
+            # No image provided
+            {"name": "Tablet", "quantity": 10, "price": 500.0, "category": "1", "expected_status": 400, "no_image": True},
         ]
 
         # Simulate admin login
@@ -86,30 +77,28 @@ class AdminCrudTestCase(TestCase):
             assert admin_user is not None, "Admin user must exist for login"
             email = admin_user.email  # Access email while attached to the session
 
-            response = self.client.post('/auth/', data={
-                'email': email,
-                'password': 'admin2',
-            })
-            self.assertEqual(response.status_code, 200)
+        response = self.client.post('/auth/', data={
+            'email': email,
+            'password': 'admin2',
+            'action': 'login'
+        })
 
-            for case in test_cases:
-                with self.subTest(case=case):
-                    form_data = {
-                        'name_prod': case["name"],
-                        'description_prod': 'Test product',
-                        'price': str(case["price"]),
-                        'promo': '0',
-                        'stock': str(case["quantity"]),
-                        'idCategory': case["category"],
-                        'brand': 'TestBrand',
-                        'img_prod': (io.BytesIO(b"fake image data"), 'test.jpg')
-                    }
-                    # Query the product within the same session context
-                    with self.app.app_context():
-                        product = db.session.query(Product).filter_by(idProduct=self.product.idProduct).first()
-                        response = self.edit_product(product.idProduct, form_data)
-                        print(f"Testing: {case} -> Status: {response.status_code}")
-                        self.assertEqual(response.status_code, case["expected_status"])
+        for case in test_cases:
+            with self.subTest(case=case):
+                form_data = {
+                    'name_prod': case["name"],
+                    'description_prod': 'Test product',
+                    'price': str(case["price"]),
+                    'promo': '0',
+                    'stock': str(case["quantity"]),
+                    'idCategory': case["category"],
+                    'brand': 'TestBrand',
+                }
+                if not case.get("no_image"):
+                    form_data['img_prod'] = (io.BytesIO(b"fake image data"), 'test.jpg')
+                response = self.add_product(form_data)
+                print(f"Testing: {case} -> Status: {response.status_code}")
+                self.assertEqual(response.status_code, case["expected_status"])
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
