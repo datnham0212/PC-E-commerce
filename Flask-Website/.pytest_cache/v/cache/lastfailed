@@ -67,5 +67,6 @@
   "app/tests/integration/admin_crud_integration_test.py::test_delete_product_not_admin": true,
   "app/tests/integration/admin_crud_integration_test.py::test_add_product_already_exists": true,
   "app/tests/integration/admin_crud_integration_test.py::test_update_product_not_found": true,
-  "app/tests/integration/admin_crud_integration_test.py::test_delete_product_not_found": true
+  "app/tests/integration/admin_crud_integration_test.py::test_delete_product_not_found": true,
+  "app/tests/integration/test_cases_admin_edit_product.py::AdminCrudTestCase::test_edit_product_non_existent_id": true
 }

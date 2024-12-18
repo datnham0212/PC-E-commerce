@@ -1,4 +1,5 @@
 [
+  "app/tests/integration/3_test_cases_admin_delete_product.py::AdminCrudTestCase::test_delete_product",
   "app/tests/integration/admin_crud_integration_test.py::AdminCrudTestCase::test_add_category",
   "app/tests/integration/admin_crud_integration_test.py::AdminCrudTestCase::test_add_product",
   "app/tests/integration/admin_crud_integration_test.py::AdminCrudTestCase::test_add_product_missing_image",
@@ -35,6 +36,8 @@
   "app/tests/integration/cart_integration_test.py::CartTestCase::test_update_quantity_in_cart",
   "app/tests/integration/checkout_integration_test.py::CheckoutTestCase::test_checkout_page",
   "app/tests/integration/checkout_integration_test.py::CheckoutTestCase::test_process_checkout",
+  "app/tests/integration/test_cases_admin_edit_product.py::AdminCrudTestCase::test_edit_product_non_existent_id",
+  "app/tests/integration/test_cases_admin_edit_product.py::AdminCrudTestCase::test_product_validations",
   "app/tests/test_admin.py::AdminRouteTestCase::test_add_category",
   "app/tests/test_admin.py::AdminRouteTestCase::test_add_product",
   "app/tests/test_admin.py::AdminRouteTestCase::test_categories",

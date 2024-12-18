@@ -150,10 +150,17 @@ def add_product_route():
 def edit_product_route(product_id):
     if not isinstance(current_user, Admin):
         return redirect(url_for('main.home'))
+
+    product = Product.query.get(product_id)
+    if not product:
+        flash('Product not found', 'error')
+        return redirect(url_for('admin.products_route')), 404
+
     file = request.files['img_prod']
     filename = secure_filename(file.filename) if file and file.filename else None
     if file and file.filename:
         file.save(os.path.join('app', 'static', 'img', filename))
+
     name_prod = request.form.get('name_prod')
     description_prod = request.form.get('description_prod')
     price = request.form.get('price')
@@ -161,18 +168,30 @@ def edit_product_route(product_id):
     stock = request.form.get('stock')
     idCategory = request.form.get('idCategory')
     brand = request.form.get('brand')
+
+    # Validate inputs
+    if not name_prod or float(price) <= 0 or int(stock) < 0 or not idCategory.isdigit():
+        flash('Invalid input data', 'error')
+        return redirect(url_for('admin.products_route')), 400
+
     success, message = update_product(product_id, name_prod, description_prod, price, promo, stock, idCategory, brand, filename)
     flash(message, 'success' if success else 'error')
-    return redirect(url_for('admin.products_route'))
+    return redirect(url_for('admin.products_route')), 302 if success else 400
 
 @admin_bp.route('/delete_product/<int:product_id>', methods=['POST'])
 @login_required
 def delete_product_route(product_id):
     if not isinstance(current_user, Admin):
         return redirect(url_for('main.home'))
+    
+    product = Product.query.get(product_id)
+    if not product:
+        flash('Product not found', 'error')
+        return redirect(url_for('admin.products_route')), 404
+
     success, message = delete_product(product_id)
     flash(message, 'success' if success else 'error')
-    return redirect(url_for('admin.products_route'))
+    return redirect(url_for('admin.products_route')), 302 if success else 400
 
 @admin_bp.route('/update_delivery_status/<int:order_id>', methods=['POST'])
 @login_required
