@@ -143,38 +143,72 @@ def fetch_all_products():
 def add_product(name_prod, description_prod, price, promo, stock, idCategory, brand, img_prod):
     if not current_user.is_authenticated or not isinstance(current_user, Admin):
         return False, 'User is not an admin.'
-    if not name_prod or not description_prod or not price or not stock or not idCategory or not brand:
+    if not name_prod or not description_prod or not idCategory or not brand:
         return False, 'Missing product information.'
     if not img_prod:
         return False, 'Missing product image.'
+    
+    # Check if the category exists
+    category = Category.query.get(idCategory)
+    if not category:
+        return False, 'Category not found.'
+
+    try:
+        price = float(price)
+        stock = int(stock)
+    except ValueError:
+        return False, 'Price and stock must be numeric values.'
+
+    if price < 1 or stock < 1:
+        return False, 'Price and stock must be at least 1.'
+    
     existing_product = Product.query.filter_by(name_prod=name_prod, idCategory=idCategory, brand=brand).first()
     if existing_product:
         return False, 'Product already exists.'
+    
     new_product = Product(name_prod=name_prod, description_prod=description_prod, price=price, promo=promo, stock=stock, idCategory=idCategory, brand=brand, img_prod=img_prod)
     db.session.add(new_product)
     db.session.commit()
     return True, 'Product added successfully.'
 
-def update_product(product_id, name_prod, description_prod, price, promo, stock, idCategory, brand, img_prod=None):
+def update_product(product_id, name, description, price, promo, stock, category_id, brand, image):
     if not current_user.is_authenticated or not isinstance(current_user, Admin):
         return False, 'User is not an admin.'
-    if not name_prod or not description_prod or not price or not stock or not idCategory or not brand:
-        return False, 'Missing product information.'
-    if not img_prod:
-        return False, 'Missing product image.'
+
     product = Product.query.get(product_id)
-    if product:
-        product.img_prod = img_prod
-        product.name_prod = name_prod
-        product.description_prod = description_prod
-        product.price = price
-        product.promo = promo
-        product.stock = stock
-        product.idCategory = idCategory
-        product.brand = brand
-        db.session.commit()
-        return True, 'Product updated successfully.'
-    return False, 'Product not found.'
+    if not product:
+        return False, 'Product not found.'
+
+    if not name or not description or not category_id or not brand:
+        return False, 'Missing product information.'
+    
+    # Check if the category exists
+    category = Category.query.get(category_id)
+    if not category:
+        return False, 'Category not found.'
+
+    try:
+        price = float(price)
+        stock = int(stock)
+    except ValueError:
+        return False, 'Price and stock must be numeric values.'
+
+    if price < 1 or stock < 1:
+        return False, 'Price and stock must be at least 1.'
+
+    product.name_prod = name
+    product.description_prod = description
+    product.price = price
+    product.promo = promo
+    product.stock = stock
+    product.idCategory = category_id
+    product.brand = brand
+
+    if image:
+        product.img_prod = image
+
+    db.session.commit()
+    return True, 'Product updated successfully.'
 
 def delete_product(product_id):
     if not current_user.is_authenticated or not isinstance(current_user, Admin):

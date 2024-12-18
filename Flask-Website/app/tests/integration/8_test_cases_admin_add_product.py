@@ -81,7 +81,6 @@ class AdminCrudTestCase(TestCase):
             'action': 'login'
         })
 
-
         for case in test_cases:
             with self.subTest(case=case):
                 form_data = {
