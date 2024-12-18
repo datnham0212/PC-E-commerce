@@ -98,10 +98,18 @@ class TestAdminController(unittest.TestCase):
 
         # Call the add_product function with missing information
         result, message = add_product(None, 'Description1', 10.0, 0, 100, 1, 'Brand1', 'img1.jpg')
-        
-        # Assertions to verify the correct behavior
         self.assertFalse(result)
         self.assertEqual(message, 'Missing product information.')
+
+        # Call the add_product function with invalid price
+        result, message = add_product('Product1', 'Description1', 0.5, 0, 100, 1, 'Brand1', 'img1.jpg')
+        self.assertFalse(result)
+        self.assertEqual(message, 'Price and stock must be at least 1.')
+        
+        # Call the add_product function with invalid stock
+        result, message = add_product('Product1', 'Description1', 10.0, 0, 0, 1, 'Brand1', 'img1.jpg')
+        self.assertFalse(result)
+        self.assertEqual(message, 'Price and stock must be at least 1.')
         
         # Verify that session add and commit methods were not called
         mock_db_session.add.assert_not_called()
@@ -170,23 +178,25 @@ class TestAdminController(unittest.TestCase):
     @patch('app.controllers.admin_controller.db.session')
     @patch('app.controllers.admin_controller.Product')
     @patch('app.controllers.admin_controller.current_user')
-    def test_update_product_missing_image(self, mock_current_user, mock_product, mock_db_session):
+    def test_update_product_missing_new_image(self, mock_current_user, mock_product, mock_db_session):
         # Mock current_user as an authenticated admin
         mock_current_user.is_authenticated = True
         mock_current_user.__class__ = Admin  # Ensure current_user is an instance of Admin
         
         # Mock getting an existing product by ID
-        mock_product.query.get.return_value = MagicMock(idProduct=1, name_prod='Product1')
+        existing_product = MagicMock(idProduct=1, name_prod='Product1', img_prod='existing_image.jpg')
+        mock_product.query.get.return_value = existing_product
 
         # Call the update_product function without image
         result, message = update_product(1, 'UpdatedProduct', 'UpdatedDescription', 20.0, 1, 200, 1, 'UpdatedBrand', None)
         
         # Assertions to verify the correct behavior
-        self.assertFalse(result)
-        self.assertEqual(message, 'Missing product image.')
+        self.assertTrue(result)
+        self.assertEqual(message, 'Product updated successfully.')
+        self.assertEqual(existing_product.img_prod, 'existing_image.jpg')
         
-        # Verify that session commit method was not called
-        mock_db_session.commit.assert_not_called()
+        # Verify that session commit method was called
+        mock_db_session.commit.assert_called_once()
 
     @patch('app.controllers.admin_controller.db.session')
     @patch('app.controllers.admin_controller.Product')
@@ -199,9 +209,19 @@ class TestAdminController(unittest.TestCase):
         # Mock getting an existing product by ID
         mock_product.query.get.return_value = MagicMock(idProduct=1, name_prod='Product1')
 
+        # Call the update_product function with invalid price
+        result, message = update_product(1, 'UpdatedProduct', 'UpdatedDescription', 0.5, 1, 100, 1, 'UpdatedBrand', 'updated_img.jpg')
+        self.assertFalse(result)
+        self.assertEqual(message, 'Price and stock must be at least 1.')
+        
+        # Call the update_product function with invalid stock
+        result, message = update_product(1, 'UpdatedProduct', 'UpdatedDescription', 10.0, 1, 0, 1, 'UpdatedBrand', 'updated_img.jpg')
+        self.assertFalse(result)
+        self.assertEqual(message, 'Price and stock must be at least 1.')
+
         # Call the update_product function with missing information
         result, message = update_product(1, None, 'UpdatedDescription', 20.0, 1, 200, 1, 'UpdatedBrand', 'updated_img.jpg')
-        
+
         # Assertions to verify the correct behavior
         self.assertFalse(result)
         self.assertEqual(message, 'Missing product information.')
@@ -218,14 +238,16 @@ class TestAdminController(unittest.TestCase):
         mock_current_user.__class__ = Admin  # Ensure current_user is an instance of Admin
         
         # Mock getting an existing product by ID
-        mock_product.query.get.return_value = MagicMock(idProduct=1, name_prod='Product1')
+        existing_product = MagicMock(idProduct=1, name_prod='Product1', img_prod='existing_image.jpg')
+        mock_product.query.get.return_value = existing_product
 
         # Call the update_product function
-        result, message = update_product(1, 'UpdatedProduct', 'UpdatedDescription', 20.0, 1, 200, 1, 'UpdatedBrand', 'updated_img.jpg')
+        result, message = update_product(1, 'UpdatedProduct', 'UpdatedDescription', 20.0, 1, 200, 1, 'UpdatedBrand', 'updated_image.jpg')
         
         # Assertions to verify the correct behavior
         self.assertTrue(result)
         self.assertEqual(message, 'Product updated successfully.')
+        self.assertEqual(existing_product.img_prod, 'updated_image.jpg')
         
         # Verify that session commit method was called
         mock_db_session.commit.assert_called_once()

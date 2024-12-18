@@ -19,7 +19,7 @@ class AdminCrudTestCase(TestCase):
         return self.app
 
     def setUp(self):
-        """Set up the Flask test client"""
+        """Set up the test environment"""
         print("Setting up the test environment")
         self.client = self.app.test_client()  # Initialize the test client
         with self.app.app_context():
@@ -53,7 +53,7 @@ class AdminCrudTestCase(TestCase):
                 stock=10,
                 img_prod='palit rtx.jpg',
                 idCategory=1,
-                brand=6
+                brand='BrandX'
             )
             db.session.add(self.product)
             db.session.commit()
@@ -132,6 +132,36 @@ class AdminCrudTestCase(TestCase):
                 print(f"Product added: {product}")
                 self.assertIsNotNone(product)
                 self.assertEqual(product.name_prod, 'Laptop')
+
+    def test_add_product_invalid_category(self):
+        """Test adding a product with an invalid category"""
+        with self.client:
+            with self.app.app_context():
+                self.admin_user = db.session.query(Admin).filter_by(idAdmin=2).first()
+                db.session.refresh(self.admin_user)  # Refresh the instance
+
+            # Simulate login
+            response = self.client.post('/auth/', data={
+                'email': self.admin_user.email,
+                'password': 'admin2',
+                'action': 'login'
+            })
+            print(f"Login response status code: {response.status_code}")
+
+            # Add product with invalid category
+            form_data = {
+                'name_prod': 'Phone',
+                'description_prod': 'Smartphone',
+                'price': '800.0',
+                'promo': '5',
+                'stock': '30',
+                'idCategory': '999',  # Non-existent category
+                'brand': 'BrandY',
+                'img_prod': (io.BytesIO(b"fake image data"), 'phone.jpg')
+            }
+            response = self.client.post('/admin/add_product', data=form_data, content_type='multipart/form-data')
+            print(f"Add product with invalid category response status code: {response.status_code}")
+            self.assertEqual(response.status_code, 400)  # Bad request due to invalid category
 
     def test_delete_product(self):
         """Test deleting a product"""

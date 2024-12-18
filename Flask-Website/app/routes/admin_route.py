@@ -140,7 +140,10 @@ def add_product_route():
     brand = request.form.get('brand')
     success, message = add_product(name_prod, description_prod, price, promo, stock, idCategory, brand, filename)
     flash(message, 'success' if success else 'error')
-    return redirect(url_for('admin.products_route'))
+    if success:
+        return redirect(url_for('admin.products_route')), 302
+    else:
+        return redirect(url_for('admin.products_route')), 400
 
 @admin_bp.route('/edit_product/<int:product_id>', methods=['POST'])
 @login_required
