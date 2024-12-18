@@ -22,16 +22,16 @@ class AdminCrudTestCase(TestCase):
         with self.app.app_context():
             db.create_all()
             # Create admin user
-            admin_user = Admin(
+            self.admin_user = Admin(
                 idAdmin=2,
                 firstName='bee',
                 lastName='bee',
                 email='admin2@gmail.com',
                 password='admin2'
             )
-            db.session.add(admin_user)
+            db.session.add(self.admin_user)
             db.session.commit()
-            self.admin_user = db.session.query(Admin).filter_by(email='admin2@gmail.com').first()  # Refetch to attach
+            db.session.refresh(self.admin_user)  # Ensure the instance is managed by the session
 
             # Create valid category
             self.category = Category(
@@ -62,6 +62,15 @@ class AdminCrudTestCase(TestCase):
             db.session.remove()
             db.drop_all()
 
+    def login_admin(self):
+        """Helper method to log in as admin"""
+        response = self.client.post('/auth/', data={
+            'email': self.admin_user.email,
+            'password': 'admin2',
+            'action': 'login'
+        })
+        self.assertEqual(response.status_code, 200)
+
     def edit_product(self, product_id, form_data):
         """Reusable helper for editing a product"""
         return self.client.post(f'/admin/edit_product/{product_id}', data=form_data, content_type='multipart/form-data')
@@ -78,19 +87,25 @@ class AdminCrudTestCase(TestCase):
             {"name": "Product with invalid category", "quantity": 30, "price": 1200.0, "category": "999", "expected_status": 400},  # Invalid category
             {"name": "Product with negative quantity", "quantity": -30, "price": 1200.0, "category": "1", "expected_status": 400},  # Negative quantity
             {"name": "Product with zero price", "quantity": 30, "price": 0.0, "category": "1", "expected_status": 400},  # Price = 0
+            # Non-existent product ID
+            {"name": "Non-existent Product", "quantity": 30, "price": 1200.0, "category": "1", "expected_status": 404},  # Non-existent product ID
         ]
 
-        # Simulate admin login
-        with self.app.app_context():
-            admin_user = db.session.query(Admin).filter_by(idAdmin=2).first()
-            assert admin_user is not None, "Admin user must exist for login"
-            email = admin_user.email  # Access email while attached to the session
+        with self.client:
+            with self.app.app_context():
+                self.admin_user = db.session.query(Admin).filter_by(idAdmin=2).first()
+                db.session.refresh(self.admin_user)  # Refresh the instance
 
+                # Refresh the product instance to ensure it is managed by the session
+                self.product = db.session.query(Product).filter_by(idProduct=1).first()
+                db.session.refresh(self.product)
+
+            # Simulate admin login
             response = self.client.post('/auth/', data={
-                'email': email,
+                'email': self.admin_user.email,
                 'password': 'admin2',
+                'action': 'login'
             })
-            self.assertEqual(response.status_code, 200)
 
             for case in test_cases:
                 with self.subTest(case=case):
@@ -104,12 +119,10 @@ class AdminCrudTestCase(TestCase):
                         'brand': 'TestBrand',
                         'img_prod': (io.BytesIO(b"fake image data"), 'test.jpg')
                     }
-                    # Query the product within the same session context
-                    with self.app.app_context():
-                        product = db.session.query(Product).filter_by(idProduct=self.product.idProduct).first()
-                        response = self.edit_product(product.idProduct, form_data)
-                        print(f"Testing: {case} -> Status: {response.status_code}")
-                        self.assertEqual(response.status_code, case["expected_status"])
+                    product_id = self.product.idProduct if case["name"] != "Non-existent Product" else 999
+                    response = self.edit_product(product_id, form_data)
+                    print(f"Testing: {case} -> Status: {response.status_code}")
+                    self.assertEqual(response.status_code, case["expected_status"])
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
