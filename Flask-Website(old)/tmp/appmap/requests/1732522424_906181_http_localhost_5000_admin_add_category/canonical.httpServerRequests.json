@@ -1,7 +1,0 @@
-[
-  {
-    "route": "POST /admin/add_category",
-    "parameters": "(,)",
-    "status": 302
-  }
-]

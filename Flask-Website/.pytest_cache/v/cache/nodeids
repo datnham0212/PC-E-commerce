@@ -122,6 +122,7 @@
   "app/tests/unit/unittest_admin.py::TestAdminController::test_update_product_missing_image",
   "app/tests/unit/unittest_admin.py::TestAdminController::test_update_product_missing_info",
   "app/tests/unit/unittest_admin.py::TestAdminController::test_update_product_missing_information",
+  "app/tests/unit/unittest_admin.py::TestAdminController::test_update_product_missing_new_image",
   "app/tests/unit/unittest_admin.py::TestAdminController::test_update_product_not_admin",
   "app/tests/unit/unittest_admin.py::TestAdminController::test_update_product_not_found",
   "app/tests/unit/unittest_admin.py::TestAdminController::test_update_product_success",

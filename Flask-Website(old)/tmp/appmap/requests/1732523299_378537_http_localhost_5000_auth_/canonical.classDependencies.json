@@ -1,6 +1,0 @@
-[
-  {
-    "caller": "GET /auth/",
-    "callee": "<templates>/CUsersAdminOnedrivePythonprojectsFlaskWebsiteAppTemplatesLoginHtml#render"
-  }
-]
