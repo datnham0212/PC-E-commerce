@@ -1,7 +1,0 @@
-[
-  {
-    "route": "GET /product_catalog/api/products",
-    "parameters": "()",
-    "status": 200
-  }
-]

@@ -1,7 +1,0 @@
-[
-  {
-    "route": "POST /admin/update_delivery_status/{order_id}",
-    "parameters": "()",
-    "status": 204
-  }
-]
